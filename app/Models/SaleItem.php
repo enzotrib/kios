@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 use App\Traits\Userstamps;
 
 class SaleItem extends Model
@@ -12,6 +14,21 @@ class SaleItem extends Model
     use HasFactory;
     use SoftDeletes;
     use Userstamps;
+    use LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('sale_item')
+            ->logOnly([
+                'sale_id', 'product_id', 'batch_id', 'quantity', 'unit_price',
+                'unit_cost', 'discount', 'sale_date', 'description', 'is_free',
+                'item_type', 'base_amount',
+            ])
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs()
+            ->setDescriptionForEvent(fn(string $eventName) => "SaleItem has been {$eventName}");
+    }
 
     protected $fillable = [
         'sale_id',          // Sale ID without foreign key constraint

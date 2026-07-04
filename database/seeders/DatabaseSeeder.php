@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
             'pos', 'products', 'inventory', 'sales', 'customers', 'vendors',
             'charges', 'collections', 'expenses', 'quotations', 'reloads',
             'cheques', 'sold-items', 'purchases', 'payments', 'stores',
-            'employees', 'payroll', 'media', 'settings',
+            'employees', 'payroll', 'media', 'settings', 'activity-log',
         ];
 
         foreach ($permissions as $perm) {

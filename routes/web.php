@@ -35,6 +35,7 @@ use App\Http\Controllers\BackupController;
 use App\Http\Controllers\DevDatabaseController;
 use App\Http\Controllers\ChargeController;
 use App\Http\Controllers\SyncController;
+use App\Http\Controllers\ActivityLogController;
 
 // Installer routes (must be before auth routes)
 require __DIR__ . '/installer.php';
@@ -273,6 +274,10 @@ Route::get('/update', [UpgradeController::class, 'showUploadForm'])->name('uploa
         });
         return 'Mail sent';
     });
+
+    Route::get('/activity-log', [ActivityLogController::class, 'index'])->name('activity-log.index');
+    Route::get('/activity-log/prune-count', [ActivityLogController::class, 'pruneCount'])->name('activity-log.prune-count');
+    Route::post('/activity-log/prune', [ActivityLogController::class, 'prune'])->name('activity-log.prune');
 });
 
 require __DIR__ . '/auth.php';

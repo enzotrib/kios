@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 use App\Models\Store;
 use Illuminate\Support\Facades\DB;
 
@@ -12,7 +14,22 @@ class Sale extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    
+    use LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('sale')
+            ->logOnly([
+                'invoice_number', 'sale_type', 'store_id', 'contact_id', 'sale_date',
+                'total_amount', 'discount', 'amount_received', 'profit_amount',
+                'status', 'payment_status', 'note',
+            ])
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs()
+            ->setDescriptionForEvent(fn(string $eventName) => "Sale has been {$eventName}");
+    }
+
     protected $fillable = [
         'invoice_number',
         'sync_id',

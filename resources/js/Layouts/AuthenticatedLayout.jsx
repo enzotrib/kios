@@ -41,6 +41,7 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import BadgeIcon from "@mui/icons-material/Badge";
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import PermMediaIcon from '@mui/icons-material/PermMedia';
+import HistoryIcon from '@mui/icons-material/History';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoneyCheck, faFileInvoice, faBoxesStacked, faPercent } from "@fortawesome/free-solid-svg-icons";
 import infoshopLogo from "@/infoshop.png";
@@ -407,6 +408,16 @@ function AuthenticatedLayout({ header, children, ...props }) {
                             </List>
                         </Collapse>
                     </>
+                )}
+
+                {canAccess("activity-log") && (
+                    <NavItem
+                        href="/activity-log"
+                        icon={HistoryIcon}
+                        label="Activity Log"
+                        open={open}
+                        selected={isSelected("/activity-log")}
+                    />
                 )}
 
                 <NavItem

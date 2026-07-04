@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 use App\Traits\Userstamps;
 
 class ProductBatch extends Model
@@ -12,6 +14,20 @@ class ProductBatch extends Model
     use HasFactory;
     use SoftDeletes;
     use Userstamps;
+    use LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('product_batch')
+            ->logOnly([
+                'product_id', 'batch_number', 'expiry_date', 'cost', 'price',
+                'is_active', 'is_featured', 'discount', 'contact_id', 'discount_percentage',
+            ])
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs()
+            ->setDescriptionForEvent(fn(string $eventName) => "ProductBatch has been {$eventName}");
+    }
 
     protected $fillable = [
         'product_id',

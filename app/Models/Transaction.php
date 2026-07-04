@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 use App\Traits\Userstamps;
 use App\Models\CashLog;
 
@@ -13,6 +15,20 @@ class Transaction extends Model
     use HasFactory;
     use SoftDeletes;
     use Userstamps;
+    use LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('transaction')
+            ->logOnly([
+                'sales_id', 'store_id', 'contact_id', 'transaction_date', 'amount',
+                'payment_method', 'transaction_type', 'note',
+            ])
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs()
+            ->setDescriptionForEvent(fn(string $eventName) => "Transaction has been {$eventName}");
+    }
 
     protected $fillable = [
         'sales_id',          // Unique identifier for the sale

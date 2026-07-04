@@ -19,7 +19,6 @@ class Expense extends Model
     use LogsActivity;
 
     protected $fillable = ['description', 'amount', 'expense_date', 'store_id', 'source'];
-    protected static $recordEvents = ['deleted'];
 
     protected static function booted()
     {
@@ -60,8 +59,10 @@ class Expense extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->logOnly(['description', 'amount', 'expense_date', 'store_id'])
+            ->useLogName('expense')
+            ->logOnly(['description', 'amount', 'expense_date', 'store_id', 'source'])
             ->logOnlyDirty()
+            ->dontSubmitEmptyLogs()
             ->setDescriptionForEvent(fn(string $eventName) => "Expense has been {$eventName}");
     }
 
