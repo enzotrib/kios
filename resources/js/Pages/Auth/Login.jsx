@@ -10,8 +10,7 @@ import {
 } from '@mui/material';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
-import infomaxlogo from '@/Infomax-logo.png';
-import infoshopLogo from '@/infoshop.png';
+import brandLogo from '@/kios-logo.jpg';
 import { t } from '@/i18n';
 
 export default function Login({ status, canResetPassword, version }) {
@@ -39,12 +38,12 @@ export default function Login({ status, canResetPassword, version }) {
             <Stack alignItems="center" spacing={1} sx={{ mb: 4 }}>
                 <Box
                     component="img"
-                    src={shopLogo || infoshopLogo}
-                    alt={shopName || 'InfoShop'}
+                    src={shopLogo || brandLogo}
+                    alt={shopName || 'KIOS'}
                     sx={{ height: 56, objectFit: 'contain', maxWidth: '100%' }}
                 />
                 <Typography variant="h3" sx={{ textAlign: 'center' }}>
-                    {shopName || 'InfoShop'}
+                    {shopName || 'KIOS'}
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                     {t('Log in')}
@@ -146,10 +145,7 @@ export default function Login({ status, canResetPassword, version }) {
                     {t('Developed by: infomax')}
                 </Typography>
 
-                <Stack direction="row" spacing={1} alignItems="center" sx={{ opacity: 0.7 }}>
-                    <Box component="img" src={infomaxlogo} alt="Infomax" sx={{ height: 40, objectFit: 'contain' }} />
-                    <Box component="img" src={infoshopLogo} alt="InfoShop" sx={{ height: 40, objectFit: 'contain' }} />
-                </Stack>
+
             </Stack>
         </GuestLayout>
     );

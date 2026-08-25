@@ -45,7 +45,7 @@ import PermMediaIcon from '@mui/icons-material/PermMedia';
 import HistoryIcon from '@mui/icons-material/History';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoneyCheck, faFileInvoice, faBoxesStacked, faPercent } from "@fortawesome/free-solid-svg-icons";
-import infoshopLogo from "@/infoshop.png";
+import brandLogo from "@/kios-logo.jpg";
 import { t } from '@/i18n';
 const drawerWidth = 240;
 
@@ -54,7 +54,7 @@ function AuthenticatedLayout({ header, children, ...props }) {
     const shop_name = usePage().props.settings.shop_name;
     // Logo subido desde Configuracion > Comercio. Si todavia no se subio ninguno,
     // cae en el que viene empaquetado con la app.
-    const shop_logo = usePage().props.settings.shop_logo || infoshopLogo;
+    const shop_logo = usePage().props.settings.shop_logo || brandLogo;
     const modules = usePage().props.modules;
     const pageLabel = usePage().props.pageLabel;
     const pathname = usePage().url;
