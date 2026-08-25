@@ -120,7 +120,6 @@ export default function ProductSearch() {
             <Link href="/products/create">
                 <Button
                     variant="contained"
-                    size="large"
                     sx={{ minWidth: "200px", ml:'1rem' }}
                     startIcon={<AddBoxIcon />}
                 >

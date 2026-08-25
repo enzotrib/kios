@@ -104,8 +104,10 @@ export function createAppTheme(mode = 'light') {
             // caption/Size Small 12 - lineHeight 1.3 - letterSpacing 0
             caption: { fontSize: '0.75rem', fontWeight: 400, lineHeight: 1.3, color: mutedForeground },
 
-            // component/button/Size Base 16 - weight 600
-            button: { fontSize: '1rem', fontWeight: 600, textTransform: 'none', letterSpacing: '-0.2px' },
+            // component/button: Size Small 14 por defecto, Base 16 solo en los
+            // grandes. 16px en cada boton compite con las tablas (13-14px) y es
+            // lo que hacia ver la interfaz mas pesada que las grillas.
+            button: { fontSize: '0.875rem', fontWeight: 600, textTransform: 'none', letterSpacing: '-0.2px' },
         },
 
         components: {
@@ -168,7 +170,7 @@ export function createAppTheme(mode = 'light') {
                         minHeight: 40,
                     },
                     sizeSmall: { paddingInline: 14, minHeight: 32, fontSize: '0.875rem' },
-                    sizeLarge: { minHeight: 48 },
+                    sizeLarge: { minHeight: 48, fontSize: '1rem' },
 
                     outlined: {
                         // action/border/secondary/default (#404B5A en oscuro)
@@ -246,6 +248,7 @@ export function createAppTheme(mode = 'light') {
                     root: {
                         borderRadius: radiusControl,
                         marginInline: 8,
+                        minHeight: 40,
                         '&.Mui-selected': {
                             backgroundColor: 'var(--primary-soft)',
                             color: primary,
@@ -257,7 +260,29 @@ export function createAppTheme(mode = 'light') {
             },
 
             MuiListItemIcon: {
-                styleOverrides: { root: { minWidth: 40, color: mutedForeground } },
+                styleOverrides: { root: { minWidth: 36, color: mutedForeground } },
+            },
+
+            // El texto del menu usaba body1, que en la escala de Rayum son 16px:
+            // quedaba mucho mas grueso que las tablas (13-14px) y rompia el ritmo.
+            // Aca baja a Body Small con peso medio.
+            MuiListItemText: {
+                styleOverrides: {
+                    primary: { fontSize: '0.875rem', fontWeight: 500, letterSpacing: '-0.2px' },
+                    secondary: { fontSize: '0.75rem', color: mutedForeground },
+                },
+            },
+
+            // Escala de iconos de Rayum (component/icon): Small 16, Medium 20,
+            // Large 24. MUI por defecto usa 20/24/35, un escalon mas grande en
+            // todos los casos, y por eso la interfaz se veia mas pesada que las
+            // tablas.
+            MuiSvgIcon: {
+                styleOverrides: {
+                    fontSizeSmall: { fontSize: 16 },
+                    fontSizeMedium: { fontSize: 20 },
+                    fontSizeLarge: { fontSize: 24 },
+                },
             },
 
             MuiTableCell: {

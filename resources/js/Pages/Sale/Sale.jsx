@@ -364,7 +364,7 @@ export default function Sale({ sales, contacts }) {
                 <SalesList sales={dataSales.data} handleRowClick={handleRowClick} />
             )}
             <Grid size={12} container spacing={2} sx={{ justifyContent: "end", alignItems: "center", mt: 2 }}>
-                <Chip size="large" label={'Total results : ' + dataSales.total} color="primary" />
+                <Chip label={'Total results : ' + dataSales.total} color="primary" />
                 <CustomPagination
                     refreshTable={refreshSales}
                     setSearchTerms={setSearchTerms}

@@ -175,7 +175,6 @@ export default function CurrencySetting({ handleSubmit, settingFormData, handleC
                         <Button
                             type="submit"
                             variant="outlined"
-                            size="large"
                             fullWidth
                         >
                             {t("UPDATE CURRENCY SETTINGS")}

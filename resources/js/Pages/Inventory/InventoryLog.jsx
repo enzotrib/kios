@@ -144,7 +144,6 @@ const InventoryLog = ({ inventory_log, stores }) => {
                     <Button
                         variant="contained"
                         sx={{ height: "100%" }}
-                        size="large"
                         fullWidth
 
                     >
@@ -170,7 +169,7 @@ const InventoryLog = ({ inventory_log, stores }) => {
                 />
             </Box>
             <Grid size={12} container sx={{ justifyContent: "end" }}>
-                {/* <Chip size="large" label={'Total:' + numeral(totalExpense).format('0,0')} color="primary" /> */}
+                {/* <Chip label={'Total:' + numeral(totalExpense).format('0,0')} color="primary" /> */}
                 <CustomPagination
                     dataLinks={dataInventoryLog?.links}
                     refreshTable={refreshInventoryItems}

@@ -177,7 +177,7 @@ export default function Reload({ reloads, transactionType }) {
                 />
             </Box>
             <Grid size={12} spacing={2} container sx={{ justifyContent: 'end' }}>
-                <Chip size="large" label={`Total Commission: ${numeral(totalCommission).format('0,0.00')}`} color="primary" />
+                <Chip label={`Total Commission: ${numeral(totalCommission).format('0,0.00')}`} color="primary" />
                 <CustomPagination
                     data={reloads || {}}
                     searchTerms={searchTerms}

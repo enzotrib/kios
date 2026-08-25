@@ -28,7 +28,6 @@ export default function PurchaseAppBar({setOpenPayment, selectedVendor, disable=
                         <Button
                             variant="contained"
                             color="warning"
-                            size="large"
                             startIcon={<ArrowBackIosNewIcon />}
                             sx={{ mr: "1rem" }}
                         >
@@ -39,7 +38,6 @@ export default function PurchaseAppBar({setOpenPayment, selectedVendor, disable=
                     <Button
                         variant="contained"
                         type="submit"
-                        size="large"
                         endIcon={<PaymentsIcon />}
                         onClick={() => setOpenPayment(true)}
                         disabled={cartState.length === 0 || !selectedVendor || disable}

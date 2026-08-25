@@ -722,7 +722,6 @@ export default function Product({ product, collection, product_code, contacts, p
                                         fullWidth
                                         variant="contained"
                                         color="warning"
-                                        size="large"
                                         startIcon={<ArrowBackIosNewIcon />}
                                         sx={{ mr: "1rem" }}
                                         onClick={() => window.history.back()}
@@ -735,7 +734,6 @@ export default function Product({ product, collection, product_code, contacts, p
                                         fullWidth
                                         variant="contained"
                                         type="submit"
-                                        size="large"
                                         endIcon={<SaveIcon />}
                                         disabled={loading}
                                     >

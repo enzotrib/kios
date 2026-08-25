@@ -390,7 +390,6 @@ export default function Setting({ settings }) {
                                     <Button
                                         type="submit"
                                         variant="outlined"
-                                        size="large"
 
                                         fullWidth
                                     >
@@ -540,7 +539,6 @@ export default function Setting({ settings }) {
                                     <Button
                                         type="submit"
                                         variant="outlined"
-                                        size="large"
 
                                         fullWidth
                                     >
@@ -643,7 +641,6 @@ export default function Setting({ settings }) {
                                         <Button
                                             type="submit"
                                             variant="outlined"
-                                            size="large"
 
                                         >
                                             {t("UPDATE OPTIONS")}

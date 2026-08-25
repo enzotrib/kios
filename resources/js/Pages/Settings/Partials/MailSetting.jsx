@@ -145,7 +145,6 @@ const MailSetting = ({ handleSubmit, settingFormData, handleChange, setSettingFo
                     >
                         <Button
                             variant="outlined"
-                            size="large"
                             color="primary"
                             onClick={() => {
                                 axios.post('/test-mail', { test_mail: settingFormData.admin_email })
@@ -163,7 +162,6 @@ const MailSetting = ({ handleSubmit, settingFormData, handleChange, setSettingFo
                         <Button
                             type="submit"
                             variant="outlined"
-                            size="large"
                             fullWidth
                         >
                             {t("UPDATE")}

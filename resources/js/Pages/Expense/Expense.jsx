@@ -203,7 +203,6 @@ export default function Expense({ expenses, stores }) {
                         onClick={() => setExpenseModalOpen(true)}
                         sx={{ height: "100%" }}
                         startIcon={<AddCircleIcon />}
-                        size="large"
                         fullWidth
                     >
                         {t("ADD EXPENSE")}
@@ -222,7 +221,7 @@ export default function Expense({ expenses, stores }) {
                 />
             </Box>
             <Grid size={12} container spacing={2} sx={{ justifyContent: "end", alignItems: "center" }}>
-                <Chip size="large" label={'Total:' + numeral(totalExpense).format('0,0')} color="primary" />
+                <Chip label={'Total:' + numeral(totalExpense).format('0,0')} color="primary" />
                 <CustomPagination
                     refreshTable={refreshExpenses}
                     setSearchTerms={setSearchTerms}

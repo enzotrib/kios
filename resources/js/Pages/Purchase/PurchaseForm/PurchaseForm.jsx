@@ -222,7 +222,6 @@ export default function PurchaseForm({ vendors, purchase, stores }) {
                         )}
                         <IconButton
                             onClick={() => setOpen(true)}
-                            size="large"
                             sx={{
                                 ml: "1rem",
                                 bgcolor: 'var(--success)',

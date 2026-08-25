@@ -165,7 +165,6 @@ const InventoryPurchase = ({ inventory_items, stores }) => {
                         variant="contained"
                         sx={{ height: "100%" }}
                         startIcon={<AddCircleIcon />}
-                        size="large"
                         fullWidth
                         onClick={() => {
                             setInventoryItemModalOpen(true);
@@ -204,7 +203,7 @@ const InventoryPurchase = ({ inventory_items, stores }) => {
                                                 handleChange(index, 'item', newValue)
                                             }
                                             renderInput={(params) => (
-                                                <TextField {...params} size="large" fullWidth />
+                                                <TextField {...params} fullWidth />
                                             )}
                                         />
 
@@ -212,7 +211,6 @@ const InventoryPurchase = ({ inventory_items, stores }) => {
                                     <TableCell width={200}>
                                         <TextField
                                             fullWidth
-                                            size="large"
                                             type="number"
                                             required
                                             placeholder={t("Unit Cost")}
@@ -225,7 +223,6 @@ const InventoryPurchase = ({ inventory_items, stores }) => {
                                     >
                                         <TextField
                                             fullWidth
-                                            size="large"
                                             type="number"
                                             placeholder={t("Quantity")}
                                             value={row.quantity}

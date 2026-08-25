@@ -109,8 +109,8 @@ function AuthenticatedLayout({ header, children, ...props }) {
                     selected={selected}
                     sx={[
                         {
-                            minHeight: 48,
-                            px: 2.5,
+                            minHeight: 40,
+                            px: 1.5,
                             // Los colores salen de los design tokens (resources/css/app.css),
                             // por eso el item activo acompana el modo claro/oscuro.
                             "&.Mui-selected": {

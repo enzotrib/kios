@@ -256,7 +256,6 @@ export default function Payment({ payments, transactionType, contacts, selected_
                         name="start_date"
                         placeholder={t("Start Date")}
                         fullWidth
-                        size="large"
                         type="date"
                         slotProps={{
                             inputLabel: {
@@ -275,7 +274,6 @@ export default function Payment({ payments, transactionType, contacts, selected_
                         name="end_date"
                         placeholder={t("End Date")}
                         fullWidth
-                        size="large"
                         type="date"
                         slotProps={{
                             inputLabel: {
@@ -300,7 +298,7 @@ export default function Payment({ payments, transactionType, contacts, selected_
                 />
             </Box>
             <Grid size={12} container spacing={2} sx={{ justifyContent: "end", alignItems: "center" }}>
-                <Chip size="large" label={'Total: ' + formatCurrency(totalAmount, false)} color="primary" />
+                <Chip label={'Total: ' + formatCurrency(totalAmount, false)} color="primary" />
                 <CustomPagination
                     refreshTable={refreshPayments}
                     setSearchTerms={setSearchTerms}

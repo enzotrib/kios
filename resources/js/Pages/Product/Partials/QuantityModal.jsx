@@ -208,7 +208,6 @@ export default function QuantityModal({
                     >
                         <Grid size={12}>
                             <TextField
-                            size="large"
                                 fullWidth
                                 type="number"
                                 name="quantity"
@@ -263,7 +262,6 @@ export default function QuantityModal({
                                     onChange={handleInputChange}
                                     required
                                     name="store_id"
-                                    size="large"
                                 >
                                     {stores.map((store) => (
                                         <MenuItem
@@ -280,7 +278,6 @@ export default function QuantityModal({
                 </DialogContent>
                 <DialogActions>
                     <Button
-                    size="large"
                         variant="contained"
                         fullWidth
                         sx={{ paddingY: "6px", fontSize: "1rem" }}
@@ -292,7 +289,6 @@ export default function QuantityModal({
                     </Button>
                     {formState.quantity > 0 && (
                         <Button
-                        size="large"
                             variant="contained"
                             fullWidth
                              sx={{ paddingY: "6px", fontSize: "1rem" }}

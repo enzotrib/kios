@@ -184,7 +184,7 @@ export default function SalaryFormDialog({ open, setOpen, employee, stores, refr
                 </Grid>
             </DialogContent>
             <DialogActions>
-                <Button fullWidth size="large" variant="contained" type="submit" disabled={!formData.net_salary }>{t("SAVE")}</Button>
+                <Button fullWidth variant="contained" type="submit" disabled={!formData.net_salary }>{t("SAVE")}</Button>
             </DialogActions>
         </Dialog>
     );

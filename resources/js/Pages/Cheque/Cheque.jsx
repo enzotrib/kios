@@ -305,7 +305,7 @@ export default function Cheque({ cheques, stores }) {
                 />
             </Box>
             <Grid size={12} spacing={2} container sx={{ justifyContent: "end", alignItems: "center" }}>
-                <Chip size="large" label={`Total Amount: ${numeral(totalAmount).format('0,0.00')}`} color="primary" />
+                <Chip label={`Total Amount: ${numeral(totalAmount).format('0,0.00')}`} color="primary" />
                 <CustomPagination
                     refreshTable={refreshCheques}
                     setSearchTerms={setSearchTerms}

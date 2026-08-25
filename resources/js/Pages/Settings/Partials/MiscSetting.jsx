@@ -149,7 +149,6 @@ const MiscSetting = ({ handleSubmit, settingFormData, handleChange, setSettingFo
                         <Button
                             type="submit"
                             variant="outlined"
-                            size="large"
                             fullWidth
                         >
                             {t("UPDATE")}

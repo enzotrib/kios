@@ -141,7 +141,6 @@ export default function CartFooter() {
                                 cartState.length === 0 || selectedCustomer === null
                             }
                             onClick={onCartEmpty}
-                            size="large"
                             fullWidth
                         >
                             {t("EMPTY")}
@@ -156,7 +155,6 @@ export default function CartFooter() {
                         aria-haspopup="true"
                         aria-expanded={open ? 'true' : undefined}
                         variant="contained"
-                        size="large"
                         fullWidth
                         disableElevation
                         onClick={handleClick}
@@ -244,7 +242,6 @@ export default function CartFooter() {
                                 cartState.length === 0 || selectedCustomer === null || !saleDate
                             }
                             onClick={() => setPaymentsModalOpen(true)}
-                            size="large"
                             fullWidth
                         >
                             {t("PAYMENTS")}

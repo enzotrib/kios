@@ -253,7 +253,6 @@ const Cart = ({ cartState, contact_id, useCart }) => {
                     <Button
                         variant="contained"
                         color="primary"
-                        size="large"
                         fullWidth
                         endIcon={<Banknote />}
                         onClick={() => setPaymentsModalOpen(true)}

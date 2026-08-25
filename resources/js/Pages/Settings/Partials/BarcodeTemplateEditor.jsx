@@ -225,7 +225,6 @@ const BarcodeTemplateEditor = ({ settings }) => {
                     <Stack direction="row" spacing={1}>
                         <Tooltip title={t("Save Template")}>
                             <IconButton
-                                size="large"
                                 onClick={handleTemplateSave}
                                 disabled={saving}
                                 sx={{
@@ -240,7 +239,6 @@ const BarcodeTemplateEditor = ({ settings }) => {
                         </Tooltip>
                         <Tooltip title={t("Reset Template")}>
                             <IconButton
-                                size="large"
                                 onClick={fetchBarcodeTemplate}
                                 disabled={saving}
                                 color="info"

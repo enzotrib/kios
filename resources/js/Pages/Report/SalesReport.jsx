@@ -180,7 +180,6 @@ export default function SalesReport({ stores, report }) {
                     <Button
                         variant="contained"
                         onClick={() => refreshReport(window.location.pathname)}
-                        size="large"
                         fullWidth
                     >
                         <FindReplaceIcon />

@@ -599,12 +599,10 @@ export default function Product({ products, stores, contacts }) {
                     sx={{ justifyContent: "end", alignItems: "center" }}
                 >
                     <Chip
-                        size="large"
                         label={"Total results : " + dataProducts.total}
                         color="primary"
                     />
                     <Chip
-                        size="large"
                         label={
                             "Total valuation : " +
                             numeral(totalValuation).format("0,00.00")

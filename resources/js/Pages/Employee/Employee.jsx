@@ -280,7 +280,6 @@ export default function Employee({ employees, stores, }) {
                         onClick={() => handleEmployeeClickOpen()}
                         sx={{ height: "100%" }}
                         startIcon={<AddCircleIcon />}
-                        size="large"
                         fullWidth
                     >
                         {t("ADD EMPLOYEE")}
@@ -310,7 +309,7 @@ export default function Employee({ employees, stores, }) {
                 />
             </Box>
             <Grid size={12} container spacing={2} sx={{ justifyContent: "end", alignItems: "center" }}>
-                <Chip size="large" label={'Total Balance:' + numeral(totalEmployees).format('0,0')} color="primary" />
+                <Chip label={'Total Balance:' + numeral(totalEmployees).format('0,0')} color="primary" />
                 <CustomPagination
                     refreshTable={refreshEmployees}
                    setSearchTerms={setSearchTerms}

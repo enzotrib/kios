@@ -89,7 +89,6 @@ const Template = () => {
                     <Button
                         type="submit"
                         variant="outlined"
-                        size="large"
                         onClick={handleSubmit}
                         fullWidth
                     >

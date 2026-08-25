@@ -165,7 +165,6 @@ export default function ContactReport({
                         variant="contained"
                         onClick={() => refreshReport(window.location.pathname)}
                         sx={{ height: "100%" }}
-                        size="large"
                         fullWidth
                     >
                         <FindReplaceIcon />

@@ -178,7 +178,6 @@ export default function Quotation({ quotations }) {
                         onClick={() => router.visit("/pos")}
                         sx={{ height: "100%" }}
                         startIcon={<AddCircleIcon />}
-                        size="large"
                         fullWidth
                     >
                         {t("QUOTATION")}

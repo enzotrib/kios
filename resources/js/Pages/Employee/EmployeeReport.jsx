@@ -162,7 +162,6 @@ export default function EmployeeReport({
                         variant="contained"
                         onClick={() => refreshReport(window.location.pathname)}
                         sx={{ height: "100%" }}
-                        size="large"
                         fullWidth
                     >
                         <FindReplaceIcon />

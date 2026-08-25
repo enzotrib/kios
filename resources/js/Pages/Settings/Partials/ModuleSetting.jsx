@@ -44,11 +44,11 @@ const App = ({ handleSubmit, settingFormData, setSettingFormData, settings }) =>
                             </CardContent>
                             <CardActions>
                                 {activatedModules.includes(module) ? (
-                                    <Button size="large" color="error" onClick={() => handleDeactivate(module)}>
+                                    <Button color="error" onClick={() => handleDeactivate(module)}>
                                         {t("Deactivate")}
                                     </Button>
                                 ) : (
-                                    <Button size="large" color="primary" onClick={()=>handleActivate(module)}>
+                                    <Button color="primary" onClick={()=>handleActivate(module)}>
                                         {t("Activate")}
                                     </Button>
                                 )}

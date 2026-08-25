@@ -74,7 +74,6 @@ const TelegramSetting = ({ handleSubmit, settingFormData, handleChange, setSetti
                                 <Button
                                     type="button"
                                     variant="outlined"
-                                    size="large"
                                     color="primary"
                                     onClick={() => {
                                         axios.post(
@@ -96,7 +95,6 @@ const TelegramSetting = ({ handleSubmit, settingFormData, handleChange, setSetti
                                 <Button
                                     type="submit"
                                     variant="outlined"
-                                    size="large"
                                     fullWidth
                                 >
                                     {t("UPDATE")}

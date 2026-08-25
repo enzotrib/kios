@@ -279,7 +279,7 @@ export default function SoldItem({ sold_items, contacts }) {
                         </TextField>
                 </Grid> */}
                 <Grid size={{ xs: 12, sm: 1 }}>
-                    <Button fullWidth variant="contained" onClick={() => refreshSoldItems(window.location.pathname)} size="large">
+                    <Button fullWidth variant="contained" onClick={() => refreshSoldItems(window.location.pathname)}>
                         <FindReplaceIcon />
                     </Button>
                 </Grid>
@@ -310,8 +310,8 @@ export default function SoldItem({ sold_items, contacts }) {
                 />
             </Box>
             <Grid size={12} spacing={2} container sx={{ justifyContent: "end" }}>
-                <Chip size="large" label={'Total results : ' + dataSoldItems.total} color="primary" />
-                <Chip size="large" label={'Total Quantity : ' + dataSoldItems.data.reduce((sum, item) => sum + item.quantity, 0)} color="primary" />
+                <Chip label={'Total results : ' + dataSoldItems.total} color="primary" />
+                <Chip label={'Total Quantity : ' + dataSoldItems.data.reduce((sum, item) => sum + item.quantity, 0)} color="primary" />
 
                 <CustomPagination
                     refreshTable={refreshSoldItems}

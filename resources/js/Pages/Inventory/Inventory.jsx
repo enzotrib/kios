@@ -24,6 +24,7 @@ import InventoryItemDialog from "./Partials/InventoryItemDialog";
 import InventoryTransactionDialog from "./Partials/InventoryTransactionDialog";
 import { t } from '@/i18n';
 import DataTable from '@/Components/design/DataTable';
+import PageToolbar from '@/Components/design/PageToolbar';
 
 const columns = (handleRowClick) => [
     { field: 'id', headerName: t("ID"), width: 90 },
@@ -123,53 +124,34 @@ const Inventory = ({ inventory_items, stores }) => {
     return (
         <AuthenticatedLayout>
             <Head title={t("Inventory")} />
-            <Grid
-                container
-                spacing={2}
-                sx={{ alignItems: "center", width: "100%", justifyContent: "end" }}
-                size={12}
-            >
+            <PageToolbar sx={{ justifyContent: "flex-end" }}>
+                <Button
+                    variant="contained"
+                    startIcon={<AddCircleIcon />}
+                    onClick={() => {
+                        setSelectedInventoryItem('');
+                        setInventoryItemModalOpen(true);
+                    }}
+                >
+                    {t("ADD INVENTORY ITEM")}
+                </Button>
 
-                <Grid size={{ xs: 12, sm: 3 }}>
-                    <Button
-                        variant="contained"
-                        sx={{ height: "100%" }}
-                        startIcon={<AddCircleIcon />}
-                        size="large"
-                        fullWidth
-                        onClick={() => {
-                            setSelectedInventoryItem('');
-                            setInventoryItemModalOpen(true);
-                        }}
-                    >
-                        {t("ADD INVENTORY ITEM")}
-                    </Button>
-                </Grid>
-                <Grid size={{ xs: 12, sm: 2 }}>
-                    <Button
-                        variant="outlined"
-                        sx={{ height: "100%" }}
-                        startIcon={<AddCircleIcon />}
-                        size="large"
-                        fullWidth
-                        onClick={() => { router.get('/inventory-purchase') }}
-                    >
-                        {t("PURCHASE")}
-                    </Button>
-                </Grid>
-                <Grid size={{ xs: 8, sm: 2 }}>
-                    <Button
-                        variant="text"
-                        sx={{ height: "100%" }}
-                        startIcon={<HistoryIcon />}
-                        size="large"
-                        fullWidth
-                        onClick={() => { router.get('/inventory-logs') }}
-                    >
-                        {t("LOGS")}
-                    </Button>
-                </Grid>
-            </Grid>
+                <Button
+                    variant="outlined"
+                    startIcon={<AddCircleIcon />}
+                    onClick={() => { router.get('/inventory-purchase') }}
+                >
+                    {t("PURCHASE")}
+                </Button>
+
+                <Button
+                    variant="text"
+                    startIcon={<HistoryIcon />}
+                    onClick={() => { router.get('/inventory-logs') }}
+                >
+                    {t("LOGS")}
+                </Button>
+            </PageToolbar>
 
             <Box
                 className="py-6 w-full"
@@ -182,7 +164,7 @@ const Inventory = ({ inventory_items, stores }) => {
                 />
             </Box>
             <Grid size={12} container sx={{ justifyContent: "end" }}>
-                {/* <Chip size="large" label={'Total:' + numeral(totalExpense).format('0,0')} color="primary" /> */}
+                {/* <Chip label={'Total:' + numeral(totalExpense).format('0,0')} color="primary" /> */}
                 <CustomPagination
                     refreshTable={refreshInventoryItems}
                     setSearchTerms={setSearchTerms}

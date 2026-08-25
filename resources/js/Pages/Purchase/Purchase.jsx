@@ -238,7 +238,6 @@ export default function Purchases({ purchases, contacts }) {
                 <Link href="/purchase/create">
                     <Button
                         variant="contained"
-                        size="large"
                         startIcon={<AddIcon />}
                     >
                         {t("Add Purchase")}

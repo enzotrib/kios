@@ -94,7 +94,6 @@ const LoyaltyPointsSetting = ({ handleSubmit, settingFormData, handleChange, set
                                 <Button
                                     type="submit"
                                     variant="outlined"
-                                    size="large"
                                     fullWidth
                                 >
                                     {t("UPDATE")}
