@@ -38,7 +38,52 @@
         @vite(['resources/js/app.jsx', "resources/js/Pages/{$page['component']}.jsx"])
         @inertiaHead
 
-        <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/custom.css') }}?v={{ time() }}">
+        <style>
+            /* Logotipo claro cuando el tema es claro */
+            html:not(.dark) nav .MuiToolbar-root img,
+            html:not(.dark) .MuiDrawer-root .MuiToolbar-root img,
+            html:not(.dark) .scrollParent .MuiToolbar-root img {
+                content: url("{{ asset('kios-logo-light.webp') }}") !important;
+            }
+        </style>
+        <script>
+            (function () {
+                var lightLogoUrl = "{{ asset('kios-logo-light.webp') }}";
+
+                function updateLogo() {
+                    var isDark = document.documentElement.classList.contains('dark');
+                    var imgs = document.querySelectorAll('nav .MuiToolbar-root img, .MuiDrawer-root .MuiToolbar-root img, .scrollParent .MuiToolbar-root img');
+                    imgs.forEach(function (img) {
+                        if (!img.dataset.darkSrc && isDark) {
+                            img.dataset.darkSrc = img.src;
+                        } else if (!img.dataset.darkSrc && !isDark && !img.src.includes('kios-logo-light.webp')) {
+                            img.dataset.darkSrc = img.src;
+                        }
+
+                        if (!isDark) {
+                            if (img.src !== lightLogoUrl && !img.src.endsWith('kios-logo-light.webp')) {
+                                img.src = lightLogoUrl;
+                            }
+                        } else if (img.dataset.darkSrc) {
+                            if (img.src !== img.dataset.darkSrc) {
+                                img.src = img.dataset.darkSrc;
+                            }
+                        }
+                    });
+                }
+
+                // Observa cambios en la clase del <html> (conmutador tema claro/oscuro)
+                var observer = new MutationObserver(function () {
+                    updateLogo();
+                });
+                observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+
+                document.addEventListener('DOMContentLoaded', updateLogo);
+                document.addEventListener('inertia:finish', updateLogo);
+                setInterval(updateLogo, 250);
+            })();
+        </script>
     </head>
     <body class="font-sans antialiased">
         @inertia

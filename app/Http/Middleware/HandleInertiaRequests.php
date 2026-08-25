@@ -64,13 +64,16 @@ class HandleInertiaRequests extends Middleware
             // resuelve contra la URL de la pagina y se rompe en rutas anidadas
             // como /products/edit/5.
             $shopLogoMeta = Setting::where('meta_key', 'shop_logo')->value('meta_value');
+            $shopLogoLightMeta = Setting::where('meta_key', 'shop_logo_light')->value('meta_value');
             $shopLogo = $shopLogoMeta ? asset(ltrim($shopLogoMeta, '/')) : null;
+            $shopLogoLight = $shopLogoLightMeta ? asset(ltrim($shopLogoLightMeta, '/')) : null;
         } catch (\Exception $e) {
             // If settings table doesn't exist, use defaults
             $currencySettings = [];
             $modules = [];
             $shopName = 'InfoShop';
             $shopLogo = null;
+            $shopLogoLight = null;
         }
 
         return [
@@ -81,6 +84,7 @@ class HandleInertiaRequests extends Middleware
             'settings'=>[
                 'shop_name'=> $shopName ?? 'InfoShop',
                 'shop_logo'=> $shopLogo ?? null,
+                'shop_logo_light'=> $shopLogoLight ?? null,
                 'currency_settings'=>$currencySettings,
             ],
             'modules'=> $modules ?? [],

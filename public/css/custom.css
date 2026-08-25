@@ -14,3 +14,11 @@ tr.receipt-summary-row td{
 .receipt-meta{
     color: black;
 }
+
+/* En tema claro (cuando html no tiene la clase .dark), muestra el logotipo claro.webp */
+html:not(.dark) .MuiDrawer-root .MuiToolbar-root img,
+html:not(.dark) nav .MuiToolbar-root img,
+html:not(.dark) .sidebar-logo,
+html:not(.dark) .scrollParent .MuiToolbar-root img {
+    content: url('/kios-logo-light.webp') !important;
+}

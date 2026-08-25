@@ -45,16 +45,21 @@ import PermMediaIcon from '@mui/icons-material/PermMedia';
 import HistoryIcon from '@mui/icons-material/History';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoneyCheck, faFileInvoice, faBoxesStacked, faPercent } from "@fortawesome/free-solid-svg-icons";
-import brandLogo from "@/kios-logo.jpg";
+import brandLogoDark from "@/kios-logo.jpg";
+import brandLogoLight from "@/kios-logo-light.webp";
+import { useThemeMode } from "@/design/useThemeMode";
 import { t } from '@/i18n';
 const drawerWidth = 240;
 
 function AuthenticatedLayout({ header, children, ...props }) {
     const user = usePage().props.auth.user;
     const shop_name = usePage().props.settings.shop_name;
-    // Logo subido desde Configuracion > Comercio. Si todavia no se subio ninguno,
-    // cae en el que viene empaquetado con la app.
-    const shop_logo = usePage().props.settings.shop_logo || brandLogo;
+    const { shop_logo: darkLogoSetting, shop_logo_light: lightLogoSetting } = usePage().props.settings;
+    const mode = useThemeMode((s) => s.mode);
+    // Cambia inmediatamente cuando el usuario conmuta entre tema claro y oscuro
+    const shop_logo = mode === 'light'
+        ? (lightLogoSetting || brandLogoLight)
+        : (darkLogoSetting || brandLogoDark);
     const modules = usePage().props.modules;
     const pageLabel = usePage().props.pageLabel;
     const pathname = usePage().url;

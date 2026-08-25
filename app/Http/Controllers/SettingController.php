@@ -16,7 +16,8 @@ class SettingController extends Controller
 
         $settings = Setting::all();
         $settingArray = $settings->pluck('meta_value', 'meta_key')->all();
-        $settingArray['shop_logo'] = $imageUrl . $settingArray['shop_logo'];
+        $settingArray['shop_logo'] = isset($settingArray['shop_logo']) ? $imageUrl . $settingArray['shop_logo'] : null;
+        $settingArray['shop_logo_light'] = isset($settingArray['shop_logo_light']) ? $imageUrl . $settingArray['shop_logo_light'] : null;
         $settingArray['tinymce'] = asset('tinymce/tinymce.min.js');
         // Render the 'Settings' component with data
         return Inertia::render('Settings/Settings', [
@@ -237,6 +238,7 @@ class SettingController extends Controller
             $request->validate([
                 'shop_name' => 'required|string',
                 'shop_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:4096',
+                'shop_logo_light' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:4096',
                 'app_icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             ]);
         }
@@ -345,6 +347,29 @@ class SettingController extends Controller
             // Update the 'shop_logo' setting in the database with the image path
             Setting::updateOrCreate(
                 ['meta_key' => 'shop_logo'],
+                ['meta_value' => 'storage/' . $imageUrl]
+            );
+        }
+
+        // Handle image upload if a file is present for shop_logo_light
+        if ($request->hasFile('shop_logo_light')) {
+            $image = $request->file('shop_logo_light');
+
+            $currentImage = Setting::where('meta_key', 'shop_logo_light')->first();
+
+            if ($currentImage) {
+                $currentImagePath = public_path($currentImage->meta_value);
+
+                if (file_exists($currentImagePath)) {
+                    unlink($currentImagePath);
+                }
+            }
+
+            $folderPath = 'uploads/' . date('Y') . '/' . date('m');
+            $imageUrl = $image->store($folderPath, 'public');
+
+            Setting::updateOrCreate(
+                ['meta_key' => 'shop_logo_light'],
                 ['meta_value' => 'storage/' . $imageUrl]
             );
         }

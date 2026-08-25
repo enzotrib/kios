@@ -10,12 +10,19 @@ import {
 } from '@mui/material';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
-import brandLogo from '@/kios-logo.jpg';
+import brandLogoDark from '@/kios-logo.jpg';
+import brandLogoLight from '@/kios-logo-light.webp';
+import { useThemeMode } from '@/design/useThemeMode';
 import { t } from '@/i18n';
 
 export default function Login({ status, canResetPassword, version }) {
     const shopName = usePage().props.settings?.shop_name;
-    const shopLogo = usePage().props.settings?.shop_logo;
+    const darkLogoSetting = usePage().props.settings?.shop_logo;
+    const lightLogoSetting = usePage().props.settings?.shop_logo_light;
+    const mode = useThemeMode((s) => s.mode);
+    const activeLogo = mode === 'light'
+        ? (lightLogoSetting || brandLogoLight)
+        : (darkLogoSetting || brandLogoDark);
 
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
@@ -34,11 +41,11 @@ export default function Login({ status, canResetPassword, version }) {
         <GuestLayout>
             <Head title={t('Log in')} />
 
-            {/* Logo del comercio si ya fue cargado; si no, el de la app */}
+            {/* Logo segun el tema activo */}
             <Stack alignItems="center" spacing={1} sx={{ mb: 4 }}>
                 <Box
                     component="img"
-                    src={shopLogo || brandLogo}
+                    src={activeLogo}
                     alt={shopName || 'KIOS'}
                     sx={{ height: 56, objectFit: 'contain', maxWidth: '100%' }}
                 />

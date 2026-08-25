@@ -120,6 +120,7 @@ export default function Setting({ settings }) {
 
         return {
             shop_logo: settings.shop_logo,
+            shop_logo_light: settings.shop_logo_light,
             app_icon: settings.app_icon,
             sale_receipt_note: settings.sale_receipt_note,
             shop_name: settings.shop_name,
@@ -300,7 +301,7 @@ export default function Setting({ settings }) {
                             >
                                 <Paper sx={{ padding: { xs: '0.5rem', sm: "1rem" }, marginBottom: "1rem", width: '100%' }}>
                                     <Grid size={12} container spacing={2}>
-                                        <Grid size={{ xs: 12, sm: 6 }}>
+                                        <Grid size={{ xs: 12, sm: 4 }}>
                                             <Card>
                                                 <CardMedia
                                                     sx={{
@@ -312,7 +313,7 @@ export default function Setting({ settings }) {
                                                         backgroundOrigin: "content-box",
                                                     }}
                                                     image={settingFormData.shop_logo}
-                                                    title={t("shop logo")}
+                                                    title={t("Logo oscuro (o principal)")}
                                                 />
                                                 <CardActions className="mt-0">
                                                     <Button
@@ -323,7 +324,7 @@ export default function Setting({ settings }) {
                                                         startIcon={<CloudUploadIcon />}
                                                         fullWidth
                                                     >
-                                                        {t("Upload shop logo")}
+                                                        {t("Logo oscuro / principal")}
                                                         <VisuallyHiddenInput
                                                             type="file"
                                                             onChange={handleFileChange}
@@ -334,7 +335,41 @@ export default function Setting({ settings }) {
                                             </Card>
                                         </Grid>
 
-                                        <Grid size={{ xs: 12, sm: 6 }}>
+                                        <Grid size={{ xs: 12, sm: 4 }}>
+                                            <Card>
+                                                <CardMedia
+                                                    sx={{
+                                                        width: "100%",
+                                                        height: 200,
+                                                        contain: "content",
+                                                        padding: "8px",
+                                                        backgroundSize: "contain",
+                                                        backgroundOrigin: "content-box",
+                                                    }}
+                                                    image={settingFormData.shop_logo_light}
+                                                    title={t("Logo claro")}
+                                                />
+                                                <CardActions className="mt-0">
+                                                    <Button
+                                                        component="label"
+                                                        role={undefined}
+                                                        variant="contained"
+                                                        tabIndex={-1}
+                                                        startIcon={<CloudUploadIcon />}
+                                                        fullWidth
+                                                    >
+                                                        {t("Logo modo claro")}
+                                                        <VisuallyHiddenInput
+                                                            type="file"
+                                                            onChange={handleFileChange}
+                                                            name="shop_logo_light"
+                                                        />
+                                                    </Button>
+                                                </CardActions>
+                                            </Card>
+                                        </Grid>
+
+                                        <Grid size={{ xs: 12, sm: 4 }}>
                                             <Card>
                                                 <CardMedia
                                                     sx={{

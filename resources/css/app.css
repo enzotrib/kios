@@ -23,6 +23,14 @@ select:focus {
   --tw-ring-color: none;
 }
 
+/* Logotipo claro cuando el tema no es oscuro */
+html:not(.dark) .MuiDrawer-root .MuiToolbar-root img,
+html:not(.dark) nav .MuiToolbar-root img,
+html:not(.dark) .sidebar-logo,
+html:not(.dark) .scrollParent .MuiToolbar-root img {
+  content: url('/kios-logo-light.webp') !important;
+}
+
 .swal2-container {
   z-index: 9999;
 }
@@ -116,18 +124,23 @@ input[type=number] {
 
 /* Optional: hide scrollbars completely */
 #receipt-items-table::-webkit-scrollbar {
-    display: none;         /* Chrome, Safari */
+  display: none;
+  /* Chrome, Safari */
 }
+
 #receipt-items-table {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;     /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
 @layer utilities {
-  .border, 
-  .border-t, 
-  .border-r, 
-  .border-b, 
+
+  .border,
+  .border-t,
+  .border-r,
+  .border-b,
   .border-l {
     border-style: var(--tw-border-style);
     border-color: var(--border);
@@ -136,8 +149,10 @@ input[type=number] {
 
 @layer base {
   .border {
-    border-color: var(--border); /* override default border color */
+    border-color: var(--border);
+    /* override default border color */
   }
+
   /* ============================================================
      DESIGN TOKENS — fuente unica de verdad
 
@@ -155,61 +170,78 @@ input[type=number] {
     --tw-border-style: dashed;
 
     /* --- Radios (Figma: component/card/Radius, Radius/Card/*, button/Radius) --- */
-    --radius-sm: 4px;         /* radius/100 */
-    --radius: 12px;           /* component/card/Radius - inputs y controles */
-    --radius-card: 24px;      /* Radius/Card/Inside - tarjetas */
-    --radius-panel: 32px;     /* component/card/Radius-Outside - paneles contenedores */
-    --radius-button: 24px;    /* component/button/Radius */
-    --radius-pill: 9999px;    /* radius/Full */
+    --radius-sm: 4px;
+    /* radius/100 */
+    --radius: 12px;
+    /* component/card/Radius - inputs y controles */
+    --radius-card: 24px;
+    /* Radius/Card/Inside - tarjetas */
+    --radius-panel: 32px;
+    /* component/card/Radius-Outside - paneles contenedores */
+    --radius-button: 24px;
+    /* component/button/Radius */
+    --radius-pill: 9999px;
+    /* radius/Full */
 
     /* --- Espaciado (Figma: Space/*) --- */
-    --space-card: 20px;       /* component/card/Padding */
-    --space-gap: 16px;        /* Space/400 */
-    --space-section: 24px;    /* Space/600 */
+    --space-card: 20px;
+    /* component/card/Padding */
+    --space-gap: 16px;
+    /* Space/400 */
+    --space-section: 24px;
+    /* Space/600 */
 
     /* --- Superficies (claro, derivado: el archivo solo publica el modo oscuro) --- */
     --background: #F5F7FA;
-    --foreground: #0A0D11;    /* foreground/black */
-    --card: #FFFFFF;          /* background/white */
+    --foreground: #0A0D11;
+    /* foreground/black */
+    --card: #FFFFFF;
+    /* background/white */
     --card-foreground: #0A0D11;
-    --surface-2: #EEF1F5;     /* inputs, hover, tarjetas anidadas */
+    --surface-2: #EEF1F5;
+    /* inputs, hover, tarjetas anidadas */
     --popover: #FFFFFF;
     --popover-foreground: #0A0D11;
 
     /* --- Marca --- */
     /* El verde neon de Rayum (#70FC8E) no contrasta sobre blanco: en claro se usa
        una version oscurecida del mismo tono para que el texto se lea. */
-    --primary: #0A7A55;
+    --primary: #593eff;
     --primary-foreground: #FFFFFF;
     --primary-soft: #E3FBEF;
-    --brand-accent: #70FC8E;  /* background/brand-primary, para realces */
+    --brand-accent: #70FC8E;
+    /* background/brand-primary, para realces */
 
     /* --- Semanticos --- */
-    --success: #0A7A55;
+    --success: #593eff;
     --success-foreground: #FFFFFF;
     --success-soft: #E3FBEF;
-    --warning: #B35F00;       /* support warning-emphasis oscurecido */
+    --warning: #B35F00;
+    /* support warning-emphasis oscurecido */
     --warning-foreground: #FFFFFF;
     --warning-soft: #FFF1E3;
-    --destructive: #D92D20;   /* derivado: Figma no publica token destructivo */
+    --destructive: #D92D20;
+    /* derivado: Figma no publica token destructivo */
     --destructive-foreground: #FFFFFF;
     --destructive-soft: #FEE4E2;
-    --info: #2563EB;          /* action/foreground/link oscurecido */
+    --info: #2563EB;
+    /* action/foreground/link oscurecido */
 
     /* --- Neutros --- */
     --secondary: #EEF1F5;
     --secondary-foreground: #0A0D11;
     --muted: #EEF1F5;
-    --muted-foreground: #5A6779;  /* foreground/muted oscurecido */
+    --muted-foreground: #5A6779;
+    /* foreground/muted oscurecido */
     --accent: #EEF1F5;
     --accent-foreground: #0A0D11;
     --border: #DCE3EC;
     --input: #DCE3EC;
-    --ring: #0A7A55;
+    --ring: #593eff;
 
     /* --- Graficos --- */
     --chart-1: #3D6BFF;
-    --chart-2: #0A7A55;
+    --chart-2: #593eff;
     --chart-3: #B35F00;
     --chart-4: #2563EB;
     --chart-5: #C4238A;
@@ -217,17 +249,17 @@ input[type=number] {
     /* --- Sidebar --- */
     --sidebar: #FFFFFF;
     --sidebar-foreground: #0A0D11;
-    --sidebar-primary: #0A7A55;
+    --sidebar-primary: #593eff;
     --sidebar-primary-foreground: #FFFFFF;
     --sidebar-accent: #EEF1F5;
     --sidebar-accent-foreground: #0A0D11;
     --sidebar-border: #DCE3EC;
-    --sidebar-ring: #0A7A55;
+    --sidebar-ring: #593eff;
 
     /* --- Sombras (Figma: Shadow/Overlay y Shadow/Shadow-Button) --- */
     --shadow-card: 0 4px 10px rgba(0, 0, 0, 0.10);
     --shadow-raised: 0 3px 6px rgba(0, 0, 0, 0.10), 0 10px 10px rgba(0, 0, 0, 0.09),
-                     0 23px 14px rgba(0, 0, 0, 0.05);
+      0 23px 14px rgba(0, 0, 0, 0.05);
 
     /* --- Scrollbars --- */
     --scrollbar-thumb: #C6CEDA;
@@ -238,48 +270,70 @@ input[type=number] {
      (Figma community). El comentario indica el nombre del token de origen. */
   .dark {
     /* --- Superficies --- */
-    --background: #0A0D11;    /* background/default */
-    --foreground: #EDF0F2;    /* foreground/default */
-    --card: #181D25;          /* level/level-1 */
+    --background: #0A0D11;
+    /* background/default */
+    --foreground: #EDF0F2;
+    /* foreground/default */
+    --card: #181D25;
+    /* level/level-1 */
     --card-foreground: #EDF0F2;
-    --surface-2: #1F2633;     /* background/muted */
-    --popover: #27313F;       /* background/neutral-muted */
+    --surface-2: #1F2633;
+    /* background/muted */
+    --popover: #27313F;
+    /* background/neutral-muted */
     --popover-foreground: #EDF0F2;
 
     /* --- Marca: el verde neon de Rayum --- */
-    --primary: #70FC8E;       /* background/brand-primary */
-    --primary-foreground: #0A0D11;  /* action/foreground/primary sobre acento */
-    --primary-soft: #14301F;  /* derivado: tinte del acento para chips */
+    --primary: #70FC8E;
+    /* background/brand-primary */
+    --primary-foreground: #0A0D11;
+    /* action/foreground/primary sobre acento */
+    --primary-soft: #14301F;
+    /* derivado: tinte del acento para chips */
     --brand-accent: #70FC8E;
 
     /* --- Semanticos --- */
-    --success: #70FC8E;       /* background/accent-emphasis */
+    --success: #70FC8E;
+    /* background/accent-emphasis */
     --success-foreground: #0A0D11;
     --success-soft: #14301F;
-    --warning: #FF902E;       /* support/foreground/warning-emphasis */
+    --warning: #FF902E;
+    /* support/foreground/warning-emphasis */
     --warning-foreground: #0A0D11;
     --warning-soft: #331D0B;
-    --destructive: #FF6B5C;   /* derivado: Figma no publica token destructivo */
+    --destructive: #FF6B5C;
+    /* derivado: Figma no publica token destructivo */
     --destructive-foreground: #0A0D11;
     --destructive-soft: #331615;
-    --info: #5CA7FF;          /* action/foreground/link, support/info-emphasis */
+    --info: #5CA7FF;
+    /* action/foreground/link, support/info-emphasis */
 
     /* --- Neutros --- */
-    --secondary: #27313F;     /* background/neutral-muted */
+    --secondary: #27313F;
+    /* background/neutral-muted */
     --secondary-foreground: #EDF0F2;
-    --muted: #1F2633;         /* background/muted */
-    --muted-foreground: #929FB1;  /* foreground/muted */
+    --muted: #1F2633;
+    /* background/muted */
+    --muted-foreground: #929FB1;
+    /* foreground/muted */
     --accent: #27313F;
     --accent-foreground: #EDF0F2;
-    --border: #2F3B4C;        /* border/default */
-    --input: #404B5A;         /* action/border/secondary/default */
+    --border: #2F3B4C;
+    /* border/default */
+    --input: #404B5A;
+    /* action/border/secondary/default */
     --ring: #70FC8E;
 
-    --chart-1: #658AFF;       /* background/brand-secondary */
-    --chart-2: #70FC8E;       /* background/brand-primary */
-    --chart-3: #FF902E;       /* warning-emphasis */
-    --chart-4: #5CA7FF;       /* info-emphasis */
-    --chart-5: #F02BA7;       /* utilities/foreground/measurement */
+    --chart-1: #658AFF;
+    /* background/brand-secondary */
+    --chart-2: #70FC8E;
+    /* background/brand-primary */
+    --chart-3: #FF902E;
+    /* warning-emphasis */
+    --chart-4: #5CA7FF;
+    /* info-emphasis */
+    --chart-5: #F02BA7;
+    /* utilities/foreground/measurement */
 
     --sidebar: #0A0D11;
     --sidebar-foreground: #EDF0F2;
@@ -309,6 +363,7 @@ input[type=number] {
    ============================================================ */
 
 @layer base {
+
   /* Firefox */
   * {
     scrollbar-width: thin;
@@ -356,6 +411,7 @@ input[type=number] {
    ============================================================ */
 
 @media print {
+
   /* Se pisan los tokens, incluso con .dark activo */
   :root,
   :root.dark,
