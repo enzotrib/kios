@@ -1,130 +1,201 @@
-#### README.md
+<p align="center">
+  <img src="kios-brand.jpg" alt="KIOS — Punto de venta" width="600">
+</p>
 
-# InfoShop Point of Sale (POS) System
+<p align="center">
+  Sistema de punto de venta para kioscos, almacenes y comercios minoristas.
+</p>
 
-Welcome to the InfoShop Point of Sale (POS) System! This is a comprehensive application built with modern web technologies to streamline sales and inventory management.
-
-<h2><a href="https://demo.infomaxcloud.com/" target="_blank" rel="noopener noreferrer">Try the demo</a></h2>
-
-**Username:** `admin`
-**Password:** `infomax12345`
-
-## Table of Contents
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [Modules](#modules)
-- [Features](#features)
-- [Attribution](#attribution)
-- [License](#license)
-
-## Requirements
-
-To run this application, ensure you have the following installed:
-
-- **PHP**: 8.2 or higher
-- **Laravel**: 11
-- **Node.js**: (for Inertia JS and React)
-- **MySQL**: (for the database)
-
-## Installation
-
-To get started with the POS system, follow these steps:
-
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/NifrasUsanar/InfoShop.git
-   cd InfoShop
-   ```
-
-2. **Install PHP dependencies**:
-   ```bash
-   composer install
-   ```
-
-3. **Install Node.js dependencies**:
-   ```bash
-   npm install
-   ```
-
-4. **Set up your environment file**:
-   Copy the `.env.example` to `.env` and configure your database and other settings.
-<br>
-5. **Generate the application key**:
-   ```bash
-   php artisan key:generate
-   ```
-
-6. **Create the Database**:
-
-   Set up a new database in MySQL and update the database details in the `.env` file with the following fields:
-
-   Make sure to replace the values (e.g., db_infoshop, root, and the password) with your actual database name, username, and password. If your MySQL server does not require a password, leave the DB_PASSWORD field empty as shown.
-
-   ```env
-   DB_CONNECTION=mysql
-   DB_HOST=127.0.0.1
-   DB_PORT=3306
-   DB_DATABASE=db_infoshop
-   DB_USERNAME=root
-   DB_PASSWORD=
-   ```
-
-7. **Run migrations**:
-   ```bash
-   php artisan migrate --seed
-   ```
-
-8. **Link Storage**:
-   ```bash
-   php artisan storage:link
-   ```
-
-9. **Copy template files**:
-   Make sure to place the template files in the `storage/app/public/templates` folder by copying them from `resources/views/templates`.
-<br>
-
-10. **Start the application**:
-   ```bash
-   php artisan serve
-   ```
-
-11. **Compile assets**:
-   ```bash
-   npm run dev
-   ```
-
-## Modules
-
-The POS system includes the following modules:
-
-- **POS**: Manage point-of-sale transactions seamlessly.
-- **Sales**: Track and manage sales data.
-- **Products**: Handle batch products efficiently.
-- **Purchases**: Record and manage purchase orders.
-- **Payments**: Process various payment types.
-- **Expenses**: Keep track of business expenses.
-- **Contacts**: Manage customer and vendor information.
-  - **Contact Balances**: Easily manage and view balances for contacts.
-
-## Features
-
-- Built with **Laravel** for robust server-side functionality.
-- Utilizes **Inertia JS** and **React JS** for a modern, reactive user interface.
-- **MUI** (Material-UI) as the components library for beautiful, responsive design.
-- Styled with **Tailwind CSS** for a clean and customizable look.
-- MySQL as the database for reliable data storage.
-
-## Attribution
-
-If you use this project or any of its contents, please provide proper attribution. You can mention:
-
-"This project is based on Infoshop by Infomax / Nifras Usanar."
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+<p align="center">
+  <img src="https://img.shields.io/badge/licencia-MIT-70FC8E" alt="Licencia MIT">
+  <img src="https://img.shields.io/badge/PHP-8.2%2B-777BB4" alt="PHP 8.2+">
+  <img src="https://img.shields.io/badge/Laravel-11-FF2D20" alt="Laravel 11">
+  <img src="https://img.shields.io/badge/React-19-61DAFB" alt="React 19">
+</p>
 
 ---
 
+## Qué es KIOS
 
-Feel free to contribute to this project or reach out with any questions. Happy coding! 🚀
+KIOS es una versión en **español** de [InfoShop](https://github.com/NifrasUsanar/InfoShop), un sistema de punto de venta de código abierto creado por **Nifras Usanar (Infomax)** y publicado bajo **licencia MIT**.
+
+InfoShop resuelve muy bien la parte funcional —POS, stock por lotes, compras, cuentas corrientes, cheques, sueldos— pero está en inglés y con la estética por defecto de Material UI. KIOS parte de esa base y agrega:
+
+- **Traducción completa al español rioplatense**, con la terminología comercial que se usa acá: *presupuesto* (no "cotización"), *proveedor*, *sucursal*, *saldo*, *vuelto*, *comprobante*.
+- **Design system propio**, construido sobre los tokens de [Rayum Lite](https://www.figma.com/community) (Figma, comunidad).
+- **Modo claro y oscuro** con selector, contraste verificado según WCAG AA.
+- **Datos de prueba de kiosco argentino**: categorías, marcas y productos reales para arrancar.
+
+> KIOS **no** es un proyecto separado ni un reemplazo de InfoShop. Es una adaptación regional. Todo el mérito del sistema base es de sus autores originales.
+
+---
+
+## Requisitos
+
+| | |
+|---|---|
+| PHP | 8.2 o superior |
+| Extensiones PHP | `pdo_mysql`, `mbstring`, `openssl`, `tokenizer`, `xml`, `ctype`, `json`, `bcmath`, `gd`, `zip`, `curl`, `fileinfo`, **`sodium`** |
+| Base de datos | MySQL 5.7+ / MariaDB 10.4+ |
+| Node.js | 18 o superior |
+
+> La extensión **`sodium`** es imprescindible: sin ella `composer install` falla al resolver las dependencias de Firebase. En XAMPP viene desactivada — hay que descomentar `extension=sodium` en el `php.ini`.
+
+---
+
+## Instalación
+
+```bash
+git clone https://github.com/enzotrib/kios.git
+cd kios
+
+composer install
+npm install
+```
+
+Copiá `.env.install` a `.env` y ajustá los datos de tu base:
+
+```env
+APP_URL="http://kios.test"
+APP_LOCALE=es
+APP_FAKER_LOCALE=es_AR
+APP_TIMEZONE="America/Argentina/Buenos_Aires"
+
+DB_DATABASE=kios
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+Después:
+
+```bash
+php artisan key:generate     # imprescindible: no reutilices la clave de la plantilla
+php artisan migrate --seed
+php artisan storage:link
+npm run build
+```
+
+### Servir la aplicación
+
+KIOS asume que corre en la **raíz de un dominio**. Genera enlaces absolutos (`/pos`, `/build/...`), así que servirlo desde una subcarpeta (`localhost/kios/public`) devuelve 404 en toda la navegación.
+
+En desarrollo, configurá un VirtualHost apuntando a `public/`:
+
+```apache
+<VirtualHost *:80>
+    ServerName kios.test
+    DocumentRoot "C:/xampp/htdocs/kios/public"
+    <Directory "C:/xampp/htdocs/kios/public">
+        AllowOverride All
+        Require all granted
+    </Directory>
+</VirtualHost>
+```
+
+Y agregá `127.0.0.1 kios.test` al archivo `hosts`. El dominio `.test` está reservado por la RFC 6761 justamente para esto: nunca va a existir en internet.
+
+En **cPanel** no hace falta nada de esto: apuntá el document root del dominio a la carpeta `public/`.
+
+---
+
+## Datos de prueba
+
+```bash
+php artisan db:seed --class=KioscoCollectionsSeeder   # 12 categorías, 58 subcategorías, 83 marcas, 14 etiquetas
+php artisan db:seed --class=KioscoProductsSeeder      # 6 productos con lote, stock y precios reales
+```
+
+Ambos son idempotentes: se pueden correr varias veces sin duplicar nada.
+
+Los productos incluyen costo y precio distintos (márgenes del 30–36%) para que los reportes de ganancia muestren números con sentido, y uno de ellos tiene stock por debajo del mínimo a propósito, para ver funcionando la alerta del panel.
+
+---
+
+## Comandos útiles
+
+```bash
+php artisan user:password --list                 # lista los usuarios
+php artisan user:password correo@ejemplo.com     # restablece una contraseña
+```
+
+Sirve para el caso típico de "se perdió la clave del administrador", sin tocar la base a mano. En cPanel se corre igual desde la Terminal.
+
+---
+
+## Design system
+
+Los tokens viven en un solo lugar, [`resources/css/app.css`](resources/css/app.css), y los consumen **dos motores**:
+
+```
+resources/css/app.css  ← tokens (color, tipografía, radios, espaciado, sombras)
+        ├──────────────→ Tailwind v4 / shadcn      (directo)
+        └──→ design/theme.js → MUI ThemeProvider   (los lee con getComputedStyle)
+```
+
+`theme.js` **lee** las variables CSS en lugar de redefinirlas, así los dos motores no pueden divergir: se cambia un token y cambia toda la aplicación.
+
+**Componentes reutilizables** en `resources/js/Components/design/`:
+
+| Componente | Para qué |
+|---|---|
+| `PageToolbar` | Barra de acciones con un alto de control único, para que inputs y botones se alineen |
+| `SearchField` | Buscador con ícono y placeholder (sin label flotante) |
+| `StatPill` | Dato numérico compacto, con tono semántico |
+| `StatCard` | Tarjeta de métrica con ícono, valor y variación |
+| `SectionHeader` | Título de sección con acciones |
+| `Money` | Importes con decimales atenuados y cifras tabulares |
+| `ThemeToggle` | Selector de modo claro/oscuro |
+
+Los colores nunca se escriben a mano en los componentes: se elige un **tono semántico** (`primary`, `success`, `warning`, `danger`, `neutral`) y el componente resuelve el token. Así una tarjeta no puede quedar de un color que no pertenezca al sistema.
+
+### Jerarquía de acciones
+
+Una sola acción principal por pantalla. El resto baja de nivel:
+
+| Variante | Uso |
+|---|---|
+| `contained` | La acción a la que viniste a esta pantalla |
+| `outlined` | Acción frecuente pero secundaria |
+| `text` | Consultas y navegación, no modifican nada |
+
+---
+
+## Traducción
+
+El sistema usa un helper propio, sin dependencias:
+
+```js
+import { t } from '@/i18n';
+
+t('Start Date')  // → 'Fecha de inicio'
+```
+
+La **clave es el texto en inglés**, así que cualquier cadena que todavía no esté traducida se muestra en inglés en lugar de romper. Todas las traducciones están en un único archivo editable: [`resources/js/lang/es.json`](resources/js/lang/es.json).
+
+Los mensajes de validación, autenticación y paginación de Laravel están en [`lang/es/`](lang/es), y los textos internos de MUI y del DataGrid usan el locale `esES` oficial.
+
+---
+
+## Módulos
+
+Punto de venta · Ventas · Productos con lotes · Inventario · Compras · Pagos · Gastos · Clientes y proveedores con cuenta corriente · Cheques · Presupuestos · Recargas · Recargos e impuestos · Empleados y sueldos · Sucursales · Reportes · Registro de actividad
+
+---
+
+## Créditos
+
+KIOS está construido sobre **[InfoShop](https://github.com/NifrasUsanar/InfoShop)**, de **Nifras Usanar / Infomax**.
+
+Si usás este proyecto, mantené la atribución al trabajo original:
+
+> Este proyecto está basado en InfoShop, de Infomax / Nifras Usanar.
+
+**Stack:** Laravel 11 · Inertia.js · React 19 · Material UI · Tailwind CSS v4 · MySQL
+
+---
+
+## Licencia
+
+Publicado bajo **licencia MIT**, la misma del proyecto original. Ver [LICENSE](LICENSE).
+
+La licencia MIT permite usar, modificar, distribuir y vender el software, incluso con fines comerciales, con una única condición: **conservar el aviso de copyright y el texto de la licencia**.
