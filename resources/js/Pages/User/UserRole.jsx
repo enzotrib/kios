@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import { DataGrid, GridToolbar} from '@mui/x-data-grid';
 import UserRoleDialog from './UserRoleDialog';
 import { t } from '@/i18n';
+import DataTable from '@/Components/design/DataTable';
 
   const columns = (handleEdit) => [
     { field: 'id', headerName: t("ID"), width: 100 },
@@ -59,7 +60,7 @@ import { t } from '@/i18n';
                 </Grid>
 
                 <Box className='py-6 w-full' sx={{display: 'grid', gridTemplateColumns: '1fr'}}>
-                      <DataGrid 
+                      <DataTable 
                       rows={roles} 
                       columns={columns(handleEdit)}
                       pageSize={5}

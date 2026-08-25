@@ -1,7 +1,6 @@
 import * as React from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, router } from "@inertiajs/react";
-import { DataGrid } from "@mui/x-data-grid";
 import {
     Button,
     Box,
@@ -22,6 +21,7 @@ import { useState, useEffect } from "react";
 import ChargeDialog from "./Partials/ChargeDialog";
 import CustomPagination from "@/Components/CustomPagination";
 import { t } from '@/i18n';
+import DataTable from '@/Components/design/DataTable';
 
 export default function ChargesIndex({
     charges,
@@ -230,7 +230,7 @@ export default function ChargesIndex({
                     height: "calc(100vh - 200px)",
                 }}
             >
-                <DataGrid
+                <DataTable
                     rows={processedCharges}
                     columns={chargeColumns}
                     disableSelectionOnClick

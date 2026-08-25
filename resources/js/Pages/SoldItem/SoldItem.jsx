@@ -7,12 +7,12 @@ import { Button, Box, TextField, Tooltip, MenuItem, Chip, IconButton } from "@mu
 import FindReplaceIcon from "@mui/icons-material/FindReplace";
 import Select2 from "react-select";
 import numeral from "numeral";
-import { DataGrid } from "@mui/x-data-grid";
 
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import CustomPagination from "@/Components/CustomPagination";
 import { t } from '@/i18n';
 import SearchField from '@/Components/design/SearchField';
+import DataTable from '@/Components/design/DataTable';
 
 const columns = () => [
     {
@@ -289,7 +289,7 @@ export default function SoldItem({ sold_items, contacts }) {
                 className="py-6 w-full"
                 sx={{ display: "grid", gridTemplateColumns: "1fr", height: "calc(100vh - 200px)", }}
             >
-                <DataGrid
+                <DataTable
                     rows={dataSoldItems.data}
                     getRowId={(row) => row.id}
                     columns={columns()}

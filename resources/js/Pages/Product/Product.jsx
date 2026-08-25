@@ -2,7 +2,6 @@ import * as React from "react";
 
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, usePage } from "@inertiajs/react";
-import { DataGrid } from "@mui/x-data-grid";
 import {
     Button,
     Box,
@@ -37,6 +36,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import ProductsList from "./Partials/ProductsList";
 import { t } from '@/i18n';
 import SearchField from '@/Components/design/SearchField';
+import DataTable from '@/Components/design/DataTable';
 
 const productColumns = (handleProductEdit, onToggleFeatured, onToggleActive, loadingBatchId) => [
     {
@@ -559,7 +559,7 @@ export default function Product({ products, stores, contacts }) {
                             height: "calc(100vh - 200px)",
                         }}
                     >
-                        <DataGrid
+                        <DataTable
                             rows={dataProducts.data}
                             columns={productColumns(handleProductEdit, onToggleFeatured, onToggleActive, loadingBatchId)}
                             getRowId={(row) =>

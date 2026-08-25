@@ -19,11 +19,11 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import numeral from "numeral";
 
-import { DataGrid } from "@mui/x-data-grid";
 import CustomPagination from "@/Components/CustomPagination";
 import InventoryItemDialog from "./Partials/InventoryItemDialog";
 import InventoryTransactionDialog from "./Partials/InventoryTransactionDialog";
 import { t } from '@/i18n';
+import DataTable from '@/Components/design/DataTable';
 
 const columns = (handleRowClick) => [
     { field: 'id', headerName: t("ID"), width: 90 },
@@ -175,7 +175,7 @@ const Inventory = ({ inventory_items, stores }) => {
                 className="py-6 w-full"
                 sx={{ display: "grid", gridTemplateColumns: "1fr", height: "calc(100vh - 200px)", }}
             >
-                <DataGrid
+                <DataTable
                     rows={dataInventoryItems?.data ?? []} //.}
                     columns={columns(handleRowClick)}
                     hideFooter

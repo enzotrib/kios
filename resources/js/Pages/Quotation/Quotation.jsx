@@ -20,9 +20,9 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import numeral from "numeral";
 
-import { DataGrid } from "@mui/x-data-grid";
 import CustomPagination from "@/Components/CustomPagination";
 import { t } from '@/i18n';
+import DataTable from '@/Components/design/DataTable';
 
 const columns = (handleRowClick) => [
     { field: "id", headerName: t("ID"), width: 80 },
@@ -190,7 +190,7 @@ export default function Quotation({ quotations }) {
                 className="py-6 w-full"
                 sx={{ display: "grid", gridTemplateColumns: "1fr", height: '70vh' }}
             >
-                <DataGrid
+                <DataTable
                     rows={dataQuotations?.data}
                     columns={columns(handleRowClick)}
                     hideFooter

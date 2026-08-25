@@ -23,6 +23,7 @@ import CustomPagination from "@/Components/CustomPagination";
 import ExpenseDialog from "./Partials/ExpenseDialog";
 import { t } from '@/i18n';
 import SearchField from '@/Components/design/SearchField';
+import DataTable from '@/Components/design/DataTable';
 
 const columns = (handleRowClick) => [
     { field: "id", headerName: t("ID"), width: 80 },
@@ -214,7 +215,7 @@ export default function Expense({ expenses, stores }) {
                 className="py-6 w-full"
                 sx={{ display: "grid", gridTemplateColumns: "1fr", height: "calc(100vh - 200px)", }}
             >
-                <DataGrid
+                <DataTable
                     rows={dataExpenses?.data}
                     columns={columns(handleRowClick)}
                     hideFooter

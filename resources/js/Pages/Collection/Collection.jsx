@@ -6,13 +6,13 @@ import Grid from '@mui/material/Grid';
 import { Button, Box, IconButton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
-import { DataGrid } from '@mui/x-data-grid';
 
 import FormDialog from './Partial/FormDialog';
 import { X } from 'lucide-react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { t } from '@/i18n';
+import DataTable from '@/Components/design/DataTable';
 
 const columns = (handleAction) => [
   {
@@ -117,7 +117,7 @@ export default function Collection({ collections }) {
         </Grid>
 
         <Box className="py-6 w-full" sx={{ display: 'grid', gridTemplateColumns: '1fr' }}>
-          <DataGrid
+          <DataTable
             rows={collections}
             columns={columns(handleAction)}
             pageSize={5}

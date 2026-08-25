@@ -20,6 +20,7 @@ import CustomPagination from "@/Components/CustomPagination";
 import ReloadFormDialog from "./ReloadFormDialog";
 import { t } from '@/i18n';
 import SearchField from '@/Components/design/SearchField';
+import DataTable from '@/Components/design/DataTable';
 
 const columns = (handleRowClick) => [
     {
@@ -163,7 +164,7 @@ export default function Reload({ reloads, transactionType }) {
                 className="py-6 w-full"
                 sx={{ display: "grid", gridTemplateColumns: "1fr", height: "calc(100vh - 200px)", }}
             >
-                <DataGrid
+                <DataTable
                     rows={dataReloads?.data || []}
                     columns={columns(handleRowClick)}
                     slots={{ toolbar: GridToolbar }}

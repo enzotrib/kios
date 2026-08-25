@@ -18,10 +18,10 @@ import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import Swal from "sweetalert2";
 import { useCurrencyFormatter } from '@/lib/currencyFormatter';
 
-import { DataGrid } from "@mui/x-data-grid";
 import CustomPagination from "@/Components/CustomPagination";
 import ViewDetailsDialog from "@/Components/ViewDetailsDialog";
 import { t } from '@/i18n';
+import DataTable from '@/Components/design/DataTable';
 
 const columns = (handleRowClick, formatCurrency) => [
     {
@@ -293,7 +293,7 @@ export default function Payment({ payments, transactionType, contacts, selected_
                 className="py-6 w-full"
                 sx={{ display: "grid", gridTemplateColumns: "1fr", height: '73vh' }}
             >
-                <DataGrid
+                <DataTable
                     rows={dataPayments?.data}
                     columns={columns(handleRowClick, formatCurrency)}
                     hideFooter

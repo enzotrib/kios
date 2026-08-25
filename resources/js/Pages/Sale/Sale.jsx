@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, router } from "@inertiajs/react";
 import { Button, Box, IconButton, TextField, MenuItem, Tooltip, Chip, Grid } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
 import Select2 from "react-select";
 import dayjs from "dayjs";
 import Swal from "sweetalert2";
@@ -22,6 +21,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import SalesList from "./Partials/SalesList";
 import { t } from '@/i18n';
 import SearchField from '@/Components/design/SearchField';
+import DataTable from '@/Components/design/DataTable';
 
 const columns = (handleRowClick, formatCurrency) => [
     {
@@ -345,7 +345,7 @@ export default function Sale({ sales, contacts }) {
                     className="py-6 w-full"
                     sx={{ display: "grid", gridTemplateColumns: "1fr", height: "calc(100vh - 195px)", }}
                 >
-                    <DataGrid
+                    <DataTable
                         rows={dataSales.data}
                         columns={columns(handleRowClick, formatCurrency)}
                         initialState={{

@@ -14,11 +14,11 @@ import {
 import dayjs from "dayjs";
 import numeral from "numeral";
 
-import { DataGrid } from "@mui/x-data-grid";
 import CustomPagination from "@/Components/CustomPagination";
 import ChequeFormDialog from "./ChequeFormDialog";
 import { t } from '@/i18n';
 import SearchField from '@/Components/design/SearchField';
+import DataTable from '@/Components/design/DataTable';
 
 const columns = (handleRowClick) => [
     {
@@ -298,7 +298,7 @@ export default function Cheque({ cheques, stores }) {
                 className="py-6 w-full"
                 sx={{ display: "grid", gridTemplateColumns: "1fr", height: '74vh' }}
             >
-                <DataGrid
+                <DataTable
                     rows={dataCheques?.data}
                     columns={columns(handleRowClick)}
                     hideFooter

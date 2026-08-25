@@ -26,9 +26,9 @@ import dayjs from "dayjs";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-import { DataGrid } from "@mui/x-data-grid";
 import CustomPagination from "@/Components/CustomPagination";
 import { t } from '@/i18n';
+import DataTable from '@/Components/design/DataTable';
 
 const formatProps = (properties) => {
     if (!properties || typeof properties !== "object") return "-";
@@ -336,7 +336,7 @@ export default function Index({ logs, subjectTypes, logNames, events, filters, f
 
                 <Grid item xs={12}>
                     <Box sx={{ height: 640, width: "100%" }}>
-                        <DataGrid
+                        <DataTable
                             rows={rows}
                             columns={columns(subjectTypes)}
                             getRowId={(row) => row.id}

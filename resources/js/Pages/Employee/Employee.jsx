@@ -18,7 +18,6 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import numeral from "numeral";
 
-import { DataGrid } from "@mui/x-data-grid";
 import CustomPagination from "@/Components/CustomPagination";
 import EmployeeDialog from "./Partials/EmployeeDialog";
 import SalaryFormDialog from "./Partials/SalaryFormDialog";
@@ -27,6 +26,7 @@ import PrintIcon from "@mui/icons-material/Print";
 import { data } from "autoprefixer";
 import { t } from '@/i18n';
 import SearchField from '@/Components/design/SearchField';
+import DataTable from '@/Components/design/DataTable';
 
 const columns = (handleRowClick) => [
     { field: "id", headerName: t("ID"), width: 80 },
@@ -292,7 +292,7 @@ export default function Employee({ employees, stores, }) {
                 className="py-6 w-full"
                 sx={{ display: "grid", gridTemplateColumns: "1fr", height: "calc(100vh - 200px)", }}
             >
-                <DataGrid
+                <DataTable
                     rows={dataEmployees?.data}
                     columns={columns(handleRowClick)}
                     initialState={{

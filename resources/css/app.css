@@ -188,7 +188,7 @@ input[type=number] {
     --success: #0A7A55;
     --success-foreground: #FFFFFF;
     --success-soft: #E3FBEF;
-    --warning: #B35F00;       /* support/*/warning-emphasis oscurecido */
+    --warning: #B35F00;       /* support warning-emphasis oscurecido */
     --warning-foreground: #FFFFFF;
     --warning-soft: #FFF1E3;
     --destructive: #D92D20;   /* derivado: Figma no publica token destructivo */

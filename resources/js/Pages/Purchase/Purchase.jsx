@@ -3,7 +3,6 @@ import * as React from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, router, Link } from "@inertiajs/react";
 import { useState, useEffect } from "react";
-import { DataGrid } from "@mui/x-data-grid";
 import Grid from "@mui/material/Grid";
 import {
     Button,
@@ -22,6 +21,7 @@ import AddPaymentDialog from "@/Components/AddPaymentDialog";
 import ViewDetailsDialog from "@/Components/ViewDetailsDialog";
 import CustomPagination from "@/Components/CustomPagination";
 import { t } from '@/i18n';
+import DataTable from '@/Components/design/DataTable';
 
 const columns = (handleRowClick) => [
     { field: "id", headerName: t("ID"), width: 80 },
@@ -249,7 +249,7 @@ export default function Purchases({ purchases, contacts }) {
                     className="py-6 w-full"
                     sx={{ display: "grid", gridTemplateColumns: "1fr", height: "calc(100vh - 200px)", }}
                 >
-                    <DataGrid
+                    <DataTable
                         rowHeight={50}
                         rows={dataPurchases.data}
                         columns={columns(handleRowClick)}

@@ -9,7 +9,6 @@ import AddIcon from '@mui/icons-material/Add';
 import PrintIcon from "@mui/icons-material/Print";
 import HourglassTopIcon from '@mui/icons-material/HourglassTop';
 import numeral from 'numeral';
-import { DataGrid } from '@mui/x-data-grid';
 import FormDialog from './Partial/FormDialog';
 import CustomPagination from '@/Components/CustomPagination';
 import AddPaymentDialog from '@/Components/AddPaymentDialog';
@@ -25,6 +24,7 @@ import { t } from '@/i18n';
 import PageToolbar from '@/Components/design/PageToolbar';
 import SearchField from '@/Components/design/SearchField';
 import StatPill from '@/Components/design/StatPill';
+import DataTable from '@/Components/design/DataTable';
 
 const columns = (handleRowClick, handleDelete) => [
     { field: 'id', headerName: t("ID"), width: 80 },
@@ -268,7 +268,7 @@ export default function Contact({ contacts, type, stores }) {
                         className="py-6 w-full"
                         sx={{ display: "grid", gridTemplateColumns: "1fr", height: "calc(100vh - 240px)", }}
                     >
-                        <DataGrid
+                        <DataTable
                             rows={dataContacts.data}
                             columns={columns(handleRowClick, handleDelete)}
                             getRowId={(row) => row.id}

@@ -19,6 +19,7 @@ import axios from "axios";
 import numeral from "numeral";
 import CustomPagination from "@/Components/CustomPagination";
 import { t } from '@/i18n';
+import DataTable from '@/Components/design/DataTable';
 
 const columns = (handleRowClick) => [
     { field: "id", headerName: t("ID"), width: 80 },
@@ -214,7 +215,7 @@ export default function Payroll({ salaries, employees, stores }) {
             </Grid>
 
             <Box className="py-6 w-full" sx={{ display: "grid", height: "calc(100vh - 190px)", }}>
-                <DataGrid
+                <DataTable
                     rows={dataSalaries?.data}
                     columns={columns(handleRowClick)}
                     hideFooter

@@ -7,12 +7,12 @@ import { Button, Box, IconButton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import Typography from '@mui/material/Typography';
 
-import { DataGrid} from '@mui/x-data-grid';
 
 import FormDialog from './UserFormDialog';
 import Swal from 'sweetalert2';
 import { X } from 'lucide-react';
 import { t } from '@/i18n';
+import DataTable from '@/Components/design/DataTable';
 
 
   const columns = (handleAction) => [
@@ -111,7 +111,7 @@ import { t } from '@/i18n';
                     </Grid>
 
                     <Box className='py-6 w-full' sx={{display: 'grid', gridTemplateColumns: '1fr'}}>
-                      <DataGrid 
+                      <DataTable 
                       rows={users}
                       columns={columns(handleAction)}
                       pageSize={5}
