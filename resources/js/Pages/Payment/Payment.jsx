@@ -215,12 +215,6 @@ export default function Payment({ payments, transactionType, contacts, selected_
                     <Select2
                         className="w-full"
                         placeholder={t("Select a contact...")}
-                        styles={{
-                            control: (baseStyles, state) => ({
-                                ...baseStyles,
-                                height: "55px",
-                            }),
-                        }}
                         options={contacts}
                         onChange={(selectedOption) => handleSearchChange(selectedOption)}
                         isClearable

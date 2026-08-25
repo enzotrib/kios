@@ -175,12 +175,6 @@ export default function SoldItem({ sold_items, contacts }) {
                     <Select2
                         className="w-full"
                         placeholder={t("Select a contact...")}
-                        styles={{
-                            control: (baseStyles, state) => ({
-                                ...baseStyles,
-                                height: "55px",
-                            }),
-                        }}
                         options={contacts} // Options to display in the dropdown
                         onChange={(selectedOption) => handleSearchChange(selectedOption)}
                         isClearable // Allow the user to clear the selected option

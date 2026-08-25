@@ -168,12 +168,6 @@ export default function Purchases({ purchases, contacts }) {
                     <Select2
                         className="w-full"
                         placeholder={t("Select a contact...")}
-                        styles={{
-                            control: (baseStyles, state) => ({
-                                ...baseStyles,
-                                height: "55px",
-                            }),
-                        }}
                         options={contacts}
                         onChange={(selectedOption) => handleSearchChange(selectedOption)}
                         isClearable
