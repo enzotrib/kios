@@ -1,104 +1,126 @@
-import ReactSelect from 'react-select';
-import ReactCreatable from 'react-select/creatable';
+import { Autocomplete, TextField, createFilterOptions } from '@mui/material';
 import { CONTROL_HEIGHT } from './PageToolbar';
+import { t } from '@/i18n';
 
 /**
- * react-select con los tokens del design system.
+ * Selector con busqueda del design system.
  *
- * react-select no es MUI: trae su propio sistema de estilos y NO hereda el
- * ThemeProvider. Por eso en 11 pantallas aparecia un control blanco, con otro
- * alto, otro radio y el anillo de foco azul de fabrica, al lado de inputs que
- * ya seguian el sistema.
+ * Por FUERA mantiene la API de react-select (options, value, onChange(option),
+ * placeholder, isClearable...). Por DENTRO usa MUI Autocomplete.
  *
- * Es un reemplazo directo: mismos props que react-select. Si una pantalla pasa
- * su propio `styles`, se fusiona encima del base.
+ * El motivo: el proyecto tenia TRES widgets de seleccion conviviendo — MUI
+ * TextField select para listas fijas (33 archivos), MUI Autocomplete (7) y
+ * react-select (10). Los dos ultimos hacen exactamente lo mismo, pero
+ * react-select no hereda el ThemeProvider y quedaba con otro alto, otro radio
+ * y el foco azul de fabrica.
+ *
+ * Mantener la firma de react-select permite migrar las 10 pantallas sin tocar
+ * su codigo: cambia el import y nada mas.
+ *
+ * Para listas cortas y fijas seguí usando <TextField select>: no necesitan
+ * buscador y el desplegable simple es mas rapido de operar.
  */
 
-const baseStyles = {
-    control: (base, state) => ({
-        ...base,
-        minHeight: CONTROL_HEIGHT,
-        height: CONTROL_HEIGHT,
-        backgroundColor: 'var(--surface-2)',
-        borderColor: state.isFocused ? 'var(--primary)' : 'var(--border)',
-        borderRadius: 'var(--radius)',
-        boxShadow: state.isFocused
-            ? '0 0 0 3px color-mix(in srgb, var(--primary) 25%, transparent)'
-            : 'none',
-        '&:hover': { borderColor: state.isFocused ? 'var(--primary)' : 'var(--border)' },
-        fontSize: '0.875rem',
-    }),
-
-    valueContainer: (base) => ({ ...base, padding: '0 12px' }),
-    input: (base) => ({ ...base, color: 'var(--foreground)', margin: 0, padding: 0 }),
-    singleValue: (base) => ({ ...base, color: 'var(--foreground)' }),
-    placeholder: (base) => ({ ...base, color: 'var(--muted-foreground)' }),
-
-    indicatorSeparator: (base) => ({ ...base, backgroundColor: 'var(--border)' }),
-    dropdownIndicator: (base) => ({
-        ...base,
-        color: 'var(--muted-foreground)',
-        padding: '0 8px',
-        '&:hover': { color: 'var(--foreground)' },
-    }),
-    clearIndicator: (base) => ({ ...base, color: 'var(--muted-foreground)', padding: '0 4px' }),
-
-    menu: (base) => ({
-        ...base,
-        backgroundColor: 'var(--popover)',
-        border: '1px solid var(--border)',
-        borderRadius: 'var(--radius)',
-        boxShadow: 'var(--shadow-raised)',
-        overflow: 'hidden',
-        zIndex: 1300, // por encima de los dialogos de MUI
-    }),
-    menuPortal: (base) => ({ ...base, zIndex: 1300 }),
-
-    option: (base, state) => ({
-        ...base,
-        fontSize: '0.875rem',
-        backgroundColor: state.isSelected
-            ? 'var(--primary-soft)'
-            : state.isFocused
-              ? 'var(--surface-2)'
-              : 'transparent',
-        color: state.isSelected ? 'var(--primary)' : 'var(--foreground)',
-        fontWeight: state.isSelected ? 600 : 400,
-        cursor: 'pointer',
-        '&:active': { backgroundColor: 'var(--primary-soft)' },
-    }),
-
-    noOptionsMessage: (base) => ({ ...base, color: 'var(--muted-foreground)', fontSize: '0.875rem' }),
-    multiValue: (base) => ({
-        ...base,
-        backgroundColor: 'var(--primary-soft)',
-        borderRadius: 'var(--radius-pill)',
-    }),
-    multiValueLabel: (base) => ({ ...base, color: 'var(--primary)', fontWeight: 500 }),
-    multiValueRemove: (base) => ({
-        ...base,
-        color: 'var(--primary)',
-        borderRadius: 'var(--radius-pill)',
-        '&:hover': { backgroundColor: 'var(--primary)', color: 'var(--primary-foreground)' },
-    }),
-};
-
-/** Fusiona los estilos de la pantalla encima de los del sistema. */
-function mergeStyles(custom) {
-    if (!custom) return baseStyles;
-
-    const merged = { ...baseStyles };
-    for (const [key, fn] of Object.entries(custom)) {
-        const base = baseStyles[key];
-        merged[key] = base ? (b, s) => fn(base(b, s), s) : fn;
-    }
-    return merged;
+/** react-select entrega la opcion elegida; Autocomplete entrega (evento, valor). */
+function toReactSelectOnChange(onChange) {
+    return (_event, newValue) => onChange?.(newValue ?? null);
 }
 
-export default function Select({ styles, ...props }) {
-    return <ReactSelect styles={mergeStyles(styles)} {...props} />;
+const defaultGetOptionLabel = (option) =>
+    typeof option === 'string' ? option : (option?.label ?? '');
+
+function baseProps({
+    options = [],
+    value,
+    onChange,
+    placeholder,
+    getOptionLabel,
+    isClearable = false,
+    isDisabled = false,
+    isLoading = false,
+    name,
+    inputValue,
+    onInputChange,
+    className,
+    autoFocus,
+}) {
+    return {
+        options,
+        // Autocomplete distingue null de undefined: con undefined pasa a
+        // no-controlado y tira un warning al cambiar de valor.
+        value: value ?? null,
+        onChange: toReactSelectOnChange(onChange),
+        getOptionLabel: getOptionLabel ?? defaultGetOptionLabel,
+        isOptionEqualToValue: (option, val) =>
+            (option?.value ?? option) === (val?.value ?? val),
+        disableClearable: !isClearable,
+        disabled: isDisabled,
+        loading: isLoading,
+        className,
+        size: 'small',
+        noOptionsText: t('No data available'),
+        ...(inputValue !== undefined ? { inputValue } : {}),
+        ...(onInputChange
+            ? { onInputChange: (_e, val, reason) => onInputChange(val, { action: reason }) }
+            : {}),
+        renderInput: (params) => (
+            <TextField
+                {...params}
+                name={name}
+                placeholder={placeholder}
+                autoFocus={autoFocus}
+            />
+        ),
+        sx: {
+            '& .MuiOutlinedInput-root': {
+                minHeight: CONTROL_HEIGHT,
+                paddingTop: '2px',
+                paddingBottom: '2px',
+            },
+        },
+    };
 }
 
-export function CreatableSelect({ styles, ...props }) {
-    return <ReactCreatable styles={mergeStyles(styles)} {...props} />;
+export default function Select(props) {
+    // `styles` era la API de react-select: ya no aplica, el estilo sale del tema
+    const { styles, ...rest } = props;
+    return <Autocomplete {...baseProps(rest)} />;
+}
+
+const filter = createFilterOptions();
+
+/**
+ * Variante que permite escribir un valor que no esta en la lista.
+ * Equivale al `react-select/creatable`.
+ */
+export function CreatableSelect(props) {
+    const { styles, options = [], ...rest } = props;
+
+    return (
+        <Autocomplete
+            {...baseProps({ ...rest, options })}
+            freeSolo
+            selectOnFocus
+            handleHomeEndKeys
+            filterOptions={(opts, params) => {
+                const filtered = filter(opts, params);
+                const input = params.inputValue.trim();
+                const yaExiste = opts.some(
+                    (o) => defaultGetOptionLabel(o).toLowerCase() === input.toLowerCase()
+                );
+
+                if (input && !yaExiste) {
+                    filtered.push({ value: input, label: input, __nuevo: true });
+                }
+                return filtered;
+            }}
+            renderOption={(optionProps, option) => (
+                <li {...optionProps} key={option.value ?? option}>
+                    {option.__nuevo
+                        ? `${t('Add')} "${option.label}"`
+                        : defaultGetOptionLabel(option)}
+                </li>
+            )}
+        />
+    );
 }

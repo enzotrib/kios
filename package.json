@@ -63,7 +63,6 @@
         "react-infinite-scroll-component": "^7.2.1",
         "react-qr-code": "^2.2.0",
         "react-router-dom": "^7.17.0",
-        "react-select": "^5.10.2",
         "react-to-print": "^3.3.0",
         "recharts": "^3.8.1",
         "string-width": "^8.2.1",
