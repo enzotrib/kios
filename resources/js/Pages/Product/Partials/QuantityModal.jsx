@@ -7,7 +7,7 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
 import Swal from "sweetalert2";
-import CreatableSelect from 'react-select/creatable';
+import { CreatableSelect as CreatableSelect } from '@/Components/design/Select';
 import { usePage, Link, router } from "@inertiajs/react";
 import { t } from '@/i18n';
 

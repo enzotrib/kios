@@ -12,7 +12,7 @@ import {
     Badge,
 } from '@mui/material';
 import TuneIcon from '@mui/icons-material/Tune';
-import Select2 from 'react-select';
+import Select2 from '@/Components/design/Select';
 import { t } from '@/i18n';
 
 /**

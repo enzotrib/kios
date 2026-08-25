@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, router } from "@inertiajs/react";
 import { Button, Box, IconButton, TextField, MenuItem, Tooltip, Chip, Grid } from "@mui/material";
-import Select2 from "react-select";
+import Select2 from '@/Components/design/Select';
 import dayjs from "dayjs";
 import Swal from "sweetalert2";
 import { useCurrencyFormatter } from '@/lib/currencyFormatter';
@@ -364,7 +364,7 @@ export default function Sale({ sales, contacts }) {
                 <SalesList sales={dataSales.data} handleRowClick={handleRowClick} />
             )}
             <Grid size={12} container spacing={2} sx={{ justifyContent: "end", alignItems: "center", mt: 2 }}>
-                <Chip label={'Total results : ' + dataSales.total} color="primary" />
+                <Chip variant="outlined" label={t("Total results") + ': ' + dataSales.total} />
                 <CustomPagination
                     refreshTable={refreshSales}
                     setSearchTerms={setSearchTerms}

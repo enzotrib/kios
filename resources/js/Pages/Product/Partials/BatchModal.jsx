@@ -6,7 +6,7 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
-import Select2 from "react-select";
+import Select2 from '@/Components/design/Select';
 
 import Swal from "sweetalert2";
 import { t } from '@/i18n';

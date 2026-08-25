@@ -25,7 +25,7 @@ import "dayjs/locale/en-gb";
 import dayjs from "dayjs";
 import Swal from "sweetalert2";
 import Hotkeys from "react-hot-keys";
-import Select2 from "react-select";
+import Select2 from '@/Components/design/Select';
 import imageCompression from 'browser-image-compression';
 
 import AppBar from "@mui/material/AppBar";

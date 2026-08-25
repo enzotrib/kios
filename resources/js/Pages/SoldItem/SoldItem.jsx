@@ -5,7 +5,7 @@ import { Head, Link, router } from "@inertiajs/react";
 import Grid from "@mui/material/Grid";
 import { Button, Box, TextField, Tooltip, MenuItem, Chip, IconButton } from "@mui/material";
 import FindReplaceIcon from "@mui/icons-material/FindReplace";
-import Select2 from "react-select";
+import Select2 from '@/Components/design/Select';
 import numeral from "numeral";
 
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
@@ -279,8 +279,13 @@ export default function SoldItem({ sold_items, contacts }) {
                         </TextField>
                 </Grid> */}
                 <Grid size={{ xs: 12, sm: 1 }}>
-                    <Button fullWidth variant="contained" onClick={() => refreshSoldItems(window.location.pathname)}>
-                        <FindReplaceIcon />
+                    <Button
+                        fullWidth
+                        variant="outlined"
+                        startIcon={<FindReplaceIcon />}
+                        onClick={() => refreshSoldItems(window.location.pathname)}
+                    >
+                        {t("Refresh")}
                     </Button>
                 </Grid>
             </Grid>
@@ -310,8 +315,8 @@ export default function SoldItem({ sold_items, contacts }) {
                 />
             </Box>
             <Grid size={12} spacing={2} container sx={{ justifyContent: "end" }}>
-                <Chip label={'Total results : ' + dataSoldItems.total} color="primary" />
-                <Chip label={'Total Quantity : ' + dataSoldItems.data.reduce((sum, item) => sum + item.quantity, 0)} color="primary" />
+                <Chip variant="outlined" label={t("Total results") + ': ' + dataSoldItems.total} />
+                <Chip variant="outlined" label={t("Total quantity") + ': ' + dataSoldItems.data.reduce((sum, item) => sum + item.quantity, 0)} />
 
                 <CustomPagination
                     refreshTable={refreshSoldItems}

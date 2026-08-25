@@ -15,7 +15,7 @@ import {
 import AddIcon from "@mui/icons-material/Add";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import dayjs from "dayjs";
-import Select2 from "react-select";
+import Select2 from '@/Components/design/Select';
 import numeral from "numeral";
 import AddPaymentDialog from "@/Components/AddPaymentDialog";
 import ViewDetailsDialog from "@/Components/ViewDetailsDialog";

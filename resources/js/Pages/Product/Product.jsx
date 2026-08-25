@@ -27,7 +27,7 @@ import FilterModal from "@/Components/FilterModal";
 import { useState } from "react";
 import numeral from "numeral";
 import { useEffect } from "react";
-import Select2 from "react-select";
+import Select2 from '@/Components/design/Select';
 import axios from "axios";
 import Swal from "sweetalert2";
 
@@ -599,7 +599,7 @@ export default function Product({ products, stores, contacts }) {
                     sx={{ justifyContent: "end", alignItems: "center" }}
                 >
                     <Chip
-                        label={"Total results : " + dataProducts.total}
+                        label={t("Total results") + ': ' + dataProducts.total}
                         color="primary"
                     />
                     <Chip

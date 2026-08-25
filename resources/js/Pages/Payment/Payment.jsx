@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import FindReplaceIcon from "@mui/icons-material/FindReplace";
 import dayjs from "dayjs";
-import Select2 from "react-select";
+import Select2 from '@/Components/design/Select';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import Swal from "sweetalert2";
 import { useCurrencyFormatter } from '@/lib/currencyFormatter';
