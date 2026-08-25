@@ -25,6 +25,7 @@ import Barcode from "./Barcode";
 import { snapdom } from '@zumer/snapdom';
 import { Download } from "lucide-react";
 import { useCurrencyFormatter } from "../../lib/currencyFormatter";
+import { t } from '@/i18n';
 
 export function ReceiptDisplay({ 
     sale, 
@@ -159,7 +160,7 @@ export function ReceiptDisplay({
         return (
             <Box className="flex justify-center mt-10 p-0">
                 <Typography variant="h6" color="error">
-                    No pending sales available.
+                    {t("No pending sales available.")}
                 </Typography>
             </Box>
         );
@@ -183,10 +184,10 @@ export function ReceiptDisplay({
                             variant="outlined"
                             startIcon={<ArrowBackIosIcon />}
                         >
-                            Back
+                            {t("Back")}
                         </Button>
                         <Box className="flex gap-2">
-                            <IconButton onClick={handleWhatsAppShare} color="success"><WhatsAppIcon fontSize="medium" /></IconButton>
+                            <IconButton onClick={handleWhatsAppShare}><WhatsAppIcon fontSize="medium" /></IconButton>
                             <IconButton onClick={() => handleImageDownload(true, 'jpg')}>
                                 <Download />
                             </IconButton>
@@ -194,7 +195,7 @@ export function ReceiptDisplay({
                                 onClick={reactToPrintFn}
                                 style={{
                                     padding: '8px 16px',
-                                    backgroundColor: '#1976d2',
+                                    backgroundColor: 'var(--info)',
                                     color: 'white',
                                     border: 'none',
                                     borderRadius: '4px',
@@ -206,7 +207,7 @@ export function ReceiptDisplay({
                                 }}
                             >
                                 <PrintIcon fontSize="small" style={{ width: '20px', height: '20px' }} />
-                                Print
+                                {t("Print")}
                             </button>
                         </Box>
                     </Box>
@@ -214,7 +215,7 @@ export function ReceiptDisplay({
                 <div
                     id="print-area"
                     ref={contentRef}
-                    className="p-0 bg-white"
+                    className="p-0 bg-[var(--card)]"
                     style={styles.printArea}
                 >
                     <ReceiptPrintContainer square={false}>
@@ -273,17 +274,17 @@ export function ReceiptDisplay({
                                         sx={styles.receiptTopText}
                                         color="black"
                                     >
-                                        Receipt No:{receiptNo}
+                                        {t("Receipt No:")}{receiptNo}
                                     </Typography>
                                     <Typography
                                         sx={{ ...styles.receiptTopText, textAlign: 'start' }}
                                         color="black"
                                     >
-                                        Date:
+                                        {t("Date:")}
                                         {dayjs(sale.created_at).format(
                                             "DD-MMM-YYYY, h:mm A"
                                         ) + " "}
-                                        By: {user_name}
+                                        {t("By:")} {user_name}
                                     </Typography>
                                 </>
                             )}
@@ -293,7 +294,7 @@ export function ReceiptDisplay({
                                         sx={{ ...styles.receiptTopText, textAlign: 'start' }}
                                         color="black"
                                     >
-                                        Print date:
+                                        {t("Print date:")}
                                         {dayjs(sale.created_at).format(
                                             "DD-MMM-YYYY, h:mm A"
                                         ) + " "}
@@ -305,7 +306,7 @@ export function ReceiptDisplay({
                                 sx={styles.receiptTopText}
                                 color="black"
                             >
-                                Customer: {sale.name}
+                                {t("Customer:")} {sale.name}
                             </Typography>
                         </Box>
                         <Divider
@@ -329,7 +330,7 @@ export function ReceiptDisplay({
                                                 sx={styles.itemsHeaderTyp}
                                                 color="black"
                                             >
-                                                Item
+                                                {t("Item")}
                                             </Typography>
                                         </TableCell>
                                         <TableCell
@@ -340,7 +341,7 @@ export function ReceiptDisplay({
                                                 sx={styles.itemsHeaderTyp}
                                                 color="black"
                                             >
-                                                Qty.
+                                                {t("Qty.")}
                                             </Typography>
                                         </TableCell>
                                         <TableCell
@@ -351,7 +352,7 @@ export function ReceiptDisplay({
                                                 sx={styles.itemsHeaderTyp}
                                                 color="black"
                                             >
-                                                U.Price
+                                                {t("U.Price")}
                                             </Typography>
                                         </TableCell>
                                         <TableCell
@@ -362,7 +363,7 @@ export function ReceiptDisplay({
                                                 sx={styles.itemsHeaderTyp}
                                                 color="black"
                                             >
-                                                Disc.
+                                                {t("Disc.")}
                                             </Typography>
                                         </TableCell>
                                         <TableCell
@@ -373,7 +374,7 @@ export function ReceiptDisplay({
                                                 sx={styles.itemsHeaderTyp}
                                                 color="black"
                                             >
-                                                Total
+                                                {t("Total")}
                                             </Typography>
                                         </TableCell>
                                     </TableRow>
@@ -425,7 +426,7 @@ export function ReceiptDisplay({
                                                     >
                                                         <strong>{item.quantity}</strong>
                                                         {Number(item.free_quantity) !== 0 && (
-                                                            <strong> + [Free: {item.free_quantity}]</strong>
+                                                            <strong> {t("+ [Free:")} {item.free_quantity}]</strong>
                                                         )}
                                                     </Typography>
                                                 </TableCell>
@@ -491,7 +492,7 @@ export function ReceiptDisplay({
                                                 sx={styles.receiptSummaryTyp}
                                                 color="black"
                                             >
-                                                Total:
+                                                {t("Total:")}
                                             </Typography>
                                         </TableCell>
                                         <TableCell
@@ -521,7 +522,7 @@ export function ReceiptDisplay({
                                                     sx={styles.receiptSummaryTyp}
                                                     color="black"
                                                 >
-                                                    Discount:
+                                                    {t("Discount:")}
                                                 </Typography>
                                             </TableCell>
                                             <TableCell
@@ -551,7 +552,7 @@ export function ReceiptDisplay({
                                                 sx={styles.receiptSummaryTyp}
                                                 color="black"
                                             >
-                                                Subtotal:
+                                                {t("Subtotal:")}
                                             </Typography>
                                         </TableCell>
                                         <TableCell
@@ -617,7 +618,7 @@ export function ReceiptDisplay({
                                                     sx={styles.receiptSummaryTyp}
                                                     color="black"
                                                 >
-                                                    Payable Amount:
+                                                    {t("Payable Amount:")}
                                                 </Typography>
                                             </TableCell>
                                             <TableCell
@@ -647,7 +648,7 @@ export function ReceiptDisplay({
                                                 sx={styles.receiptSummaryTyp}
                                                 color="black"
                                             >
-                                                Paid:
+                                                {t("Paid:")}
                                             </Typography>
                                         </TableCell>
                                         <TableCell
@@ -675,7 +676,7 @@ export function ReceiptDisplay({
                                                 sx={styles.receiptSummaryTyp}
                                                 color="black"
                                             >
-                                                Balance:
+                                                {t("Balance:")}
                                             </Typography>
                                         </TableCell>
                                         <TableCell
@@ -706,7 +707,7 @@ export function ReceiptDisplay({
                                                         sx={styles.receiptSummaryTyp}
                                                         color="black"
                                                     >
-                                                        Old Balance:
+                                                        {t("Old Balance:")}
                                                     </Typography>
                                                 </TableCell>
                                                 <TableCell
@@ -738,7 +739,7 @@ export function ReceiptDisplay({
                                                         sx={styles.receiptSummaryTyp}
                                                         color="black"
                                                     >
-                                                        Total Balance:
+                                                        {t("Total Balance:")}
                                                     </Typography>
                                                 </TableCell>
                                                 <TableCell

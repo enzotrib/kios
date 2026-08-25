@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Card, CardContent, Box } from '@mui/material';
 import JsBarcode from 'jsbarcode';
+import { t } from '@/i18n';
 
 const BarcodePreview = ({ template, barcodeSettings, templateData, maxHeight = '600px', maxWidth = '320px', isPrint = false }) => {
     const [previewHtml, setPreviewHtml] = useState('');
@@ -60,7 +61,7 @@ const BarcodePreview = ({ template, barcodeSettings, templateData, maxHeight = '
 
     return (
         <Card sx={{
-            backgroundColor: '#fafafa',
+            backgroundColor: 'var(--surface-2)',
             display: 'flex',
             flexDirection: 'column',
             maxHeight,
@@ -91,7 +92,7 @@ const BarcodePreview = ({ template, barcodeSettings, templateData, maxHeight = '
                         sx={{
                             p: 2,
                             backgroundColor: 'white',
-                            border: '1px solid #e0e0e0',
+                            border: '1px solid var(--border)',
                             borderRadius: '4px',
                             width: '100%',
                             maxWidth,
@@ -109,7 +110,7 @@ const BarcodePreview = ({ template, barcodeSettings, templateData, maxHeight = '
                         sx={{
                             p: 2,
                             backgroundColor: 'white',
-                            border: '1px dashed #cccccc',
+                            border: '1px dashed var(--border)',
                             borderRadius: '4px',
                             width: '100%',
                             maxWidth,
@@ -117,7 +118,7 @@ const BarcodePreview = ({ template, barcodeSettings, templateData, maxHeight = '
                             textAlign: 'center',
                         }}
                     >
-                        No preview available
+                        {t("No preview available")}
                     </Box>
                 )}
             </CardContent>

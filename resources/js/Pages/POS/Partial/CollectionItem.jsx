@@ -4,26 +4,23 @@ import { Folder } from 'lucide-react';
 import CategoryIcon from '@mui/icons-material/Category';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import BrandingWatermarkIcon from '@mui/icons-material/BrandingWatermark';
+import { t } from '@/i18n';
 
 export default function CollectionItem({ collection, onClick, hasChildren = false }) {
 
-    const getIcon = (type) => {
-        switch (type) {
-            case 'category': return <CategoryIcon fontSize="large" color="primary" />;
-            case 'brand': return <BrandingWatermarkIcon fontSize="large" color="secondary" />;
-            case 'tag': return <LocalOfferIcon fontSize="large" color="action" />;
-            default: return <Folder size={32} color="currentColor" />;
-        }
+    // El tipo viene crudo de la base ('category' | 'brand' | 'tag'): aca se
+    // traduce a una etiqueta legible y se resuelve el color con tokens, igual
+    // que en StatCard, para que no aparezcan colores fuera del sistema.
+    const TYPES = {
+        category: { Icon: CategoryIcon, fg: 'var(--primary)', bg: 'var(--primary-soft)', label: t('Category') },
+        brand: { Icon: BrandingWatermarkIcon, fg: 'var(--chart-5)', bg: 'var(--surface-2)', label: t('Brand') },
+        tag: { Icon: LocalOfferIcon, fg: 'var(--success)', bg: 'var(--success-soft)', label: t('Tag') },
     };
 
-    const getColor = (type) => {
-        switch (type) {
-            case 'category': return 'primary.light';
-            case 'brand': return 'secondary.light';
-            case 'tag': return 'grey.200';
-            default: return 'grey.100';
-        }
+    const type = TYPES[collection.collection_type] ?? {
+        Icon: null, fg: 'var(--muted-foreground)', bg: 'var(--surface-2)', label: collection.collection_type,
     };
+    const TypeIcon = type.Icon;
 
     return (
         <Card
@@ -72,20 +69,21 @@ export default function CollectionItem({ collection, onClick, hasChildren = fals
                     mb: 2,
                     p: 2,
                     borderRadius: '50%',
-                    backgroundColor: getColor(collection.collection_type),
+                    backgroundColor: type.bg,
+                    color: type.fg,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center'
                 }}>
-                    {getIcon(collection.collection_type)}
+                    {TypeIcon ? <TypeIcon fontSize="large" color="inherit" /> : <Folder size={32} color="currentColor" />}
                 </Box>
 
-                <Typography variant="body1" component="div" align="center" noWrap sx={{ width: '100%', fontWeight: 'bold' }}>
+                <Typography variant="body1" component="div" align="center" noWrap sx={{ width: '100%', fontWeight: 600 }}>
                     {collection.name}
                 </Typography>
 
-                <Typography variant="caption" color="text.secondary" sx={{ textTransform: 'capitalize' }}>
-                    {collection.collection_type}
+                <Typography variant="caption" color="text.secondary">
+                    {type.label}
                 </Typography>
             </CardContent>
         </Card>

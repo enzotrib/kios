@@ -5,6 +5,7 @@ import browserImageCompression from 'browser-image-compression';
 import dayjs from 'dayjs';
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { t } from '@/i18n';
 
 export default function Media({ images, settings }) {
     const [uploading, setUploading] = useState(false);
@@ -91,7 +92,7 @@ export default function Media({ images, settings }) {
 
     return (
         <AuthenticatedLayout>
-            <Head title="Media Library" />
+            <Head title={t("Media Library")} />
             <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <div className="media-grid" style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '10px' }}>
                     {images && images.length > 0 ? (
@@ -109,7 +110,7 @@ export default function Media({ images, settings }) {
                                     borderRadius: '8px',
                                     overflow: 'hidden',
                                     textAlign: 'center',
-                                    backgroundColor: '#f9f9f9',
+                                    backgroundColor: 'var(--surface-2)',
                                 }}
                             >
                                 {/* Image */}
@@ -152,7 +153,7 @@ export default function Media({ images, settings }) {
                                         onClick={() => handleOptimizeImage(image)}
                                         disabled={uploading}
                                         style={{
-                                            backgroundColor: '#4CAF50',
+                                            backgroundColor: 'var(--success)',
                                             color: 'white',
                                             border: 'none',
                                             borderRadius: '4px',
@@ -167,7 +168,7 @@ export default function Media({ images, settings }) {
                             </div>
                         ))
                     ) : (
-                        <p>No images found.</p>
+                        <p>{t("No images found.")}</p>
                     )}
                 </div>
             </div>
@@ -182,7 +183,7 @@ export default function Media({ images, settings }) {
                     {selectedImage && (
                         <img
                             src={selectedImage}
-                            alt="Selected Media"
+                            alt={t("Selected Media")}
                             style={{
                                 width: '100%',
                                 height: '100%',

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Button,  Grid, CardContent, Typography, CardActions } from '@mui/material';
 import Card from '@mui/material/Card';
 import { SnackbarProvider, useSnackbar } from 'notistack';
+import { t } from '@/i18n';
 
 const App = ({ handleSubmit, settingFormData, setSettingFormData, settings }) => {
     const modules_list = ['Cheques', 'Reloads','Inventory','Catalog POS'];
@@ -44,11 +45,11 @@ const App = ({ handleSubmit, settingFormData, setSettingFormData, settings }) =>
                             <CardActions>
                                 {activatedModules.includes(module) ? (
                                     <Button size="large" color="error" onClick={() => handleDeactivate(module)}>
-                                        Deactivate
+                                        {t("Deactivate")}
                                     </Button>
                                 ) : (
                                     <Button size="large" color="primary" onClick={()=>handleActivate(module)}>
-                                        Activate
+                                        {t("Activate")}
                                     </Button>
                                 )}
                             </CardActions>

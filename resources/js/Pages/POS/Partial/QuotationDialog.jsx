@@ -8,6 +8,7 @@ import { IconButton, TextField,  Grid } from "@mui/material";
 import dayjs from "dayjs";
 import CloseIcon from "@mui/icons-material/Close";
 import Swal from "sweetalert2";
+import { t } from '@/i18n';
 export default function QuotationDialog({
     useCart,
     open,
@@ -77,15 +78,15 @@ export default function QuotationDialog({
                     }
                 }}
             >
-                <DialogTitle id="alert-dialog-title">NEW QUOTATION</DialogTitle>
+                <DialogTitle id="alert-dialog-title">{t("NEW QUOTATION")}</DialogTitle>
                 <IconButton
-                    aria-label="close"
+                    aria-label={t("close")}
                     onClick={handleClose}
                     sx={(theme) => ({
                         position: "absolute",
                         right: 8,
                         top: 8,
-                        color: theme.palette.grey[500],
+                        color: theme.palette.text.secondary,
                     })}
                 >
                     <CloseIcon />
@@ -97,7 +98,7 @@ export default function QuotationDialog({
                                 fullWidth
                                 type="number"
                                 id="discount"
-                                label="Discount"
+                                label={t("Discount")}
                                 value={discount === "" ? 0 : discount}
                                 onFocus={(event) => event.target.select()}
                                 onChange={(event) => setDiscount(event.target.value === "" ? 0 : event.target.value)}
@@ -108,7 +109,7 @@ export default function QuotationDialog({
                                 fullWidth
                                 type="number"
                                 name="total"
-                                label="Total"
+                                label={t("Total")}
                                 value={cartTotal - discount}
                                 slotProps={{
                                     readOnly: true,
@@ -122,7 +123,7 @@ export default function QuotationDialog({
                                 required
                                 id="quotation_date"
                                 name="quotation_date"
-                                label="Quotation Date"
+                                label={t("Quotation Date")}
                                 type="date"
                                 defaultValue={dayjs().format("YYYY-MM-DD")}
                             />
@@ -132,7 +133,7 @@ export default function QuotationDialog({
                                 fullWidth
                                 required
                                 name="expiry_date"
-                                label="Expiry Date"
+                                label={t("Expiry Date")}
                                 type="date"
                                 defaultValue={dayjs().add(30, 'day').format("YYYY-MM-DD")}
                             />
@@ -142,7 +143,7 @@ export default function QuotationDialog({
                                 fullWidth
                                 required
                                 name="customer_notes"
-                                label="Customer Notes"
+                                label={t("Customer Notes")}
                                 type="text"
                                 multiline
                                 rows={2}
@@ -153,7 +154,7 @@ export default function QuotationDialog({
                                 fullWidth
                                 required
                                 name="terms_conditions"
-                                label="Terms and Conditions"
+                                label={t("Terms and Conditions")}
                                 type="text"
                                 multiline
                                 rows={2}

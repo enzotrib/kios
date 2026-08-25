@@ -11,11 +11,13 @@ import { DataGrid } from "@mui/x-data-grid";
 
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import CustomPagination from "@/Components/CustomPagination";
+import { t } from '@/i18n';
+import SearchField from '@/Components/design/SearchField';
 
 const columns = () => [
     {
         field: "id",
-        headerName: "ID",
+        headerName: t("ID"),
         width: 80,
         renderCell: (params) => {
             // Format the date to 'YYYY-MM-DD'
@@ -23,48 +25,48 @@ const columns = () => [
         },
     },
     {
-        field: "contact_name", headerName: "Customer Name", width: 200,
+        field: "contact_name", headerName: t("Customer Name"), width: 200,
         renderCell: (params) => (
             <Tooltip title={'' + params.row.balance} arrow>
                 <Button>{params.value}</Button>
             </Tooltip>
         ),
     },
-    { field: 'barcode', headerName: 'Barcode', width: 200, selector: row => row.barcode, sortable: true, hideable: true },
-    { field: "product_name", headerName: "Product Name", width: 200, },
+    { field: 'barcode', headerName: t("Barcode"), width: 200, selector: row => row.barcode, sortable: true, hideable: true },
+    { field: "product_name", headerName: t("Product Name"), width: 200, },
     {
-        field: "quantity", headerName: "Quantity", width: 100, align: 'right', headerAlign: 'right',
+        field: "quantity", headerName: t("Quantity"), width: 100, align: 'right', headerAlign: 'right',
         renderCell: (params) => {
             return numeral(params.value).format('0,0.00');
         },
     },
     {
-        field: "discount", headerName: "Unit Disc.", width: 100, align: 'right', headerAlign: 'right',
+        field: "discount", headerName: t("Unit Disc."), width: 100, align: 'right', headerAlign: 'right',
         renderCell: (params) => {
             return numeral(params.value).format('0,0.00');
         },
     },
     {
-        field: "unit_cost", headerName: "Unit Cost", width: 100, align: 'right', headerAlign: 'right',
+        field: "unit_cost", headerName: t("Unit Cost"), width: 100, align: 'right', headerAlign: 'right',
         renderCell: (params) => {
             return numeral(params.value).format('0,0.00');
         },
     },
     {
-        field: "unit_price", headerName: "Unit Price", width: 100, align: 'right', headerAlign: 'right',
+        field: "unit_price", headerName: t("Unit Price"), width: 100, align: 'right', headerAlign: 'right',
         renderCell: (params) => {
             return numeral(params.value).format('0,0.00');
         },
     },
     {
-        field: "profit", headerName: "Profit", width: 100, align: 'right', headerAlign: 'right',
+        field: "profit", headerName: t("Profit"), width: 100, align: 'right', headerAlign: 'right',
         renderCell: (params) => {
             return numeral(params.value).format('0,0.00');
         },
     },
     {
         field: 'total',
-        headerName: "Total",
+        headerName: t("Total"),
         width: 120,
         align: 'right',
         headerAlign: 'right',
@@ -74,7 +76,7 @@ const columns = () => [
             if (total === 0) {
                 return (
                     <span className="bg-green-600 text-white px-2 py-1 rounded-md">
-                        Free
+                        {t("Free")}
                     </span>
                 );
             }
@@ -85,12 +87,12 @@ const columns = () => [
     // { field: 'profit_amount', headerName: 'Profit Amount', width: 120 },
     {
         field: "sale_date",
-        headerName: "Date",
+        headerName: t("Date"),
         width: 100,
     },
     {
         field: "action",
-        headerName: "Action",
+        headerName: t("Action"),
         width: 80,
         renderCell: (params) => {
             if (params.row.quantity < 0) return null;
@@ -161,7 +163,7 @@ export default function SoldItem({ sold_items, contacts }) {
 
     return (
         <AuthenticatedLayout>
-            <Head title="Sold Items" />
+            <Head title={t("Sold Items")} />
             <Grid
                 container
                 spacing={2}
@@ -172,7 +174,7 @@ export default function SoldItem({ sold_items, contacts }) {
                 <Grid size={{ xs: 12, sm: 3 }}>
                     <Select2
                         className="w-full"
-                        placeholder="Select a contact..."
+                        placeholder={t("Select a contact...")}
                         styles={{
                             control: (baseStyles, state) => ({
                                 ...baseStyles,
@@ -189,9 +191,9 @@ export default function SoldItem({ sold_items, contacts }) {
 
                 <Grid size={{ xs: 6, sm: 2 }}>
                     <TextField
-                        label="Start Date"
+                        label={t("Start Date")}
                         name="start_date"
-                        placeholder="Start Date"
+                        placeholder={t("Start Date")}
                         size="small"
                         fullWidth
                         type="date"
@@ -207,9 +209,9 @@ export default function SoldItem({ sold_items, contacts }) {
                 </Grid>
                 <Grid size={{ xs: 6, sm: 2 }}>
                     <TextField
-                        label="End Date"
+                        label={t("End Date")}
                         name="end_date"
-                        placeholder="End Date"
+                        placeholder={t("End Date")}
                         fullWidth
                         size="small"
                         type="date"
@@ -226,39 +228,26 @@ export default function SoldItem({ sold_items, contacts }) {
 
                 <Grid size={{ xs: 6, sm: 2 }}>
                     <TextField
-                        label="Item type"
+                        label={t("Item type")}
                         name="item_type"
                         size="small"
                         fullWidth
-                        slotProps={{
-                            inputLabel: {
-                                shrink: true,
-                            },
-                        }}
                         value={searchTerms.item_type}
                         onChange={handleSearchChange}
                         required
                         select
                     >
-                        <MenuItem value={'all'}>All</MenuItem>
-                        <MenuItem value={'regular'}>Regular</MenuItem>
-                        <MenuItem value={'free'}>Free</MenuItem>
-                        <MenuItem value={'return'}>Return</MenuItem>
+                        <MenuItem value={'all'}>{t("All")}</MenuItem>
+                        <MenuItem value={'regular'}>{t("Regular")}</MenuItem>
+                        <MenuItem value={'free'}>{t("Free")}</MenuItem>
+                        <MenuItem value={'return'}>{t("Return")}</MenuItem>
                     </TextField>
                 </Grid>
 
                 <Grid size={{ xs: 12, sm: 2 }}>
-                    <TextField
-                        label="Search"
+                    <SearchField
                         name="query"
-                        placeholder="Search"
-                        size="small"
-                        fullWidth
-                        slotProps={{
-                            inputLabel: {
-                                shrink: true,
-                            },
-                        }}
+                        placeholder={t("Search")}
                         value={searchTerms.query}
                         onChange={handleSearchChange}
                         onKeyDown={(e) => {

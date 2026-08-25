@@ -3,6 +3,7 @@ import { Head, usePage } from '@inertiajs/react';
 import { Box, Button, CircularProgress } from '@mui/material';
 import { Printer } from 'lucide-react';
 import BarcodePreview from '@/Components/BarcodePreview';
+import { t } from '@/i18n';
 
 export default function ProductBarcodeV2({ product }) {
     const [barcodeSettings, setBarcodeSettings] = useState({
@@ -81,7 +82,7 @@ export default function ProductBarcodeV2({ product }) {
                         },
                     }}
                 >
-                    Print Barcode
+                    {t("Print Barcode")}
                 </Button>
 
                 <Box

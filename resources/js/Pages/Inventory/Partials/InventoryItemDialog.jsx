@@ -16,6 +16,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import axios from "axios";
 import Swal from "sweetalert2";
 import dayjs from "dayjs";
+import { t } from '@/i18n';
 
 const initialInventoryItemFormState = {
     name: '',
@@ -26,11 +27,11 @@ const initialInventoryItemFormState = {
 };
 
 const unit_types = [
-    { value: 'PC', label: 'Piece' },
-    { value: 'kg', label: 'Kilogram' },
-    { value: 'Box', label: 'Box' },
-    { value: 'l', label: 'Liter' },
-    { value: 'ml', label: 'Milliliter' },
+    { value: 'PC', label: t("Piece") },
+    { value: 'kg', label: t("Kilogram") },
+    { value: 'Box', label: t("Box") },
+    { value: 'l', label: t("Liter") },
+    { value: 'ml', label: t("Milliliter") },
 ]
 
 export default function InventoryItemDialog({
@@ -108,15 +109,15 @@ export default function InventoryItemDialog({
                     }
                 }}
             >
-                <DialogTitle id="alert-dialog-title">{inventory_item ? "UPDATE" : "ADD"} INVENTORY ITEM</DialogTitle>
+                <DialogTitle id="alert-dialog-title">{inventory_item ? "UPDATE" : "ADD"} {t("INVENTORY ITEM")}</DialogTitle>
                 <IconButton
-                    aria-label="close"
+                    aria-label={t("close")}
                     onClick={handleClose}
                     sx={(theme) => ({
                         position: "absolute",
                         right: 8,
                         top: 8,
-                        color: theme.palette.grey[500],
+                        color: theme.palette.text.secondary,
                     })}
                 >
                     <CloseIcon />
@@ -127,17 +128,12 @@ export default function InventoryItemDialog({
                             <TextField
                                 fullWidth
                                 variant="outlined"
-                                label={"Name"}
+                                label={t("Name")}
                                 name="name"
-                                placeholder="Name"
+                                placeholder={t("Name")}
                                 value={inventoryItemsForm.name}
                                 onChange={handleFieldChange}
                                 required
-                                slotProps={{
-                                    inputLabel: {
-                                        shrink: true,
-                                    },
-                                }}
                             />
                         </Grid>
                         {!inventory_item && (
@@ -145,18 +141,13 @@ export default function InventoryItemDialog({
                                 <TextField
                                     fullWidth
                                     variant="outlined"
-                                    label={"Quantity"}
+                                    label={t("Quantity")}
                                     name="quantity"
-                                    placeholder="Current Quantity"
+                                    placeholder={t("Current Quantity")}
                                     type="number"
                                     value={inventoryItemsForm.quantity}
                                     onChange={handleFieldChange}
                                     required
-                                    slotProps={{
-                                        inputLabel: {
-                                            shrink: true,
-                                        },
-                                    }}
                                 />
                             </Grid>
                         )}
@@ -165,16 +156,11 @@ export default function InventoryItemDialog({
                                 fullWidth
                                 variant="outlined"
                                 select
-                                label={"Unit Type"}
+                                label={t("Unit Type")}
                                 name="unit_type"
                                 value={inventoryItemsForm.unit_type}
                                 onChange={handleFieldChange}
                                 required
-                                slotProps={{
-                                    inputLabel: {
-                                        shrink: true,
-                                    },
-                                }}
                             >
                                 {unit_types.map((option) => (
                                     <MenuItem key={option.value} value={option.value}>
@@ -187,18 +173,13 @@ export default function InventoryItemDialog({
                             <TextField
                                 fullWidth
                                 variant="outlined"
-                                label={"Cost"}
+                                label={t("Cost")}
                                 name="cost"
-                                placeholder="Cost"
+                                placeholder={t("Cost")}
                                 type="number"
                                 value={inventoryItemsForm.cost}
                                 onChange={handleFieldChange}
                                 required
-                                slotProps={{
-                                    inputLabel: {
-                                        shrink: true,
-                                    },
-                                }}
                             />
                         </Grid>
 
@@ -206,24 +187,19 @@ export default function InventoryItemDialog({
                             <TextField
                                 fullWidth
                                 variant="outlined"
-                                label={"Alert Quantity"}
+                                label={t("Alert Quantity")}
                                 name="alert_quantity"
-                                placeholder="Alert Quantity"
+                                placeholder={t("Alert Quantity")}
                                 type="number"
                                 value={inventoryItemsForm.alert_quantity}
                                 onChange={handleFieldChange}
                                 required
-                                slotProps={{
-                                    inputLabel: {
-                                        shrink: true,
-                                    },
-                                }}
                             />
                         </Grid>
                             <Grid size={12}>
                                 <TextField
                                     value={inventoryItemsForm.store_id}
-                                    label="Store"
+                                    label={t("Store")}
                                     fullWidth
                                     onChange={handleFieldChange}
                                     required
@@ -253,7 +229,7 @@ export default function InventoryItemDialog({
                         type="submit"
                         disabled={inventoryItemsForm.amount == 0}
                     >
-                        {inventory_item ? "UPDATE" : "ADD"} ITEM
+                        {inventory_item ? "UPDATE" : "ADD"} {t("ITEM")}
                     </Button>
                 </DialogActions>
             </Dialog>

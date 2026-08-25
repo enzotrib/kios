@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import dayjs from "dayjs";
 import { MenuItem, Button } from "@mui/material";
+import { t } from '@/i18n';
 
 const getInitialFormData = (employee) => ({
     employee_id: employee?.id || "",
@@ -112,7 +113,7 @@ export default function EmployeeBalanceDialog({ open, setOpen, employee, stores,
                 }
             }}
         >
-            <DialogTitle>Employee Balance Update</DialogTitle>
+            <DialogTitle>{t("Employee Balance Update")}</DialogTitle>
             <DialogContent>
                 <Grid container spacing={2} sx={{ mt: 2 }}>
                     {/* Hidden Inputs */}
@@ -125,7 +126,7 @@ export default function EmployeeBalanceDialog({ open, setOpen, employee, stores,
                             fullWidth
                             id="amount"
                             name="amount"
-                            label="Amount"
+                            label={t("Amount")}
                             type="number"
                             variant="outlined"
                             required
@@ -140,7 +141,7 @@ export default function EmployeeBalanceDialog({ open, setOpen, employee, stores,
                         <TextField
                             fullWidth
                             name="log_date"
-                            label="Date"
+                            label={t("Date")}
                             type="date"
                             required
                             value={formData.log_date}
@@ -152,15 +153,15 @@ export default function EmployeeBalanceDialog({ open, setOpen, employee, stores,
                         <TextField
                             fullWidth
                             name="select_description"
-                            label="Description"
+                            label={t("Description")}
                             select
                             required
                             value={formData.select_description}
                             onChange={handleChange}
                         >
-                                <MenuItem value={'Pending Salary'}> Pending Salary </MenuItem>
-                                <MenuItem value={'Deduct Balance'}> Deduct Balance </MenuItem>
-                                <MenuItem value={'Other'}> Other </MenuItem>
+                                <MenuItem value={'Pending Salary'}> {t("Pending Salary")} </MenuItem>
+                                <MenuItem value={'Deduct Balance'}> {t("Deduct Balance")} </MenuItem>
+                                <MenuItem value={'Other'}> {t("Other")} </MenuItem>
                         </TextField>
                     </Grid>
 
@@ -169,7 +170,7 @@ export default function EmployeeBalanceDialog({ open, setOpen, employee, stores,
                         <TextField
                             fullWidth
                             name="description"
-                            label="Description"
+                            label={t("Description")}
                             type="text"
                             variant="outlined"
                             required
@@ -184,7 +185,7 @@ export default function EmployeeBalanceDialog({ open, setOpen, employee, stores,
                             fullWidth
                             id="store_id"
                             name="store_id"
-                            label="Store"
+                            label={t("Store")}
                             select
                             required
                             value={formData.store_id}
@@ -201,8 +202,8 @@ export default function EmployeeBalanceDialog({ open, setOpen, employee, stores,
                 </Grid>
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleClose}>Cancel</Button>
-                <Button type="submit">SAVE</Button>
+                <Button onClick={handleClose}>{t("Cancel")}</Button>
+                <Button type="submit">{t("SAVE")}</Button>
             </DialogActions>
         </Dialog>
     );

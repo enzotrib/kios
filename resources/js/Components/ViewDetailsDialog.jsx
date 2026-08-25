@@ -19,6 +19,7 @@ import InventoryIcon from '@mui/icons-material/Inventory';
 import PaymentsIcon from '@mui/icons-material/Payments';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { useCurrencyFormatter } from '@/lib/currencyFormatter';
+import { t } from '@/i18n';
 
 export default function ViewDetailsDialog({
     open,
@@ -102,15 +103,15 @@ export default function ViewDetailsDialog({
                 onClose={handleClose}
                 aria-labelledby="alert-dialog-title"
             >
-                <DialogTitle id="alert-dialog-title">VIEW DETAILS</DialogTitle>
+                <DialogTitle id="alert-dialog-title">{t("VIEW DETAILS")}</DialogTitle>
                 <IconButton
-                    aria-label="close"
+                    aria-label={t("close")}
                     onClick={handleClose}
                     sx={(theme) => ({
                         position: "absolute",
                         right: 8,
                         top: 8,
-                        color: theme.palette.grey[500],
+                        color: theme.palette.text.secondary,
                     })}
                 >
                     <CloseIcon />
@@ -119,42 +120,42 @@ export default function ViewDetailsDialog({
                     <Table size="large">
                         <TableBody>
                             <TableRow>
-                                <TableCell align="left">Date</TableCell>
+                                <TableCell align="left">{t("Date")}</TableCell>
                                 <TableCell sx={{ fontWeight: 'bold' }} align="right">{type === 'sales' || type === 'sale' ? dayjs(details.sale_date).format('DD-MM-YYYY') : dayjs(details.purchase_date).format('DD-MM-YYYY')}</TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell align="left">Contact Name</TableCell>
+                                <TableCell align="left">{t("Contact Name")}</TableCell>
                                 <TableCell align="right" sx={{ fontWeight: 'bold' }}>{details.contact_name}</TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell align="left">Total</TableCell>
+                                <TableCell align="left">{t("Total")}</TableCell>
                                 <TableCell align="right" sx={{ fontWeight: 'bold' }}>{formatCurrency(details.total_amount, false)}</TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell align="left">Discount</TableCell>
+                                <TableCell align="left">{t("Discount")}</TableCell>
                                 <TableCell align="right" sx={{ fontWeight: 'bold' }}>{formatCurrency(details.discount, false)}</TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell align="left">Created At</TableCell>
+                                <TableCell align="left">{t("Created At")}</TableCell>
                                 <TableCell align="right" sx={{ fontWeight: 'bold' }}>{dayjs(details.created_at).format('DD-MM-YYYY hh:mm A')}</TableCell>
                             </TableRow>
                         </TableBody>
                     </Table>
                     
-                    <Tabs value={tabValue} onChange={handleChange} aria-label="icon label tabs example">
-                        <Tab icon={<InventoryIcon />} iconPosition="start" label="ITEMS" />
-                        <Tab icon={<PaymentsIcon />} iconPosition="start" label="PAYMENTS" />
+                    <Tabs value={tabValue} onChange={handleChange} aria-label={t("icon label tabs example")}>
+                        <Tab icon={<InventoryIcon />} iconPosition="start" label={t("ITEMS")} />
+                        <Tab icon={<PaymentsIcon />} iconPosition="start" label={t("PAYMENTS")} />
                     </Tabs>
 
                     <TabPanel value={tabValue} index={0}>
                         <Table>
                             <TableHead>
                                 <TableRow>
-                                    <TableCell sx={{ fontWeight: 'bold', whiteSpace: 'nowrap' }}>Name</TableCell>
-                                    <TableCell sx={{ fontWeight: 'bold' }}>Qty</TableCell>
-                                    <TableCell sx={{ fontWeight: 'bold' }}>Price</TableCell>
-                                    <TableCell sx={{ fontWeight: 'bold' }}>Cost</TableCell>
-                                    <TableCell sx={{ fontWeight: 'bold' }}>Discount</TableCell>
+                                    <TableCell sx={{ fontWeight: 'bold', whiteSpace: 'nowrap' }}>{t("Name")}</TableCell>
+                                    <TableCell sx={{ fontWeight: 'bold' }}>{t("Qty")}</TableCell>
+                                    <TableCell sx={{ fontWeight: 'bold' }}>{t("Price")}</TableCell>
+                                    <TableCell sx={{ fontWeight: 'bold' }}>{t("Cost")}</TableCell>
+                                    <TableCell sx={{ fontWeight: 'bold' }}>{t("Discount")}</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -177,10 +178,10 @@ export default function ViewDetailsDialog({
                         <Table>
                             <TableHead>
                                 <TableRow>
-                                    <TableCell sx={{ fontWeight: 'bold' }}>Method</TableCell>
-                                    <TableCell sx={{ fontWeight: 'bold' }}>Amount</TableCell>
-                                    <TableCell sx={{ fontWeight: 'bold' }}>Date</TableCell>
-                                    <TableCell sx={{ fontWeight: 'bold' }}> Action </TableCell>
+                                    <TableCell sx={{ fontWeight: 'bold' }}>{t("Method")}</TableCell>
+                                    <TableCell sx={{ fontWeight: 'bold' }}>{t("Amount")}</TableCell>
+                                    <TableCell sx={{ fontWeight: 'bold' }}>{t("Date")}</TableCell>
+                                    <TableCell sx={{ fontWeight: 'bold' }}> {t("Action")} </TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -192,7 +193,7 @@ export default function ViewDetailsDialog({
                                             <TableCell>{payment.transaction_date}</TableCell>
                                             <TableCell align="left">
                                                 {!payment.parent_id && payment.payment_method !== 'Credit' && (
-                                                    <IconButton onClick={() => handleDeletePayment(payment.id)} edge="start" color="error" aria-label="delete">
+                                                    <IconButton onClick={() => handleDeletePayment(payment.id)} edge="start" color="error" aria-label={t("delete")}>
                                                         <HighlightOffIcon />
                                                     </IconButton>
                                                 )}
@@ -205,7 +206,7 @@ export default function ViewDetailsDialog({
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} autoFocus>
-                        Close
+                        {t("Close")}
                     </Button>
                 </DialogActions>
             </Dialog>

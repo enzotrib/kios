@@ -11,6 +11,7 @@ import PaymentsIcon from "@mui/icons-material/Payments";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
 import { usePurchase } from "@/Context/PurchaseContext";
+import { t } from '@/i18n';
 
 export default function PurchaseAppBar({setOpenPayment, selectedVendor, disable=true}) {
     const { cartState, cartTotal, } = usePurchase();
@@ -31,20 +32,19 @@ export default function PurchaseAppBar({setOpenPayment, selectedVendor, disable=
                             startIcon={<ArrowBackIosNewIcon />}
                             sx={{ mr: "1rem" }}
                         >
-                            BACK
+                            {t("BACK")}
                         </Button>
                     </Link>
 
                     <Button
                         variant="contained"
                         type="submit"
-                        color="success"
                         size="large"
                         endIcon={<PaymentsIcon />}
                         onClick={() => setOpenPayment(true)}
                         disabled={cartState.length === 0 || !selectedVendor || disable}
                     >
-                        PAYMENTS
+                        {t("PAYMENTS")}
                     </Button>
                 </Toolbar>
             </AppBar>

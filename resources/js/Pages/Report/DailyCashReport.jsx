@@ -14,6 +14,7 @@ import numeral from "numeral";
 
 import DailyCashDialog from "./Partial/DailyCashDialog";
 import ViewDetailsDialog from "@/Components/ViewDetailsDialog";
+import { t } from '@/i18n';
 
 export default function DailyReport({ logs, stores, users }) {
     const auth = usePage().props.auth.user
@@ -64,7 +65,7 @@ export default function DailyReport({ logs, stores, users }) {
 
     return (
         <AuthenticatedLayout>
-            <Head title="Daily Report" />
+            <Head title={t("Daily Report")} />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <Grid
                     container
@@ -74,7 +75,7 @@ export default function DailyReport({ logs, stores, users }) {
                 >
                     <Grid size={{ xs: 12, sm: 4, md: 2 }}>
                         <DatePicker
-                            label="Date"
+                            label={t("Date")}
                             value={dayjs(formState.transaction_date)}
                             onChange={(date) => {
                                 const newDate = date.format("YYYY-MM-DD");
@@ -100,14 +101,14 @@ export default function DailyReport({ logs, stores, users }) {
                             fullWidth
                             select
                             value={formState.store_id}
-                            label="Store"
+                            label={t("Store")}
                             size="small"
                             onChange={handleFieldChange}
                             required
                             name="store_id"
                         >
                             {auth.user_role === 'admin' || auth.user_role === 'super-admin' ? (
-                                <MenuItem value="All">All</MenuItem>
+                                <MenuItem value="All">{t("All")}</MenuItem>
                             ) : null}
                             {stores?.map((store) => (
                                 <MenuItem
@@ -125,11 +126,11 @@ export default function DailyReport({ logs, stores, users }) {
                             fullWidth
                             name="user_id"
                             size="small"
-                            label="User/Cashier"
+                            label={t("User/Cashier")}
                             onChange={handleFieldChange}
                             select
                         >
-                            <MenuItem value="All">All</MenuItem>
+                            <MenuItem value="All">{t("All")}</MenuItem>
                             {users.map((user) => (
                                 <MenuItem key={user.id} value={user.id}>
                                     {user.name}
@@ -146,9 +147,8 @@ export default function DailyReport({ logs, stores, users }) {
                             startIcon={<AddCircleIcon />}
                             size="small"
                             fullWidth
-                            color="success"
                         >
-                            MANUAL
+                            {t("MANUAL")}
                         </Button>
                     </Grid>
 
@@ -158,24 +158,24 @@ export default function DailyReport({ logs, stores, users }) {
             <div className="flex justify-center">
                 <div className="w-full max-w-4xl">
                     {/* Desktop Table View */}
-                    <div className="hidden md:block border border-gray-300 rounded-lg overflow-hidden">
+                    <div className="hidden md:block border border-[var(--border)] rounded-lg overflow-hidden">
                         {/* Table Header */}
                         <div className="grid grid-cols-12 bg-black text-white text-sm font-semibold sticky top-0">
                             <div className="col-span-1 px-4 py-3 text-center">#</div>
-                            <div className="col-span-2 px-4 py-3 text-left">DATE</div>
-                            <div className="col-span-5 px-4 py-3 text-left">DESCRIPTION</div>
-                            <div className="col-span-2 px-4 py-3 text-right">CASH IN</div>
-                            <div className="col-span-2 px-4 py-3 text-right">CASH OUT</div>
+                            <div className="col-span-2 px-4 py-3 text-left">{t("DATE")}</div>
+                            <div className="col-span-5 px-4 py-3 text-left">{t("DESCRIPTION")}</div>
+                            <div className="col-span-2 px-4 py-3 text-right">{t("CASH IN")}</div>
+                            <div className="col-span-2 px-4 py-3 text-right">{t("CASH OUT")}</div>
                         </div>
 
                         {/* Table Body */}
                         <div className="divide-y divide-gray-200">
                             {dataLogs.map((row, index) => (
-                                <div key={index} className="grid grid-cols-12 hover:bg-gray-50 text-sm even:bg-gray-50">
+                                <div key={index} className="grid grid-cols-12 hover:bg-[var(--surface-2)] text-sm even:bg-[var(--surface-2)]">
                                     <div className="col-span-1 px-4 py-3 text-center">{index + 1}</div>
                                     <div className="col-span-2 px-4 py-3 text-left">{row.transaction_date}</div>
                                     <div
-                                        className="col-span-5 px-4 py-3 text-left cursor-pointer hover:text-blue-600"
+                                        className="col-span-5 px-4 py-3 text-left cursor-pointer hover:text-[var(--info)]"
                                         onClick={() => {
                                             if (row.sales_id !== null) {
                                                 setSelectedTransaction(row.sales_id);
@@ -202,8 +202,8 @@ export default function DailyReport({ logs, stores, users }) {
                         </div>
 
                         {/* Total Row */}
-                        <div className="grid grid-cols-12 bg-gray-100 border-t-2 border-gray-300 font-semibold text-sm">
-                            <div className="col-span-8 px-4 py-3 text-right">Total:</div>
+                        <div className="grid grid-cols-12 bg-[var(--surface-2)] border-t-2 border-[var(--border)] font-semibold text-sm">
+                            <div className="col-span-8 px-4 py-3 text-right">{t("Total:")}</div>
                             <div className="col-span-2 px-4 py-3 text-right font-mono">
                                 {numeral(totalCashIn).format('0,0.00')}
                             </div>
@@ -213,8 +213,8 @@ export default function DailyReport({ logs, stores, users }) {
                         </div>
 
                         {/* Balance Row */}
-                        <div className="grid grid-cols-12 bg-white border-t border-gray-300 font-bold text-base">
-                            <div className="col-span-10 px-4 py-4 text-right">Balance:</div>
+                        <div className="grid grid-cols-12 bg-[var(--card)] border-t border-[var(--border)] font-bold text-base">
+                            <div className="col-span-10 px-4 py-4 text-right">{t("Balance:")}</div>
                             <div className="col-span-2 px-4 py-4 text-right font-mono text-lg">
                                 {numeral(dataLogs.reduce((total, row) => total + parseFloat(row.amount), 0)).format('0,0.00')}
                             </div>
@@ -226,14 +226,14 @@ export default function DailyReport({ logs, stores, users }) {
                         {dataLogs.map((row, index) => (
                             <div
                                 key={index}
-                                className="bg-white rounded-xl p-3 border border-gray-200"
+                                className="bg-[var(--card)] rounded-xl p-3 border border-[var(--border)]"
                             >
                                 {/* Header Row - Index and Date */}
                                 <div className="flex justify-between items-center mb-2">
-                                    <span className="inline-block bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full text-xs font-semibold">
+                                    <span className="inline-block bg-[var(--primary-soft)] text-[var(--info)] px-2 py-0.5 rounded-full text-xs font-semibold">
                                         #{index + 1}
                                     </span>
-                                    <span className="text-xs text-gray-500 font-medium">{row.transaction_date}</span>
+                                    <span className="text-xs text-[var(--muted-foreground)] font-medium">{row.transaction_date}</span>
                                 </div>
 
                                 {/* Description with Amount */}
@@ -246,7 +246,7 @@ export default function DailyReport({ logs, stores, users }) {
                                         }
                                     }}
                                 >
-                                    <p className="text-sm font-medium text-gray-900 group-hover:text-blue-600 transition-colors break-words leading-snug flex-1">
+                                    <p className="text-sm font-medium text-[var(--foreground)] group-hover:text-[var(--info)] transition-colors break-words leading-snug flex-1">
                                         {
                                             row.source.charAt(0).toUpperCase() + row.source.slice(1) +
                                             (row.sales_id ? ' (#' + row.sales_id + ')' : "") +
@@ -255,7 +255,7 @@ export default function DailyReport({ logs, stores, users }) {
                                             (row.transaction_type === 'account' ? " (Balance update)" : "")
                                         }
                                     </p>
-                                    <span className={`text-base font-bold font-mono flex-shrink-0 ${row.cash_in > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                                    <span className={`text-base font-bold font-mono flex-shrink-0 ${row.cash_in > 0 ? 'text-[var(--success)]' : 'text-[var(--destructive)]'}`}>
                                         {row.cash_in > 0 ? '+' + numeral(row.cash_in).format('0,0.00') : '-' + numeral(row.cash_out).format('0,0.00')}
                                     </span>
                                 </div>
@@ -265,18 +265,18 @@ export default function DailyReport({ logs, stores, users }) {
                         {/* Mobile Summary Section */}
                         <div className="mt-4 space-y-2">
                             {/* Total Card */}
-                            <div className="bg-slate-50 rounded-xl p-3 border border-gray-200">
-                                <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">Summary</p>
+                            <div className="bg-[var(--surface-2)] rounded-xl p-3 border border-[var(--border)]">
+                                <p className="text-xs font-semibold text-[var(--muted-foreground)] uppercase tracking-wider mb-2">{t("Summary")}</p>
                                 <div className="grid grid-cols-2 gap-3">
                                     <div>
-                                        <p className="text-xs text-gray-500 font-medium mb-0.5">Total In</p>
-                                        <p className="text-base font-bold text-green-600 font-mono">
+                                        <p className="text-xs text-[var(--muted-foreground)] font-medium mb-0.5">{t("Total In")}</p>
+                                        <p className="text-base font-bold text-[var(--success)] font-mono">
                                             +{numeral(totalCashIn).format('0,0.00')}
                                         </p>
                                     </div>
                                     <div>
-                                        <p className="text-xs text-gray-500 font-medium mb-0.5">Total Out</p>
-                                        <p className="text-base font-bold text-red-600 font-mono">
+                                        <p className="text-xs text-[var(--muted-foreground)] font-medium mb-0.5">{t("Total Out")}</p>
+                                        <p className="text-base font-bold text-[var(--destructive)] font-mono">
                                             -{numeral(totalCashOut).format('0,0.00')}
                                         </p>
                                     </div>
@@ -285,7 +285,7 @@ export default function DailyReport({ logs, stores, users }) {
 
                             {/* Balance Card - Highlighted */}
                             <div className="bg-gray-900 rounded-xl p-4 border border-gray-800">
-                                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">Final Balance</p>
+                                <p className="text-xs font-semibold text-[var(--muted-foreground)] uppercase tracking-wider mb-1">{t("Final Balance")}</p>
                                 <p className="text-2xl font-bold text-white font-mono">
                                     {numeral(dataLogs.reduce((total, row) => total + parseFloat(row.amount), 0)).format('0,0.00')}
                                 </p>

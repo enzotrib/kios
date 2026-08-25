@@ -18,24 +18,25 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import numeral from "numeral";
 import CustomPagination from "@/Components/CustomPagination";
+import { t } from '@/i18n';
 
 const columns = (handleRowClick) => [
-    { field: "id", headerName: "ID", width: 80 },
+    { field: "id", headerName: t("ID"), width: 80 },
     {
         field: "employee_id",
-        headerName: "Employee",
+        headerName: t("Employee"),
         width: 200,
         renderCell: (params) => params.row.employee_name,
     },
     {
         field: "salary_date",
-        headerName: "Salary Date",
+        headerName: t("Salary Date"),
         width: 150,
         renderCell: (params) => dayjs(params.value).format("YYYY-MM-DD"),
     },
     {
         field: "net_salary",
-        headerName: "Net Salary",
+        headerName: t("Net Salary"),
         width: 150,
         align: "right",
         headerAlign: "right",
@@ -43,18 +44,18 @@ const columns = (handleRowClick) => [
     },
     {
         field: "salary_from",
-        headerName: "Salary From",
+        headerName: t("Salary From"),
         width: 200,
     },
     {
         field: "store_id",
-        headerName: "Store",
+        headerName: t("Store"),
         width: 200,
         renderCell: (params) => params.row.store_name,
     },
     {
         field: "action",
-        headerName: "Actions",
+        headerName: t("Actions"),
         width: 150,
         align: "right",
         headerAlign: "right",
@@ -137,20 +138,20 @@ export default function Payroll({ salaries, employees, stores }) {
 
     return (
         <AuthenticatedLayout>
-            <Head title="Salaries" />
+            <Head title={t("Salaries")} />
             <Grid container spacing={2} sx={{ alignItems: "center", width: "100%", justifyContent: 'end' }}>
 
                 <Grid size={{ xs: 12, sm: 3 }}>
 
                     <TextField
-                        label="Employee"
+                        label={t("Employee")}
                         name="employee_id"
                         value={searchTerms.employee_id}
                         onChange={handleSearchChange}
                         select
                         fullWidth
                     >
-                        <MenuItem value="">All Employees</MenuItem>
+                        <MenuItem value="">{t("All Employees")}</MenuItem>
                         {employees.map((employee) => (
                             <MenuItem key={employee.id} value={employee.id}>
                                 {employee.name}
@@ -161,14 +162,14 @@ export default function Payroll({ salaries, employees, stores }) {
                 <Grid size={{ xs: 12, sm: 3 }}>
 
                     <TextField
-                        label="Store"
+                        label={t("Store")}
                         name="store_id"
                         value={searchTerms.store_id}
                         onChange={handleSearchChange}
                         select
                         fullWidth
                     >
-                        <MenuItem value="">All Stores</MenuItem>
+                        <MenuItem value="">{t("All Stores")}</MenuItem>
                         {stores.map((store) => (
                             <MenuItem key={store.id} value={store.id}>
                                 {store.name}
@@ -178,9 +179,9 @@ export default function Payroll({ salaries, employees, stores }) {
                 </Grid>
                 <Grid size={{ xs: 6, sm: 2 }}>
                     <TextField
-                        label="Start Date"
+                        label={t("Start Date")}
                         name="start_date"
-                        placeholder="Start Date"
+                        placeholder={t("Start Date")}
                         fullWidth
                         type="date"
                         slotProps={{
@@ -195,9 +196,9 @@ export default function Payroll({ salaries, employees, stores }) {
                 </Grid>
                 <Grid size={{ xs: 6, sm: 2 }}>
                     <TextField
-                        label="End Date"
+                        label={t("End Date")}
                         name="end_date"
-                        placeholder="End Date"
+                        placeholder={t("End Date")}
                         fullWidth
                         type="date"
                         slotProps={{

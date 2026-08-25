@@ -12,6 +12,7 @@ import {
      Grid,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import { t } from '@/i18n';
 
 export default function HeldItemsModal({
     modalOpen,
@@ -55,13 +56,13 @@ export default function HeldItemsModal({
                     {"HOLD ITEMS"}
                 </DialogTitle>
                 <IconButton
-                    aria-label="close"
+                    aria-label={t("close")}
                     onClick={handleClose}
                     sx={(theme) => ({
                         position: "absolute",
                         right: 8,
                         top: 8,
-                        color: theme.palette.grey[500],
+                        color: theme.palette.text.secondary,
                     })}
                 >
                     <CloseIcon />

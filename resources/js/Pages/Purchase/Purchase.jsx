@@ -21,25 +21,26 @@ import numeral from "numeral";
 import AddPaymentDialog from "@/Components/AddPaymentDialog";
 import ViewDetailsDialog from "@/Components/ViewDetailsDialog";
 import CustomPagination from "@/Components/CustomPagination";
+import { t } from '@/i18n';
 
 const columns = (handleRowClick) => [
-    { field: "id", headerName: "ID", width: 80 },
-    { field: "name", headerName: "Vendor Name", width: 200 },
+    { field: "id", headerName: t("ID"), width: 80 },
+    { field: "name", headerName: t("Vendor Name"), width: 200 },
     {
-        field: "discount", headerName: "Discount", width: 100, align: 'right', headerAlign: 'right',
+        field: "discount", headerName: t("Discount"), width: 100, align: 'right', headerAlign: 'right',
         renderCell: (params) => {
             return numeral(params.value).format('0,0.00');
         },
     },
     {
-        field: "total_amount", headerName: "Total Amount", width: 120, align: 'right', headerAlign: 'right',
+        field: "total_amount", headerName: t("Total Amount"), width: 120, align: 'right', headerAlign: 'right',
         renderCell: (params) => {
             return numeral(params.value).format('0,0.00');
         },
     },
     {
         field: "amount_paid",
-        headerName: "Amount Paid",
+        headerName: t("Amount Paid"),
         width: 120, align: 'right', headerAlign: 'right',
         renderCell: (params) => (
             <Button
@@ -58,7 +59,7 @@ const columns = (handleRowClick) => [
     },
     {
         field: "purchase_date",
-        headerName: "Date",
+        headerName: t("Date"),
         width: 120,
         renderCell: (params) => {
             // Format the date to 'YYYY-MM-DD'
@@ -67,12 +68,12 @@ const columns = (handleRowClick) => [
     },
     {
         field: "status",
-        headerName: "Status",
+        headerName: t("Status"),
         width: 100,
     },
     {
         field: "action",
-        headerName: "Actions",
+        headerName: t("Actions"),
         width: 150,
         renderCell: (params) => (
             <>
@@ -156,7 +157,7 @@ export default function Purchases({ purchases, contacts }) {
 
     return (
         <AuthenticatedLayout>
-            <Head title="Purchases" />
+            <Head title={t("Purchases")} />
 
             <Grid
                 container
@@ -166,7 +167,7 @@ export default function Purchases({ purchases, contacts }) {
                 <FormControl sx={{ minWidth: "240px" }}>
                     <Select2
                         className="w-full"
-                        placeholder="Select a contact..."
+                        placeholder={t("Select a contact...")}
                         styles={{
                             control: (baseStyles, state) => ({
                                 ...baseStyles,
@@ -184,24 +185,24 @@ export default function Purchases({ purchases, contacts }) {
                 <Grid size={{ xs: 12, sm: 2 }}>
                     <TextField
                         value={searchTerms.status}
-                        label="Status"
+                        label={t("Status")}
                         onChange={handleSearchChange}
                         name="status"
                         select
                         fullWidth
                         size="small"
                     >
-                        <MenuItem value={"all"}>All</MenuItem>
-                        <MenuItem value={"completed"}>Completed</MenuItem>
-                        <MenuItem value={"pending"}>Pending</MenuItem>
+                        <MenuItem value={"all"}>{t("All")}</MenuItem>
+                        <MenuItem value={"completed"}>{t("Completed")}</MenuItem>
+                        <MenuItem value={"pending"}>{t("Pending")}</MenuItem>
                     </TextField>
                 </Grid>
 
                 <Grid size={{ xs: 6, sm: 2 }}>
                     <TextField
-                        label="Start Date"
+                        label={t("Start Date")}
                         name="start_date"
-                        placeholder="Start Date"
+                        placeholder={t("Start Date")}
                         fullWidth
                         size="small"
                         type="date"
@@ -217,9 +218,9 @@ export default function Purchases({ purchases, contacts }) {
 
                 <Grid size={{ xs: 6, sm: 2 }}>
                     <TextField
-                        label="End Date"
+                        label={t("End Date")}
                         name="end_date"
-                        placeholder="End Date"
+                        placeholder={t("End Date")}
                         fullWidth
                         size="small"
                         type="date"
@@ -240,7 +241,7 @@ export default function Purchases({ purchases, contacts }) {
                         size="large"
                         startIcon={<AddIcon />}
                     >
-                        Add Purchase
+                        {t("Add Purchase")}
                     </Button>
                 </Link>
 

@@ -27,6 +27,56 @@ select:focus {
   z-index: 9999;
 }
 
+/* SweetAlert vive fuera del arbol de React, asi que no hereda el tema de MUI.
+   Se lo alinea con los tokens aca para que los dialogos de confirmacion no
+   aparezcan en blanco con botones azules sobre una app oscura. */
+.swal2-popup {
+  background: var(--card) !important;
+  color: var(--foreground) !important;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card) !important;
+  font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+.swal2-title,
+.swal2-html-container {
+  color: var(--foreground) !important;
+}
+
+.swal2-html-container {
+  color: var(--muted-foreground) !important;
+}
+
+.swal2-actions .swal2-styled {
+  border-radius: var(--radius-button) !important;
+  font-weight: 600;
+  box-shadow: none !important;
+}
+
+/* Confirmar = accion principal. El color por llamada (confirmButtonColor) sigue
+   ganando, pero este es el valor por defecto correcto. */
+.swal2-actions .swal2-confirm {
+  background: var(--primary) !important;
+  color: var(--primary-foreground) !important;
+}
+
+/* Cancelar = accion secundaria (transparente + borde), nunca un rojo que
+   compita con el confirmar. */
+.swal2-actions .swal2-cancel {
+  background: transparent !important;
+  color: var(--foreground) !important;
+  border: 1px solid var(--input) !important;
+}
+
+.swal2-input,
+.swal2-textarea,
+.swal2-select {
+  background: var(--surface-2) !important;
+  color: var(--foreground) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius) !important;
+}
+
 #btn-manage-stock button.MuiButtonBase-root.MuiToggleButtonGroup-grouped.MuiToggleButtonGroup-groupedHorizontal.MuiToggleButton-root.Mui-selected.MuiToggleButton-fullWidth.MuiToggleButton-sizeMedium.MuiToggleButton-primary.p-5.css-uobg7u-MuiButtonBase-root-MuiToggleButton-root {
   padding: 15px;
 }
@@ -88,73 +138,307 @@ input[type=number] {
   .border {
     border-color: var(--border); /* override default border color */
   }
+  /* ============================================================
+     DESIGN TOKENS — fuente unica de verdad
+
+     Estos tokens los consumen DOS motores:
+       1. Tailwind v4 / shadcn  -> directo como var(--token)
+       2. MUI (107 pantallas)   -> resources/js/design/theme.js los lee
+                                   con getComputedStyle al montar
+
+     Por eso no hay que hardcodear colores en los componentes: si un
+     valor se cambia aca, cambia en toda la app y los dos motores
+     siguen sincronizados.
+     ============================================================ */
+
   :root {
-    --tw-border-style: dashed; 
-    --radius: 0.65rem;
-    --background: white;
-    --foreground: oklch(0.141 0.005 285.823);
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.141 0.005 285.823);
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.141 0.005 285.823);
-    --primary: oklch(0.623 0.214 259.815);
-    --primary-foreground: oklch(0.97 0.014 254.604);
-    --secondary: oklch(0.967 0.001 286.375);
-    --secondary-foreground: oklch(0.21 0.006 285.885);
-    --muted: oklch(0.967 0.001 286.375);
-    --muted-foreground: oklch(0.552 0.016 285.938);
-    --accent: oklch(0.967 0.001 286.375);
-    --accent-foreground: oklch(0.21 0.006 285.885);
-    --destructive: oklch(0.577 0.245 27.325);
-    --border: oklch(0.92 0.004 286.32);
-    --input: oklch(0.92 0.004 286.32);
-    --ring: oklch(0.623 0.214 259.815);
-    --chart-1: oklch(0.646 0.222 41.116);
-    --chart-2: oklch(0.6 0.118 184.704);
-    --chart-3: oklch(0.398 0.07 227.392);
-    --chart-4: oklch(0.828 0.189 84.429);
-    --chart-5: oklch(0.769 0.188 70.08);
-    --sidebar: oklch(0.985 0 0);
-    --sidebar-foreground: oklch(0.141 0.005 285.823);
-    --sidebar-primary: oklch(0.623 0.214 259.815);
-    --sidebar-primary-foreground: oklch(0.97 0.014 254.604);
-    --sidebar-accent: oklch(0.967 0.001 286.375);
-    --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
-    --sidebar-border: oklch(0.92 0.004 286.32);
-    --sidebar-ring: oklch(0.623 0.214 259.815);
+    --tw-border-style: dashed;
+
+    /* --- Radios (Figma: component/card/Radius, Radius/Card/*, button/Radius) --- */
+    --radius-sm: 4px;         /* radius/100 */
+    --radius: 12px;           /* component/card/Radius - inputs y controles */
+    --radius-card: 24px;      /* Radius/Card/Inside - tarjetas */
+    --radius-panel: 32px;     /* component/card/Radius-Outside - paneles contenedores */
+    --radius-button: 24px;    /* component/button/Radius */
+    --radius-pill: 9999px;    /* radius/Full */
+
+    /* --- Espaciado (Figma: Space/*) --- */
+    --space-card: 20px;       /* component/card/Padding */
+    --space-gap: 16px;        /* Space/400 */
+    --space-section: 24px;    /* Space/600 */
+
+    /* --- Superficies (claro, derivado: el archivo solo publica el modo oscuro) --- */
+    --background: #F5F7FA;
+    --foreground: #0A0D11;    /* foreground/black */
+    --card: #FFFFFF;          /* background/white */
+    --card-foreground: #0A0D11;
+    --surface-2: #EEF1F5;     /* inputs, hover, tarjetas anidadas */
+    --popover: #FFFFFF;
+    --popover-foreground: #0A0D11;
+
+    /* --- Marca --- */
+    /* El verde neon de Rayum (#70FC8E) no contrasta sobre blanco: en claro se usa
+       una version oscurecida del mismo tono para que el texto se lea. */
+    --primary: #0A7A55;
+    --primary-foreground: #FFFFFF;
+    --primary-soft: #E3FBEF;
+    --brand-accent: #70FC8E;  /* background/brand-primary, para realces */
+
+    /* --- Semanticos --- */
+    --success: #0A7A55;
+    --success-foreground: #FFFFFF;
+    --success-soft: #E3FBEF;
+    --warning: #B35F00;       /* support/*/warning-emphasis oscurecido */
+    --warning-foreground: #FFFFFF;
+    --warning-soft: #FFF1E3;
+    --destructive: #D92D20;   /* derivado: Figma no publica token destructivo */
+    --destructive-foreground: #FFFFFF;
+    --destructive-soft: #FEE4E2;
+    --info: #2563EB;          /* action/foreground/link oscurecido */
+
+    /* --- Neutros --- */
+    --secondary: #EEF1F5;
+    --secondary-foreground: #0A0D11;
+    --muted: #EEF1F5;
+    --muted-foreground: #5A6779;  /* foreground/muted oscurecido */
+    --accent: #EEF1F5;
+    --accent-foreground: #0A0D11;
+    --border: #DCE3EC;
+    --input: #DCE3EC;
+    --ring: #0A7A55;
+
+    /* --- Graficos --- */
+    --chart-1: #3D6BFF;
+    --chart-2: #0A7A55;
+    --chart-3: #B35F00;
+    --chart-4: #2563EB;
+    --chart-5: #C4238A;
+
+    /* --- Sidebar --- */
+    --sidebar: #FFFFFF;
+    --sidebar-foreground: #0A0D11;
+    --sidebar-primary: #0A7A55;
+    --sidebar-primary-foreground: #FFFFFF;
+    --sidebar-accent: #EEF1F5;
+    --sidebar-accent-foreground: #0A0D11;
+    --sidebar-border: #DCE3EC;
+    --sidebar-ring: #0A7A55;
+
+    /* --- Sombras (Figma: Shadow/Overlay y Shadow/Shadow-Button) --- */
+    --shadow-card: 0 4px 10px rgba(0, 0, 0, 0.10);
+    --shadow-raised: 0 3px 6px rgba(0, 0, 0, 0.10), 0 10px 10px rgba(0, 0, 0, 0.09),
+                     0 23px 14px rgba(0, 0, 0, 0.05);
+
+    /* --- Scrollbars --- */
+    --scrollbar-thumb: #C6CEDA;
+    --scrollbar-thumb-hover: #9AA6B8;
   }
 
+  /* Modo oscuro: valores tomados literalmente de las variables de Rayum Lite
+     (Figma community). El comentario indica el nombre del token de origen. */
   .dark {
-    --background: oklch(0.141 0.005 285.823);
-    --foreground: oklch(0.985 0 0);
-    --card: oklch(0.21 0.006 285.885);
-    --card-foreground: oklch(0.985 0 0);
-    --popover: oklch(0.21 0.006 285.885);
-    --popover-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.546 0.245 262.881);
-    --primary-foreground: oklch(0.379 0.146 265.522);
-    --secondary: oklch(0.274 0.006 286.033);
-    --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.274 0.006 286.033);
-    --muted-foreground: oklch(0.705 0.015 286.067);
-    --accent: oklch(0.274 0.006 286.033);
-    --accent-foreground: oklch(0.985 0 0);
-    --destructive: oklch(0.704 0.191 22.216);
-    --border: oklch(96.416% 0.00011 271.152 / 0.1);
-    --input: oklch(1 0 0 / 15%);
-    --ring: oklch(0.488 0.243 264.376);
-    --chart-1: oklch(0.488 0.243 264.376);
-    --chart-2: oklch(0.696 0.17 162.48);
-    --chart-3: oklch(0.769 0.188 70.08);
-    --chart-4: oklch(0.627 0.265 303.9);
-    --chart-5: oklch(0.645 0.246 16.439);
-    --sidebar: oklch(0.21 0.006 285.885);
-    --sidebar-foreground: oklch(0.985 0 0);
-    --sidebar-primary: oklch(0.546 0.245 262.881);
-    --sidebar-primary-foreground: oklch(0.379 0.146 265.522);
-    --sidebar-accent: oklch(0.274 0.006 286.033);
-    --sidebar-accent-foreground: oklch(0.985 0 0);
-    --sidebar-border: oklch(1 0 0 / 10%);
-    --sidebar-ring: oklch(0.488 0.243 264.376);
+    /* --- Superficies --- */
+    --background: #0A0D11;    /* background/default */
+    --foreground: #EDF0F2;    /* foreground/default */
+    --card: #181D25;          /* level/level-1 */
+    --card-foreground: #EDF0F2;
+    --surface-2: #1F2633;     /* background/muted */
+    --popover: #27313F;       /* background/neutral-muted */
+    --popover-foreground: #EDF0F2;
+
+    /* --- Marca: el verde neon de Rayum --- */
+    --primary: #70FC8E;       /* background/brand-primary */
+    --primary-foreground: #0A0D11;  /* action/foreground/primary sobre acento */
+    --primary-soft: #14301F;  /* derivado: tinte del acento para chips */
+    --brand-accent: #70FC8E;
+
+    /* --- Semanticos --- */
+    --success: #70FC8E;       /* background/accent-emphasis */
+    --success-foreground: #0A0D11;
+    --success-soft: #14301F;
+    --warning: #FF902E;       /* support/foreground/warning-emphasis */
+    --warning-foreground: #0A0D11;
+    --warning-soft: #331D0B;
+    --destructive: #FF6B5C;   /* derivado: Figma no publica token destructivo */
+    --destructive-foreground: #0A0D11;
+    --destructive-soft: #331615;
+    --info: #5CA7FF;          /* action/foreground/link, support/info-emphasis */
+
+    /* --- Neutros --- */
+    --secondary: #27313F;     /* background/neutral-muted */
+    --secondary-foreground: #EDF0F2;
+    --muted: #1F2633;         /* background/muted */
+    --muted-foreground: #929FB1;  /* foreground/muted */
+    --accent: #27313F;
+    --accent-foreground: #EDF0F2;
+    --border: #2F3B4C;        /* border/default */
+    --input: #404B5A;         /* action/border/secondary/default */
+    --ring: #70FC8E;
+
+    --chart-1: #658AFF;       /* background/brand-secondary */
+    --chart-2: #70FC8E;       /* background/brand-primary */
+    --chart-3: #FF902E;       /* warning-emphasis */
+    --chart-4: #5CA7FF;       /* info-emphasis */
+    --chart-5: #F02BA7;       /* utilities/foreground/measurement */
+
+    --sidebar: #0A0D11;
+    --sidebar-foreground: #EDF0F2;
+    --sidebar-primary: #70FC8E;
+    --sidebar-primary-foreground: #0A0D11;
+    --sidebar-accent: #1F2633;
+    --sidebar-accent-foreground: #EDF0F2;
+    --sidebar-border: #2F3B4C;
+    --sidebar-ring: #70FC8E;
+
+    /* Shadow/Overlay */
+    --shadow-card: 0 4px 10px rgba(0, 0, 0, 0.35);
+    --shadow-raised: 0 4px 10px rgba(0, 0, 0, 0.45), 0 23px 14px rgba(0, 0, 0, 0.25);
+
+    --scrollbar-thumb: #2F3B4C;
+    --scrollbar-thumb-hover: #404B5A;
+  }
+}
+
+/* ============================================================
+   SCROLLBARS
+
+   La barra nativa de Windows es gris claro y rompe el modo oscuro.
+   Se estiliza con los mismos tokens: pista transparente (la barra
+   flota sobre el fondo) y pulgar tipo pastilla con un borde
+   transparente recortado, que le da el aire lateral.
+   ============================================================ */
+
+@layer base {
+  /* Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) transparent;
+  }
+
+  /* Chrome, Edge, navegadores WebKit */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb);
+    border-radius: var(--radius-pill);
+    /* El borde transparente + background-clip deja el pulgar mas fino
+       que el canal, que es lo que le da el aspecto flotante */
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--scrollbar-thumb-hover);
+    background-clip: padding-box;
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+}
+
+/* ============================================================
+   IMPRESION
+
+   Al imprimir SIEMPRE se usa la paleta clara. El modo oscuro en
+   papel gasta todo el toner y el texto blanco sale invisible.
+
+   react-to-print copia el nodo del comprobante y las hojas de
+   estilo a un iframe, asi que estas reglas aplican tanto ahi
+   como si se imprime la pagina directo con Ctrl+P.
+   ============================================================ */
+
+@media print {
+  /* Se pisan los tokens, incluso con .dark activo */
+  :root,
+  :root.dark,
+  .dark {
+    --background: #FFFFFF;
+    --foreground: #000000;
+    --card: #FFFFFF;
+    --card-foreground: #000000;
+    --surface-2: #FFFFFF;
+    --popover: #FFFFFF;
+    --popover-foreground: #000000;
+    --muted: #FFFFFF;
+    --muted-foreground: #333333;
+    --secondary: #FFFFFF;
+    --accent: #FFFFFF;
+    --border: #000000;
+    --shadow-card: none;
+    --shadow-raised: none;
+
+    /* MUI corre con cssVariables: true, asi que resuelve sus colores por sus
+       propias variables. Sin pisar estas, los Typography salen en blanco. */
+    --mui-palette-text-primary: #000000;
+    --mui-palette-text-secondary: #333333;
+    --mui-palette-background-paper: #FFFFFF;
+    --mui-palette-background-default: #FFFFFF;
+    --mui-palette-divider: #000000;
+  }
+
+  html,
+  body {
+    background: #FFFFFF !important;
+    color: #000000 !important;
+  }
+
+  /* Red de seguridad: cualquier texto dentro del comprobante va en negro,
+     sin importar de que capa venga su color. */
+  #print-area,
+  #print-area *,
+  .receipt-container,
+  .receipt-container * {
+    color: #000000 !important;
+    border-color: #000000 !important;
+  }
+
+  /* MUI pinta el fondo de Paper/Card/Table con el color del tema:
+     hay que anularlo explicitamente o el bloque sale negro. */
+  .MuiPaper-root,
+  .MuiCard-root,
+  .MuiTableCell-root,
+  .MuiTableContainer-root,
+  #print-area,
+  .receipt-container {
+    background-color: #FFFFFF !important;
+    background-image: none !important;
+    color: #000000 !important;
+    box-shadow: none !important;
+  }
+
+  /* La interfaz no se imprime: solo el comprobante */
+  .MuiAppBar-root,
+  .MuiDrawer-root,
+  .MuiBackdrop-root,
+  nav,
+  .no-print {
+    display: none !important;
+  }
+
+  /* El comprobante ocupa el ancho del papel, sin margenes heredados */
+  .receipt-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+  }
+
+  /* Evita que un item quede partido entre dos hojas */
+  tr,
+  img {
+    break-inside: avoid;
+  }
+
+  @page {
+    margin: 6mm;
   }
 }

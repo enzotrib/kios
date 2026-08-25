@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import Alpine from 'alpinejs';
 import numeral from 'numeral';
 import Mustache from 'mustache';
+import { t } from '@/i18n';
 const QuotationView = ({ quotation, template }) => {
     const [renderedTemplate, setRenderedTemplate] = useState('');
 
@@ -31,7 +32,7 @@ const QuotationView = ({ quotation, template }) => {
 
     return (
         <>
-            <Head title="Quotation" />
+            <Head title={t("Quotation")} />
             <Grid container spacing={2} sx={{ justifyContent: "center", margin: '20px 0' }}>
                 <Grid size={12} style={{ textAlign: 'center' }}>
                     <div className="no-print print:hidden">
@@ -40,7 +41,7 @@ const QuotationView = ({ quotation, template }) => {
                             endIcon={<PrintIcon />}
                             onClick={() => window.print()}
                         >
-                            Print
+                            {t("Print")}
                         </Button>
                     </div>
                 </Grid>

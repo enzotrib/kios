@@ -23,6 +23,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { Save, RotateCcw, ChevronDown } from 'lucide-react';
 import JsBarcode from 'jsbarcode';
+import { t } from '@/i18n';
 
 const BarcodeTemplateEditor = ({ settings }) => {
     const [template, setTemplate] = useState('');
@@ -205,7 +206,7 @@ const BarcodeTemplateEditor = ({ settings }) => {
     if (loading) {
         return (
             <Box sx={{ p: 3, textAlign: 'center' }}>
-                <Typography>Loading template...</Typography>
+                <Typography>{t("Loading template...")}</Typography>
             </Box>
         );
     }
@@ -219,15 +220,14 @@ const BarcodeTemplateEditor = ({ settings }) => {
             <Paper elevation={2} sx={{ p: 3 }}>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
                     <Typography variant="h6" sx={{ fontWeight: 600 }}>
-                        Barcode Template Editor
+                        {t("Barcode Template Editor")}
                     </Typography>
                     <Stack direction="row" spacing={1}>
-                        <Tooltip title="Save Template">
+                        <Tooltip title={t("Save Template")}>
                             <IconButton
                                 size="large"
                                 onClick={handleTemplateSave}
                                 disabled={saving}
-                                color="success"
                                 sx={{
                                     backgroundColor: 'rgba(76, 175, 80, 0.1)',
                                     '&:hover': {
@@ -238,7 +238,7 @@ const BarcodeTemplateEditor = ({ settings }) => {
                                 <Save size={24} />
                             </IconButton>
                         </Tooltip>
-                        <Tooltip title="Reset Template">
+                        <Tooltip title={t("Reset Template")}>
                             <IconButton
                                 size="large"
                                 onClick={fetchBarcodeTemplate}
@@ -259,10 +259,10 @@ const BarcodeTemplateEditor = ({ settings }) => {
                 <Divider sx={{ mb: 3 }} />
 
                 {/* Barcode Settings Accordion */}
-                <Accordion defaultExpanded sx={{ mb: 3, boxShadow: 'none', border: '1px solid #e0e0e0' }}>
+                <Accordion defaultExpanded sx={{ mb: 3, boxShadow: 'none', border: '1px solid var(--border)' }}>
                     <AccordionSummary expandIcon={<ChevronDown size={20} />}>
                         <Typography variant="subtitle2" sx={{ fontWeight: 500 }}>
-                            Barcode Format Settings
+                            {t("Barcode Format Settings")}
                         </Typography>
                     </AccordionSummary>
                     <AccordionDetails sx={{ pt: 2 }}>
@@ -270,7 +270,7 @@ const BarcodeTemplateEditor = ({ settings }) => {
                             <Grid item xs={12} sm={6} md={3}>
                                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
                                     <Typography variant="caption" sx={{ fontWeight: 500, color: '#666' }}>
-                                        Format
+                                        {t("Format")}
                                     </Typography>
                                     <select
                                         value={barcodeSettings.format}
@@ -278,7 +278,7 @@ const BarcodeTemplateEditor = ({ settings }) => {
                                         style={{
                                             padding: '8px',
                                             borderRadius: '4px',
-                                            border: '1px solid #ccc',
+                                            border: '1px solid var(--border)',
                                             fontFamily: 'inherit',
                                             fontSize: '0.875rem',
                                         }}
@@ -292,7 +292,7 @@ const BarcodeTemplateEditor = ({ settings }) => {
                             <Grid item xs={12} sm={6} md={3}>
                                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
                                     <Typography variant="caption" sx={{ fontWeight: 500, color: '#666' }}>
-                                        Width
+                                        {t("Width")}
                                     </Typography>
                                     <TextField
                                         type="number"
@@ -307,7 +307,7 @@ const BarcodeTemplateEditor = ({ settings }) => {
                             <Grid item xs={12} sm={6} md={3}>
                                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
                                     <Typography variant="caption" sx={{ fontWeight: 500, color: '#666' }}>
-                                        Height
+                                        {t("Height")}
                                     </Typography>
                                     <TextField
                                         type="number"
@@ -322,7 +322,7 @@ const BarcodeTemplateEditor = ({ settings }) => {
                             <Grid item xs={12} sm={6} md={3}>
                                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
                                     <Typography variant="caption" sx={{ fontWeight: 500, color: '#666' }}>
-                                        Font Size
+                                        {t("Font Size")}
                                     </Typography>
                                     <TextField
                                         type="number"
@@ -344,7 +344,7 @@ const BarcodeTemplateEditor = ({ settings }) => {
                         {/* Template Editor */}
                         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                             <Typography variant="subtitle2" sx={{ mb: 1, fontWeight: 500 }}>
-                                Template HTML
+                                {t("Template HTML")}
                             </Typography>
                             <TextField
                                 id="template-textarea"
@@ -352,12 +352,12 @@ const BarcodeTemplateEditor = ({ settings }) => {
                                 fullWidth
                                 value={template}
                                 onChange={(e) => setTemplate(e.target.value)}
-                                placeholder="Enter HTML template with {{variable}} placeholders"
+                                placeholder={t("Enter HTML template with {{variable}} placeholders")}
                                 rows={12}
                                 sx={{
                                     fontFamily: 'monospace',
                                     fontSize: '0.85rem',
-                                    backgroundColor: '#f5f5f5',
+                                    backgroundColor: 'var(--surface-2)',
                                     '& .MuiOutlinedInput-input': {
                                         resize: 'vertical',
                                     },
@@ -368,10 +368,10 @@ const BarcodeTemplateEditor = ({ settings }) => {
 
                         {/* Accordions for Variables and Sample Data */}
                         <Box sx={{ mt: 1 }}>
-                            <Accordion defaultExpanded sx={{ boxShadow: 'none', border: '1px solid #e0e0e0' }}>
+                            <Accordion defaultExpanded sx={{ boxShadow: 'none', border: '1px solid var(--border)' }}>
                                 <AccordionSummary expandIcon={<ChevronDown size={20} />}>
                                     <Typography variant="subtitle2" sx={{ fontWeight: 500 }}>
-                                        Variables (Click to Insert)
+                                        {t("Variables (Click to Insert)")}
                                     </Typography>
                                 </AccordionSummary>
                                 <AccordionDetails sx={{ pt: 1 }}>
@@ -392,10 +392,10 @@ const BarcodeTemplateEditor = ({ settings }) => {
                                 </AccordionDetails>
                             </Accordion>
 
-                            <Accordion sx={{ boxShadow: 'none', border: '1px solid #e0e0e0', mt: 1 }}>
+                            <Accordion sx={{ boxShadow: 'none', border: '1px solid var(--border)', mt: 1 }}>
                                 <AccordionSummary expandIcon={<ChevronDown size={20} />}>
                                     <Typography variant="subtitle2" sx={{ fontWeight: 500 }}>
-                                        Sample Data for Preview
+                                        {t("Sample Data for Preview")}
                                     </Typography>
                                 </AccordionSummary>
                                 <AccordionDetails sx={{ pt: 1 }}>
@@ -420,7 +420,7 @@ const BarcodeTemplateEditor = ({ settings }) => {
                     {/* Right Column: Preview */}
                     <Grid item xs={12} md={8} sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
                         <Typography variant="subtitle2" sx={{ fontWeight: 500 }}>
-                            Live Preview
+                            {t("Live Preview")}
                         </Typography>
 
                         {validationErrors.length > 0 && (
@@ -433,14 +433,14 @@ const BarcodeTemplateEditor = ({ settings }) => {
                             </Alert>
                         )}
 
-                        <Card sx={{ backgroundColor: '#fafafa', display: 'flex', flexDirection: 'column', maxHeight: '600px' }}>
+                        <Card sx={{ backgroundColor: 'var(--surface-2)', display: 'flex', flexDirection: 'column', maxHeight: '600px' }}>
                             <CardContent sx={{ overflowY: 'auto', p: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
                                 {previewHtml ? (
                                     <Box
                                         sx={{
                                             p: 2,
                                             backgroundColor: 'white',
-                                            border: '1px solid #e0e0e0',
+                                            border: '1px solid var(--border)',
                                             borderRadius: '4px',
                                             width: '100%',
                                             maxWidth: '320px',
@@ -453,7 +453,7 @@ const BarcodeTemplateEditor = ({ settings }) => {
                                         sx={{
                                             p: 2,
                                             backgroundColor: 'white',
-                                            border: '1px dashed #cccccc',
+                                            border: '1px dashed var(--border)',
                                             borderRadius: '4px',
                                             width: '100%',
                                             maxWidth: '320px',
@@ -466,7 +466,7 @@ const BarcodeTemplateEditor = ({ settings }) => {
                                         }}
                                     >
                                         <Typography variant="body2">
-                                            Enter template on the left to see preview
+                                            {t("Enter template on the left to see preview")}
                                         </Typography>
                                     </Box>
                                 )}
@@ -476,21 +476,21 @@ const BarcodeTemplateEditor = ({ settings }) => {
                 </Grid>
             </Paper>
 
-            <Paper elevation={1} sx={{ p: 2, backgroundColor: '#f0f7ff', border: '1px solid #b3d9ff' }}>
+            <Paper elevation={1} sx={{ p: 2, backgroundColor: 'var(--primary-soft)', border: '1px solid #b3d9ff' }}>
                 <Typography variant="subtitle2" sx={{ mb: 1, fontWeight: 500, color: '#0066cc' }}>
-                    💡 Template Tips
+                    {t("💡 Template Tips")}
                 </Typography>
                 <Typography variant="body2" sx={{ mb: 0.5, fontSize: '0.9rem' }}>
-                    • Use HTML and CSS to structure your barcode template
+                    {t("• Use HTML and CSS to structure your barcode template")}
                 </Typography>
                 <Typography variant="body2" sx={{ mb: 0.5, fontSize: '0.9rem' }}>
-                    • Insert variables using double curly braces: <code>{"{{variable_name}}"}</code>
+                    {t("• Insert variables using double curly braces:")} <code>{"{{variable_name}}"}</code>
                 </Typography>
                 <Typography variant="body2" sx={{ mb: 0.5, fontSize: '0.9rem' }}>
-                    • For barcodes, create an SVG element with <code>id="barcode-svg"</code>
+                    {t("• For barcodes, create an SVG element with")} <code>{t("id=\"barcode-svg\"")}</code>
                 </Typography>
                 <Typography variant="body2" sx={{ fontSize: '0.9rem' }}>
-                    • Click any variable chip on the left to insert it into your template
+                    {t("• Click any variable chip on the left to insert it into your template")}
                 </Typography>
             </Paper>
         </Box>

@@ -20,23 +20,25 @@ import numeral from "numeral";
 
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import CustomPagination from "@/Components/CustomPagination";
+import { t } from '@/i18n';
+import SearchField from '@/Components/design/SearchField';
 
 const columns = (handleRowClick) => [
-    { field: 'id', headerName: 'ID', width: 90 },
+    { field: 'id', headerName: t("ID"), width: 90 },
     {
-        field: 'transaction_date', headerName: 'Date', width: 150,
+        field: 'transaction_date', headerName: t("Date"), width: 150,
         renderCell: (params) => dayjs(params.value).format('DD MMM YYYY')
     },
     {
-        field: 'name', headerName: 'Name', width: 150,
+        field: 'name', headerName: t("Name"), width: 150,
         renderCell: (params) => <span className="hover:underline cursor-pointer font-bold" onClick={() => handleRowClick(params.row, 'edit_inventory_item')}>{params.value}</span>
     },
     {
-        field: "reason", headerName:'Description', width: 300
+        field: "reason", headerName:t("Description"), width: 300
     },
     {
         field: 'quantity',
-        headerName: 'Quantity',
+        headerName: t("Quantity"),
         width: 150,
         renderCell: (params) => (
             <span className="hover:underline cursor-pointer font-bold" onClick={() => handleRowClick(params.row, 'inventory_transaction')}>
@@ -98,8 +100,6 @@ const InventoryLog = ({ inventory_log, stores }) => {
             text: "You won't be able to revert this!",
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
@@ -125,7 +125,7 @@ const InventoryLog = ({ inventory_log, stores }) => {
 
     return (
         <AuthenticatedLayout>
-            <Head title="Inventory" />
+            <Head title={t("Inventory")} />
             <Grid
                 container
                 spacing={2}
@@ -134,11 +134,9 @@ const InventoryLog = ({ inventory_log, stores }) => {
             >
 
                 <Grid size={{ xs: 12, sm: 3 }}>
-                    <TextField
-                        label="Search..."
+                    <SearchField
                         name="search_query"
-                        placeholder="Start typing..."
-                        fullWidth
+                        placeholder={t("Start typing...")}
                     />
                 </Grid>
                 <Grid size={{ xs: 4, sm: 1 }}>

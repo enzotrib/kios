@@ -8,6 +8,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
 import { useCurrencyFormatter } from '@/lib/currencyFormatter';
 import { useCurrencyStore } from '@/stores/currencyStore';
+import { t } from '@/i18n';
 
 export default function CartSummary() {
     const { cartState, cartTotal, totalQuantity, charges, totalChargeAmount, finalTotal, discount, calculateChargeAmountWithDiscount, addCharge, removeCharge } = useCart();
@@ -62,18 +63,18 @@ export default function CartSummary() {
             <Divider
                 sx={{
                     borderBottom: "2px dashed",
-                    borderColor: "grey.500",
+                    borderColor: "divider",
                     my: 1,
                 }}
             />
             <ListItem
                 secondaryAction={
                     <Typography variant="h5" color="initial" sx={{ fontSize: { sm: '1rem', xs: '1.2rem' } }}>
-                        <strong>{cartState.length} | Qty. {totalQuantity}</strong>
+                        <strong>{cartState.length} {t("| Qty.")} {totalQuantity}</strong>
                     </Typography>
                 }
             >
-                <ListItemText primary="Total Items" />
+                <ListItemText primary={t("Total Items")} />
             </ListItem>
 
             {/* Subtotal */}
@@ -84,17 +85,17 @@ export default function CartSummary() {
                     </Typography>
                 }
             >
-                <ListItemText primary="Subtotal" />
+                <ListItemText primary={t("Subtotal")} />
             </ListItem>
 
-            <Divider sx={{ borderBottom: "1px dashed", borderColor: "grey.400", my: 1 }} />
+            <Divider sx={{ borderBottom: "1px dashed", borderColor: "divider", my: 1 }} />
 
             {/* Charges Section */}
             {charges.length > 0 && (
                 <>
                     <Box sx={{ px: 2, py: 1 }}>
                         <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 1 }}>
-                            Charges & Taxes
+                            {t("Charges & Taxes")}
                         </Typography>
                         {charges.map((charge) => (
                             <Box
@@ -111,7 +112,7 @@ export default function CartSummary() {
                                     <Typography variant="body2" sx={{ fontSize: "0.85rem" }}>
                                         {charge.name}
                                     </Typography>
-                                    <Typography variant="caption" sx={{ color: "grey.600" }}>
+                                    <Typography variant="caption" sx={{ color: "text.secondary" }}>
                                         {charge.rate_type === 'percentage'
                                             ? `${charge.rate_value}%`
                                             : `Fixed`}
@@ -132,7 +133,7 @@ export default function CartSummary() {
                             </Box>
                         ))}
                     </Box>
-                    <Divider sx={{ borderBottom: "1px dashed", borderColor: "grey.400", my: 1 }} />
+                    <Divider sx={{ borderBottom: "1px dashed", borderColor: "divider", my: 1 }} />
                 </>
             )}
 
@@ -146,7 +147,7 @@ export default function CartSummary() {
                         onClick={() => setOpenChargesDialog(true)}
                         fullWidth
                     >
-                        Add Charge
+                        {t("Add Charge")}
                     </Button>
                 </Box>
             )}
@@ -160,11 +161,11 @@ export default function CartSummary() {
                         </Typography>
                     }
                 >
-                    <ListItemText primary="Total Charges" />
+                    <ListItemText primary={t("Total Charges")} />
                 </ListItem>
             )}
 
-            <Divider sx={{ borderBottom: "2px dashed", borderColor: "grey.500", my: 1 }} />
+            <Divider sx={{ borderBottom: "2px dashed", borderColor: "divider", my: 1 }} />
 
             {/* Final Total */}
             <ListItem
@@ -182,7 +183,7 @@ export default function CartSummary() {
                 }
             >
                 <ListItemText
-                    primary="FINAL TOTAL"
+                    primary={t("FINAL TOTAL")}
                     slotProps={{
                         primary: { sx: { fontWeight: 700, fontSize: "1.1rem" } },
                     }}
@@ -191,12 +192,12 @@ export default function CartSummary() {
 
             {/* Add Charge Dialog */}
             <Dialog open={openChargesDialog} onClose={() => setOpenChargesDialog(false)}>
-                <DialogTitle>Add Charge/Tax</DialogTitle>
+                <DialogTitle>{t("Add Charge/Tax")}</DialogTitle>
                 <DialogContent sx={{ minWidth: 300, pt: 2 }}>
                     <TextField
                         select
                         fullWidth
-                        label="Select Charge"
+                        label={t("Select Charge")}
                         value={selectedCharge}
                         onChange={(e) => setSelectedCharge(e.target.value)}
                         size="small"
@@ -209,13 +210,13 @@ export default function CartSummary() {
                     </TextField>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => setOpenChargesDialog(false)}>Cancel</Button>
+                    <Button onClick={() => setOpenChargesDialog(false)}>{t("Cancel")}</Button>
                     <Button
                         onClick={handleAddCharge}
                         variant="contained"
                         disabled={!selectedCharge}
                     >
-                        Add
+                        {t("Add")}
                     </Button>
                 </DialogActions>
             </Dialog>

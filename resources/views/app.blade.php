@@ -8,7 +8,22 @@
         <title inertia>{{ config('app.name', 'InfoShop') }}</title>
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700&display=swap" rel="stylesheet" />
+
+        {{-- Aplica el tema antes del primer pintado para que no haya un flash blanco
+             al entrar en modo oscuro. Debe correr antes del CSS y del JS de la app. --}}
+        <script>
+            (function () {
+                try {
+                    var saved = localStorage.getItem('infoshop-theme');
+                    var dark = saved
+                        ? saved === 'dark'
+                        : window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    if (dark) document.documentElement.classList.add('dark');
+                    document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
+                } catch (e) {}
+            })();
+        </script>
 
         <!-- Scripts -->
         @init

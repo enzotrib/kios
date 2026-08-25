@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Button, Grid, Paper, TextField, MenuItem } from '@mui/material';
 import { useEffect } from 'react';
+import { t } from '@/i18n';
 
 const MiscSetting = ({ handleSubmit, settingFormData, handleChange, setSettingFormData, settings }) => {
 
@@ -49,7 +50,7 @@ const MiscSetting = ({ handleSubmit, settingFormData, handleChange, setSettingFo
                                 <TextField
                                     fullWidth
                                     variant="outlined"
-                                    label={"Cheque Alert"}
+                                    label={t("Cheque Alert")}
                                     name="cheque_alert"
                                     multiline
                                     required
@@ -61,7 +62,7 @@ const MiscSetting = ({ handleSubmit, settingFormData, handleChange, setSettingFo
                                 <TextField
                                     fullWidth
                                     variant="outlined"
-                                    label={"Product Alert"}
+                                    label={t("Product Alert")}
                                     name="product_alert"
                                     multiline
                                     required
@@ -73,53 +74,53 @@ const MiscSetting = ({ handleSubmit, settingFormData, handleChange, setSettingFo
                                 <TextField
                                     fullWidth
                                     variant="outlined"
-                                    label={"Cart First Focus"}
+                                    label={t("Cart First Focus")}
                                     name="cart_first_focus"
                                     required
                                     value={settingFormData.cart_first_focus}
                                     onChange={handleChange}
                                     select
                                 >
-                                    <MenuItem value="quantity">Quantity</MenuItem>
-                                    <MenuItem value="discount">Discount</MenuItem>
-                                    <MenuItem value="price">Price</MenuItem>
+                                    <MenuItem value="quantity">{t("Quantity")}</MenuItem>
+                                    <MenuItem value="discount">{t("Discount")}</MenuItem>
+                                    <MenuItem value="price">{t("Price")}</MenuItem>
                                 </TextField>
                             </Grid>
                             <Grid size={6}>
                                 <TextField
                                     fullWidth
                                     variant="outlined"
-                                    label={"Enable Unit Discount"}
+                                    label={t("Enable Unit Discount")}
                                     name="enable_unit_discount"
                                     required
                                     value={settingFormData.enable_unit_discount}
                                     onChange={handleChange}
                                     select
                                 >
-                                    <MenuItem value="yes">Yes</MenuItem>
-                                    <MenuItem value="no">No</MenuItem>
+                                    <MenuItem value="yes">{t("Yes")}</MenuItem>
+                                    <MenuItem value="no">{t("No")}</MenuItem>
                                 </TextField>
                             </Grid>
                             <Grid size={6}>
                                 <TextField
                                     fullWidth
                                     variant="outlined"
-                                    label={"Enable Flat Discount"}
+                                    label={t("Enable Flat Discount")}
                                     name="enable_flat_item_discount"
                                     required
                                     value={settingFormData.enable_flat_item_discount}
                                     onChange={handleChange}
                                     select
                                 >
-                                    <MenuItem value="yes">Yes</MenuItem>
-                                    <MenuItem value="no">No</MenuItem>
+                                    <MenuItem value="yes">{t("Yes")}</MenuItem>
+                                    <MenuItem value="no">{t("No")}</MenuItem>
                                 </TextField>
                             </Grid>
                             <Grid size={6}>
                                 <TextField
                                     fullWidth
                                     variant="outlined"
-                                    label={"Optimize Image Width"}
+                                    label={t("Optimize Image Width")}
                                     name="optimize_image_width"
                                     multiline
                                     required
@@ -131,7 +132,7 @@ const MiscSetting = ({ handleSubmit, settingFormData, handleChange, setSettingFo
                                 <TextField
                                     fullWidth
                                     variant="outlined"
-                                    label={"Optimize Image Size"}
+                                    label={t("Optimize Image Size")}
                                     name="optimize_image_size"
                                     multiline
                                     required
@@ -149,10 +150,9 @@ const MiscSetting = ({ handleSubmit, settingFormData, handleChange, setSettingFo
                             type="submit"
                             variant="outlined"
                             size="large"
-                            color="success"
                             fullWidth
                         >
-                            UPDATE
+                            {t("UPDATE")}
                         </Button>
                     </Grid>
                 </Grid>

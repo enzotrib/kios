@@ -22,42 +22,43 @@ import numeral from "numeral";
 
 import { DataGrid } from "@mui/x-data-grid";
 import CustomPagination from "@/Components/CustomPagination";
+import { t } from '@/i18n';
 
 const columns = (handleRowClick) => [
-    { field: "id", headerName: "ID", width: 80 },
+    { field: "id", headerName: t("ID"), width: 80 },
     {
         field: "quotation_number",
-        headerName: "Quotation Number",
+        headerName: t("Quotation Number"),
         width: 150,
     },
 
     {
         field: "contact_name",
-        headerName: "Contact Name",
+        headerName: t("Contact Name"),
         width: 200,
     },
     {
         field: "quotation_date",
-        headerName: "Quotation Date",
+        headerName: t("Quotation Date"),
         width: 150,
         renderCell: (params) => dayjs(params.value).format("YYYY-MM-DD"),
     },
     {
         field: "expiry_date",
-        headerName: "Expiry Date",
+        headerName: t("Expiry Date"),
         width: 100,
         renderCell: (params) => dayjs(params.value).format("YYYY-MM-DD"),
     },
     {
         field: "total",
-        headerName: "Total",
+        headerName: t("Total"),
         width: 100,
         align: 'right', headerAlign: 'right',
         renderCell: (params) => numeral(params.value).format('0,0.00'),
     },
     {
         field: 'action',
-        headerName: 'Actions',
+        headerName: t("Actions"),
         width: 150, align: 'right', headerAlign: 'right',
         renderCell: (params) => (
             <>
@@ -157,7 +158,7 @@ export default function Quotation({ quotations }) {
 
     return (
         <AuthenticatedLayout>
-            <Head title="Quotations" />
+            <Head title={t("Quotations")} />
             <Grid
                 container
                 spacing={2}
@@ -166,8 +167,8 @@ export default function Quotation({ quotations }) {
             >
                 <Grid size={{ xs: 12, sm: 3 }}>
                     <TextField
-                        label="Search..."
-                        placeholder="Start typing..."
+                        label={t("Search...")}
+                        placeholder={t("Start typing...")}
                         fullWidth
                     />
                 </Grid>
@@ -179,9 +180,8 @@ export default function Quotation({ quotations }) {
                         startIcon={<AddCircleIcon />}
                         size="large"
                         fullWidth
-                        color="success"
                     >
-                        QUOTATION
+                        {t("QUOTATION")}
                     </Button>
                 </Grid>
             </Grid>
@@ -198,7 +198,7 @@ export default function Quotation({ quotations }) {
             </Box>
             <Grid size={12} container sx={{ justifyContent: "end" }}>
                 <TextField
-                    label="Per page"
+                    label={t("Per page")}
                     value={searchTerms.per_page}
                     onChange={handleFilterChange}
                     name="per_page"

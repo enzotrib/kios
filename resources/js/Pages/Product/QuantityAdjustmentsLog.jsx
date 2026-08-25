@@ -2,10 +2,11 @@ import * as React from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, usePage } from "@inertiajs/react";
 import dayjs from "dayjs";
+import { t } from '@/i18n';
 
 export default function QuantityAdjustmentsLog({ adjustments }) {
     const getRowBgColor = (type) => {
-        return type === 'sale' ? 'bg-blue-50' : 'bg-white';
+        return type === 'sale' ? 'bg-[var(--primary-soft)]' : 'bg-[var(--card)]';
     };
 
     const getTypeLabel = (type) => {
@@ -14,17 +15,17 @@ export default function QuantityAdjustmentsLog({ adjustments }) {
 
     return (
         <AuthenticatedLayout>
-            <Head title="Adjustment Log" />
+            <Head title={t("Adjustment Log")} />
             <div className="overflow-x-auto">
                 <table className="table-auto w-full">
                     <thead className="bg-gray-700">
                         <tr>
-                            <th className="px-6 py-2 font-medium text-left text-white">Date</th>
-                            <th className="px-6 py-2 font-medium text-left text-white">Product</th>
-                            <th className="px-6 py-2 font-medium text-left text-white">Type</th>
-                            <th className="px-6 py-2 font-medium text-left text-white">Adjusted Qty</th>
-                            <th className="px-6 py-2 font-medium text-left text-white">Adjustment</th>
-                            <th className="px-6 py-2 font-medium text-left text-white">Reason</th>
+                            <th className="px-6 py-2 font-medium text-left text-white">{t("Date")}</th>
+                            <th className="px-6 py-2 font-medium text-left text-white">{t("Product")}</th>
+                            <th className="px-6 py-2 font-medium text-left text-white">{t("Type")}</th>
+                            <th className="px-6 py-2 font-medium text-left text-white">{t("Adjusted Qty")}</th>
+                            <th className="px-6 py-2 font-medium text-left text-white">{t("Adjustment")}</th>
+                            <th className="px-6 py-2 font-medium text-left text-white">{t("Reason")}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -35,8 +36,8 @@ export default function QuantityAdjustmentsLog({ adjustments }) {
                                 <td className="border px-6 py-1">
                                     <span className={`px-2 py-1 rounded text-xs font-semibold ${
                                         adjustment.type === 'sale'
-                                            ? 'bg-blue-200 text-blue-800'
-                                            : 'bg-gray-200 text-gray-800'
+                                            ? 'bg-[var(--primary-soft)] text-[var(--info)]'
+                                            : 'bg-[var(--surface-2)] text-[var(--foreground)]'
                                     }`}>
                                         {getTypeLabel(adjustment.type)}
                                     </span>

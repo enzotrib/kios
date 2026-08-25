@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Archive, Download, Loader2, RefreshCw, Trash2, UploadCloud } from "lucide-react";
+import { t } from '@/i18n';
 
 export default function BackupFilesTab() {
     const [files, setFiles] = useState([]);
@@ -88,9 +89,9 @@ export default function BackupFilesTab() {
             <div className="bg-teal-50 border border-teal-200 rounded-lg p-4 flex items-start gap-3">
                 <Archive className="w-5 h-5 text-teal-600 flex-shrink-0 mt-0.5" />
                 <div>
-                    <p className="text-sm font-semibold text-teal-900">Backup Files</p>
+                    <p className="text-sm font-semibold text-teal-900">{t("Backup Files")}</p>
                     <p className="text-xs text-teal-700 mt-1">
-                        Review previously generated backups, download copies, or delete old archives to reclaim disk space.
+                        {t("Review previously generated backups, download copies, or delete old archives to reclaim disk space.")}
                     </p>
                 </div>
             </div>
@@ -99,52 +100,52 @@ export default function BackupFilesTab() {
                 <button
                     onClick={handleBackupNow}
                     disabled={runningBackup}
-                    className="bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white px-4 py-2.5 rounded-lg font-semibold text-sm transition-colors flex items-center justify-center gap-2"
+                    className="bg-green-600 hover:bg-green-700 disabled:bg-[var(--surface-2)] text-white px-4 py-2.5 rounded-lg font-semibold text-sm transition-colors flex items-center justify-center gap-2"
                 >
                     {runningBackup ? <Loader2 className="w-4 h-4 animate-spin" /> : <UploadCloud className="w-4 h-4" />}
-                    Backup Now
+                    {t("Backup Now")}
                 </button>
                 <button
                     onClick={fetchFiles}
                     disabled={loading}
-                    className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white px-4 py-2.5 rounded-lg font-semibold text-sm transition-colors flex items-center justify-center gap-2"
+                    className="bg-blue-600 hover:bg-blue-700 disabled:bg-[var(--surface-2)] text-white px-4 py-2.5 rounded-lg font-semibold text-sm transition-colors flex items-center justify-center gap-2"
                 >
                     {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <RefreshCw className="w-4 h-4" />}
-                    Refresh List
+                    {t("Refresh List")}
                 </button>
-                <div className="text-sm text-gray-600 px-3 py-2 bg-gray-100 rounded-lg border border-gray-200">
-                    {files.length} backup{files.length === 1 ? "" : "s"} available
+                <div className="text-sm text-[var(--muted-foreground)] px-3 py-2 bg-[var(--surface-2)] rounded-lg border border-[var(--border)]">
+                    {files.length} {t("backup")}{files.length === 1 ? "" : "s"} {t("available")}
                 </div>
             </div>
 
             {error && (
-                <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-sm text-red-700">
+                <div className="bg-[var(--destructive-soft)] border border-[var(--destructive)] rounded-lg p-3 text-sm text-[var(--destructive)]">
                     {error}
                 </div>
             )}
 
             {loading ? (
                 <div className="flex items-center justify-center py-12">
-                    <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
-                    <span className="ml-3 text-gray-600">Loading backups...</span>
+                    <Loader2 className="w-8 h-8 text-[var(--info)] animate-spin" />
+                    <span className="ml-3 text-[var(--muted-foreground)]">{t("Loading backups...")}</span>
                 </div>
             ) : files.length === 0 ? (
-                <div className="bg-gray-50 border border-dashed border-gray-300 rounded-lg p-6 text-center">
-                    <Archive className="w-10 h-10 text-gray-400 mx-auto mb-2" />
-                    <p className="text-gray-500 text-sm">No backups found</p>
-                    <p className="text-xs text-gray-400 mt-1">Use automation or manual backup tools to create one.</p>
+                <div className="bg-[var(--surface-2)] border border-dashed border-[var(--border)] rounded-lg p-6 text-center">
+                    <Archive className="w-10 h-10 text-[var(--muted-foreground)] mx-auto mb-2" />
+                    <p className="text-[var(--muted-foreground)] text-sm">{t("No backups found")}</p>
+                    <p className="text-xs text-[var(--muted-foreground)] mt-1">{t("Use automation or manual backup tools to create one.")}</p>
                 </div>
             ) : (
                 <div className="space-y-3">
                     {files.map((file) => (
                         <div
                             key={file.name}
-                            className="border border-gray-200 rounded-lg p-4 flex flex-col md:flex-row md:items-center gap-4"
+                            className="border border-[var(--border)] rounded-lg p-4 flex flex-col md:flex-row md:items-center gap-4"
                         >
                             <div className="flex-1 min-w-0">
-                                <p className="font-semibold text-gray-900 break-words">{file.name}</p>
-                                <p className="text-sm text-gray-600 mt-1">
-                                    {file.size_human} • Updated {formatDate(file.last_modified)}
+                                <p className="font-semibold text-[var(--foreground)] break-words">{file.name}</p>
+                                <p className="text-sm text-[var(--muted-foreground)] mt-1">
+                                    {file.size_human} {t("• Updated")} {formatDate(file.last_modified)}
                                 </p>
                             </div>
                             <div className="flex gap-2">
@@ -153,19 +154,19 @@ export default function BackupFilesTab() {
                                     className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2"
                                 >
                                     <Download className="w-4 h-4" />
-                                    Download
+                                    {t("Download")}
                                 </button>
                                 <button
                                     onClick={() => handleDelete(file)}
                                     disabled={deleting === file.name}
-                                    className="bg-red-600 hover:bg-red-700 disabled:bg-gray-400 text-white px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2"
+                                    className="bg-red-600 hover:bg-red-700 disabled:bg-[var(--surface-2)] text-white px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2"
                                 >
                                     {deleting === file.name ? (
                                         <Loader2 className="w-4 h-4 animate-spin" />
                                     ) : (
                                         <Trash2 className="w-4 h-4" />
                                     )}
-                                    Delete
+                                    {t("Delete")}
                                 </button>
                             </div>
                         </div>

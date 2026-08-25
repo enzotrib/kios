@@ -12,8 +12,10 @@ import {
     Divider,
     Alert,
     Box,
-    IconButton
+    IconButton,
+    Typography
 } from "@mui/material";
+import SectionHeader from "@/Components/design/SectionHeader";
 import dayjs from "dayjs";
 import { Card, CardContent } from "@/Components/ui/card"
 
@@ -32,6 +34,7 @@ import { OverViewCards } from "./Partials/OverViewCards";
 import { DatePicker } from "@mui/x-date-pickers";
 import MUIDatePicker from "@/Components/ui/MUIDatePicker";
 import { DatabaseBackup } from "lucide-react";
+import { t } from '@/i18n';
 
 export default function Dashboard({ data, logo, version, store_name }) {
     const auth = usePage().props.auth.user;
@@ -71,12 +74,12 @@ export default function Dashboard({ data, logo, version, store_name }) {
     return (
         <AuthenticatedLayout
             header={
-                <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Dashboard
-                </h2>
+                <Typography variant="h4" sx={{ color: 'text.primary' }}>
+                    {t("Dashboard")}
+                </Typography>
             }
         >
-            <Head title="Dashboard" />
+            <Head title={t("Dashboard")} />
 
             {(auth.user_role == "admin" || auth.user_role == "super-admin") && (
 
@@ -84,28 +87,28 @@ export default function Dashboard({ data, logo, version, store_name }) {
                     {parseFloat(data.lowStock) != 0 && (
                         <Grid size={{ xs: 12, sm: 3 }}>
                             <Link href={"/products?status=alert&per_page=" + parseInt(data.lowStock)}>
-                                <Alert severity="warning"><strong>{data.lowStock}</strong> Alert Products</Alert>
+                                <Alert severity="warning"><strong>{data.lowStock}</strong> {t("Alert Products")}</Alert>
                             </Link>
                         </Grid>
                     )}
                     {parseFloat(data.outOfStock) != 0 && (
                         <Grid size={{ xs: 12, sm: 3 }}>
                             <Link href={"/products?status=out_of_stock&per_page=" + parseInt(data.outOfStock)}>
-                                <Alert severity="error"><strong>{data.outOfStock}</strong> Out of Stocks</Alert>
+                                <Alert severity="error"><strong>{data.outOfStock}</strong> {t("Out of Stocks")}</Alert>
                             </Link>
                         </Grid>
                     )}
                     {parseFloat(data.pending_cheque_count) != 0 && (
                         <Grid size={{ xs: 12, sm: 3 }}>
                             <Link href={"/cheques?status=pending&per_page=" + parseInt(data.pending_cheque_count)}>
-                                <Alert severity="primary"><strong>{data.pending_cheque_count}</strong> Pending Cheque/s</Alert>
+                                <Alert severity="primary"><strong>{data.pending_cheque_count}</strong> {t("Pending Cheque/s")}</Alert>
                             </Link>
                         </Grid>
                     )}
                     {parseFloat(data.cheque_alert_count) != 0 && (
                         <Grid size={{ xs: 12, sm: 3 }}>
                             <Link href={`/cheques?status=alert&per_page=${parseInt(data.cheque_alert_count)}`}>
-                                <Alert severity="error"><strong>{data.cheque_alert_count}</strong> Alert Cheque/s</Alert>
+                                <Alert severity="error"><strong>{data.cheque_alert_count}</strong> {t("Alert Cheque/s")}</Alert>
                             </Link>
                         </Grid>
                     )}
@@ -113,13 +116,22 @@ export default function Dashboard({ data, logo, version, store_name }) {
             )}
 
             {(auth.user_role == "admin" || auth.user_role == "super-admin") && (
-                <OverViewCards />
+                <>
+                    <SectionHeader
+                        title={t("Summary")}
+                        subtitle={t("Showing total sales for the last 3 months")}
+                        first
+                    />
+                    <OverViewCards />
+                </>
             )}
+
+            <SectionHeader title={t("Statistics")} />
 
             <Grid
                 container
                 size={{ xs: 12, sm: 8, md: 4 }}
-                sx={{ mt: "3rem", paddingBottom: 4 }}
+                sx={{ paddingBottom: 4 }}
                 spacing={2}
             >
                 {(auth.user_role == "admin" || auth.user_role == "super-admin") && (
@@ -132,10 +144,10 @@ export default function Dashboard({ data, logo, version, store_name }) {
                                     sx={{ display: "flex", width: "100%" }}
                                 >
                                     <Grid size={6}>
-                                        <MUIDatePicker name="start_date" label="Start Date" value={startDate} onChange={setStartDate} />
+                                        <MUIDatePicker name="start_date" label={t("Start Date")} value={startDate} onChange={setStartDate} />
                                     </Grid>
                                     <Grid size={6}>
-                                        <MUIDatePicker name="end_date" label="End Date" value={endDate} onChange={setEndDate} />
+                                        <MUIDatePicker name="end_date" label={t("End Date")} value={endDate} onChange={setEndDate} />
                                     </Grid>
                                 </Grid>
 
@@ -150,7 +162,7 @@ export default function Dashboard({ data, logo, version, store_name }) {
                                                 <ListItemIcon>
                                                     <PaidIcon />
                                                 </ListItemIcon>
-                                                <ListItemText primary="Sales" />
+                                                <ListItemText primary={t("Sales")} />
                                             </ListItemButton>
                                         </ListItem>
                                     </Link>
@@ -165,7 +177,7 @@ export default function Dashboard({ data, logo, version, store_name }) {
                                                 <ListItemIcon>
                                                     <PaymentsIcon />
                                                 </ListItemIcon>
-                                                <ListItemText primary="Cash" />
+                                                <ListItemText primary={t("Cash")} />
                                             </ListItemButton>
                                         </ListItem>
                                     </Link>
@@ -182,7 +194,7 @@ export default function Dashboard({ data, logo, version, store_name }) {
                                                         <ListItemIcon>
                                                             <ShoppingCartCheckoutIcon />
                                                         </ListItemIcon>
-                                                        <ListItemText primary="Inventory Purchase" />
+                                                        <ListItemText primary={t("Inventory Purchase")} />
                                                     </ListItemButton>
                                                 </ListItem>
                                             </Link>
@@ -199,7 +211,7 @@ export default function Dashboard({ data, logo, version, store_name }) {
                                                 <ListItemIcon>
                                                     <AccountBalanceWalletIcon />
                                                 </ListItemIcon>
-                                                <ListItemText primary="Expenses" />
+                                                <ListItemText primary={t("Expenses")} />
                                             </ListItemButton>
                                         </ListItem>
                                     </Link>
@@ -207,7 +219,7 @@ export default function Dashboard({ data, logo, version, store_name }) {
                                     <Divider />
                                     <Link href="/reports/summary-report">
                                         <ListItem>
-                                            <ListItemText sx={{ textAlign: 'center', color: '#1976d2', textDecoration: 'underline' }} primary="VIEW SUMMARY" />
+                                            <ListItemText sx={{ textAlign: 'center', color: 'var(--info)', textDecoration: 'underline' }} primary={t("VIEW SUMMARY")} />
                                         </ListItem>
                                     </Link>
                                 </List>
@@ -230,28 +242,28 @@ export default function Dashboard({ data, logo, version, store_name }) {
             <Box sx={{ justifyContent: 'center', alignItems: 'center', position: 'fixed', backgroundColor: '#c9c9c9', bottom: '2px', right: '6px', padding: '10px', paddingRight: 2 }}>
                 <Grid container spacing={1} sx={{ alignItems: 'center' }}>
                     <Grid>
-                        <a href="/clear-cache" title="Refresh cache">
+                        <a href="/clear-cache" title={t("Refresh cache")}>
                             <IconButton>
                                 <RefreshIcon />
                             </IconButton>
                         </a>
                     </Grid>
                     <Grid>
-                        <a href="/backup-now" title="Backup now" target="_blank">
+                        <a href="/backup-now" title={t("Backup now")} target="_blank">
                             <IconButton>
                                 <DatabaseBackup />
                             </IconButton>
                         </a>
                     </Grid>
                     <Grid>
-                        <a href="/maintenance" title="Maintenance">
+                        <a href="/maintenance" title={t("Maintenance")}>
                             <IconButton>
                                 <BuildIcon />
                             </IconButton>
                         </a>
                     </Grid>
                     <Grid>
-                        VERSION {version}
+                        {t("VERSION")} {version}
                     </Grid>
                 </Grid>
             </Box>

@@ -20,11 +20,13 @@ import CustomPagination from "@/Components/CustomPagination";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import SalesList from "./Partials/SalesList";
+import { t } from '@/i18n';
+import SearchField from '@/Components/design/SearchField';
 
 const columns = (handleRowClick, formatCurrency) => [
     {
         field: "id",
-        headerName: "ID",
+        headerName: t("ID"),
         width: 80,
         renderCell: (params) => {
             return "#" + params.value.toString().padStart(4, "0");
@@ -32,7 +34,7 @@ const columns = (handleRowClick, formatCurrency) => [
     },
     {
         field: "invoice_number",
-        headerName: "No",
+        headerName: t("No"),
         width: 160,
         renderCell: (params) => (
             <Button
@@ -44,7 +46,7 @@ const columns = (handleRowClick, formatCurrency) => [
         ),
     },
     {
-        field: "name", headerName: "Customer Name", width: 200,
+        field: "name", headerName: t("Customer Name"), width: 200,
         renderCell: (params) => (
             <Tooltip title={'' + params.row.balance} arrow>
                 <Button>{params.value}</Button>
@@ -52,20 +54,20 @@ const columns = (handleRowClick, formatCurrency) => [
         ),
     },
     {
-        field: "discount", headerName: "Discount", width: 80, align: 'right', headerAlign: 'right',
+        field: "discount", headerName: t("Discount"), width: 80, align: 'right', headerAlign: 'right',
         renderCell: (params) => {
             return formatCurrency(params.value, false);
         },
     },
     {
-        field: "total_amount", headerName: "Bill Amount", width: 120, align: 'right', headerAlign: 'right',
+        field: "total_amount", headerName: t("Bill Amount"), width: 120, align: 'right', headerAlign: 'right',
         renderCell: (params) => {
             return formatCurrency(params.value, false);
         },
     },
     {
         field: "amount_received",
-        headerName: "Received",
+        headerName: t("Received"),
         width: 130, align: 'right', headerAlign: 'right',
         renderCell: (params) => (
             <Button
@@ -84,23 +86,23 @@ const columns = (handleRowClick, formatCurrency) => [
     },
     {
         field: "change",
-        headerName: "Change",
+        headerName: t("Change"),
         width: 100, align: 'right', headerAlign: 'right',
         renderCell: (params) => {
             const change = params.row.amount_received - params.row.total_amount;
             return formatCurrency(change, false);
         },
     },
-    { field: 'profit_amount', headerName: 'Profit', width: 120 },
-    { field: "status", headerName: "Status", width: 100 },
+    { field: 'profit_amount', headerName: t("Profit"), width: 120 },
+    { field: "status", headerName: t("Status"), width: 100 },
     {
         field: "sale_date",
-        headerName: "Date",
+        headerName: t("Date"),
         width: 100,
     },
     {
         field: "action",
-        headerName: "Actions",
+        headerName: t("Actions"),
         width: 180,
         renderCell: (params) => (
             <>
@@ -189,8 +191,6 @@ export default function Sale({ sales, contacts }) {
             confirmButtonText: 'Yes, delete it!',
             cancelButtonText: 'No, cancel!',
             reverseButtons: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
         }).then((result) => {
             if (result.isConfirmed) {
                 axios
@@ -247,7 +247,7 @@ export default function Sale({ sales, contacts }) {
 
     return (
         <AuthenticatedLayout>
-            <Head title="Sales" />
+            <Head title={t("Sales")} />
 
             <Grid
                 container
@@ -258,7 +258,7 @@ export default function Sale({ sales, contacts }) {
                 <Grid size={{ xs: 12, sm: 3 }} sx={{ zIndex: 999 }}>
                     <Select2
                         className="w-full"
-                        placeholder="Select a contact..."
+                        placeholder={t("Select a contact...")}
                         styles={{
                             control: (baseStyles, state) => ({
                                 ...baseStyles,
@@ -276,24 +276,24 @@ export default function Sale({ sales, contacts }) {
                 <Grid size={{ xs: 12, sm: 2 }}>
                     <TextField
                         value={searchTerms.status}
-                        label="Status"
+                        label={t("Status")}
                         onChange={handleSearchChange}
                         name="status"
                         select
                         fullWidth
                         size="small"
                     >
-                        <MenuItem value={"all"}>All</MenuItem>
-                        <MenuItem value={"completed"}>Completed</MenuItem>
-                        <MenuItem value={"pending"}>Pending</MenuItem>
+                        <MenuItem value={"all"}>{t("All")}</MenuItem>
+                        <MenuItem value={"completed"}>{t("Completed")}</MenuItem>
+                        <MenuItem value={"pending"}>{t("Pending")}</MenuItem>
                     </TextField>
                 </Grid>
 
                 <Grid size={{ xs: 6, sm: 2 }}>
                     <TextField
-                        label="Start Date"
+                        label={t("Start Date")}
                         name="start_date"
-                        placeholder="Start Date"
+                        placeholder={t("Start Date")}
                         fullWidth
                         size="small"
                         type="date"
@@ -309,9 +309,9 @@ export default function Sale({ sales, contacts }) {
 
                 <Grid size={{ xs: 6, sm: 2 }}>
                     <TextField
-                        label="End Date"
+                        label={t("End Date")}
                         name="end_date"
-                        placeholder="End Date"
+                        placeholder={t("End Date")}
                         fullWidth
                         size="small"
                         type="date"
@@ -326,13 +326,10 @@ export default function Sale({ sales, contacts }) {
                     />
                 </Grid>
                 <Grid size={{ xs: 12, sm: 2 }}>
-                    <TextField
+                    <SearchField
                         value={searchTerms.query}
-                        label="Search"
-                        size="small"
                         onChange={handleSearchChange}
                         name="query"
-                        fullWidth
                         onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                                 e.preventDefault(); // Prevents form submission if inside a form

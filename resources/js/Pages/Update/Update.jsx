@@ -12,6 +12,7 @@ import {
 import Swal from "sweetalert2";
 import axios from "axios";
 import { useDropzone } from 'react-dropzone';
+import { t } from '@/i18n';
 
 export default function Update() {
     const [file, setFile] = useState(null);
@@ -75,12 +76,12 @@ export default function Update() {
     return (
         <AuthenticatedLayout
             header={
-                <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Update
+                <h2 className="font-semibold text-xl text-[var(--foreground)] leading-tight">
+                    {t("Update")}
                 </h2>
             }
         >
-            <Head title="Update" />
+            <Head title={t("Update")} />
             <Grid container sx={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
                 <Grid spacing={2} size={6}>
                   {/* Dropzone area */}
@@ -100,16 +101,16 @@ export default function Update() {
                 >
                     <input {...getInputProps()} />
                     {isDragActive ? (
-                        <Typography>Drop the zip file here...</Typography>
+                        <Typography>{t("Drop the zip file here...")}</Typography>
                     ) : (
-                        <Typography>Drag 'n' drop a zip file here, or click to select one</Typography>
+                        <Typography>{t("Drag 'n' drop a zip file here, or click to select one")}</Typography>
                     )}
                 </div>
 
                 {/* If a file is selected, show details */}
                 {file && (
                     <Paper elevation={3} style={{ padding: '10px', marginTop: '20px' }}>
-                        <Typography variant="h6">Selected File:</Typography>
+                        <Typography variant="h6">{t("Selected File:")}</Typography>
                         <Typography>{file.name}</Typography>
                     </Paper>
                 )}
@@ -122,7 +123,7 @@ export default function Update() {
                             color="error"
                             onClick={() => setFile(null)}
                         >
-                            Remove File
+                            {t("Remove File")}
                         </Button>
                         <Button
                             variant="contained"

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Head, usePage } from "@inertiajs/react";
 import { renderBarcodeTemplate, generateBarcodeInTemplate } from "@/lib/barcodeTemplateRenderer";
+import { t } from '@/i18n';
 
 export default function ProoductBarcode({
     product,
@@ -82,7 +83,7 @@ export default function ProoductBarcode({
 
     return (
         <>
-            <Head title="Barcode" />
+            <Head title={t("Barcode")} />
             <div dangerouslySetInnerHTML={{ __html: renderedTemplate }} />
         </>
     );

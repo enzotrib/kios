@@ -231,9 +231,13 @@ class SettingController extends Controller
         $settingsData = $request->only(['sale_receipt_note', 'shop_name', 'sale_print_padding_right', 'sale_print_padding_left', 'sale_print_font', 'show_barcode_store', 'show_barcode_product_price', 'show_barcode_product_name', 'show_receipt_shop_name', 'sale_receipt_second_note', 'auto_open_print_dialog',]);
 
         if ($setting_type == 'shop_information') {
+            // `nullable` es imprescindible: los inputs de archivo se envian aunque
+            // el usuario no elija nada, y sin el la validacion rechaza todo el
+            // formulario con un 422 aun cuando solo se quiso cambiar el nombre.
             $request->validate([
                 'shop_name' => 'required|string',
-                'shop_logo' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+                'shop_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:4096',
+                'app_icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             ]);
         }
         else if ($setting_type == 'currency')

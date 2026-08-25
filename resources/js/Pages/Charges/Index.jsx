@@ -21,6 +21,7 @@ import Swal from "sweetalert2";
 import { useState, useEffect } from "react";
 import ChargeDialog from "./Partials/ChargeDialog";
 import CustomPagination from "@/Components/CustomPagination";
+import { t } from '@/i18n';
 
 export default function ChargesIndex({
     charges,
@@ -40,12 +41,12 @@ export default function ChargesIndex({
     const chargeColumns = [
         {
             field: "name",
-            headerName: "Name",
+            headerName: t("Name"),
             width: 200,
             renderCell: (params) => (
                 <button
                     onClick={() => handleEditClick(params.row)}
-                    className="text-blue-600 hover:underline font-semibold bg-none border-none cursor-pointer p-0"
+                    className="text-[var(--info)] hover:underline font-semibold bg-none border-none cursor-pointer p-0"
                 >
                     {params.value}
                 </button>
@@ -53,7 +54,7 @@ export default function ChargesIndex({
         },
         {
             field: "charge_type",
-            headerName: "Type",
+            headerName: t("Type"),
             width: 150,
             renderCell: (params) => (
                 <Chip
@@ -65,13 +66,13 @@ export default function ChargesIndex({
         },
         {
             field: "rate_value",
-            headerName: "Rate Value",
+            headerName: t("Rate Value"),
             width: 120,
             renderCell: (params) => `${params.value}`,
         },
         {
             field: "rate_type",
-            headerName: "Rate Type",
+            headerName: t("Rate Type"),
             width: 120,
             renderCell: (params) => (
                 <Chip
@@ -83,7 +84,7 @@ export default function ChargesIndex({
         },
         {
             field: "is_active",
-            headerName: "Status",
+            headerName: t("Status"),
             width: 100,
             renderCell: (params) => (
                 <Chip
@@ -95,7 +96,7 @@ export default function ChargesIndex({
         },
         {
             field: "is_default",
-            headerName: "Default",
+            headerName: t("Default"),
             width: 100,
             renderCell: (params) => (
                 <Chip
@@ -108,13 +109,13 @@ export default function ChargesIndex({
         },
         {
             field: "description",
-            headerName: "Description",
+            headerName: t("Description"),
             width: 250,
             renderCell: (params) => params.value || "-",
         },
         {
             field: "actions",
-            headerName: "Actions",
+            headerName: t("Actions"),
             width: 120,
             sortable: false,
             renderCell: (params) => (
@@ -122,14 +123,14 @@ export default function ChargesIndex({
                     <IconButton
                         size="small"
                         onClick={() => handleEditClick(params.row)}
-                        title="Edit"
+                        title={t("Edit")}
                     >
                         <EditIcon fontSize="small" />
                     </IconButton>
                     <IconButton
                         size="small"
                         onClick={() => handleDeleteClick(params.row.id)}
-                        title="Delete"
+                        title={t("Delete")}
                         color="error"
                     >
                         <DeleteIcon fontSize="small" />
@@ -201,7 +202,7 @@ export default function ChargesIndex({
 
     return (
         <AuthenticatedLayout>
-            <Head title="Charges & Taxes" />
+            <Head title={t("Charges & Taxes")} />
 
             <Grid
                 container
@@ -216,7 +217,7 @@ export default function ChargesIndex({
                         startIcon={<AddIcon />}
                         onClick={handleCreateClick}
                     >
-                        Add Charge
+                        {t("Add Charge")}
                     </Button>
                 </Grid>
             </Grid>
@@ -236,7 +237,7 @@ export default function ChargesIndex({
                     hideFooter
                     sx={{
                         "& .MuiDataGrid-cell": {
-                            borderBottom: "1px solid #e0e0e0",
+                            borderBottom: "1px solid var(--border)",
                         },
                     }}
                 />
@@ -272,23 +273,22 @@ export default function ChargesIndex({
 
             {/* Delete Confirmation Dialog */}
             <Dialog open={openDeleteDialog} onClose={handleDeleteCancel}>
-                <DialogTitle>Delete Charge?</DialogTitle>
+                <DialogTitle>{t("Delete Charge?")}</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Are you sure you want to delete this charge? This action cannot
-                        be undone.
+                        {t("Are you sure you want to delete this charge? This action cannot be undone.")}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleDeleteCancel} color="primary">
-                        Cancel
+                        {t("Cancel")}
                     </Button>
                     <Button
                         onClick={handleDeleteConfirm}
                         color="error"
                         variant="contained"
                     >
-                        Delete
+                        {t("Delete")}
                     </Button>
                 </DialogActions>
             </Dialog>

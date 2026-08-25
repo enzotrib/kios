@@ -14,6 +14,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Swal from "sweetalert2";
 
 import { usePurchase } from "@/Context/PurchaseContext";
+import { t } from '@/i18n';
 
 export default function AddToPurchase({
     product,
@@ -134,13 +135,13 @@ export default function AddToPurchase({
                     {formState.name}
                 </DialogTitle>
                 <IconButton
-                    aria-label="close"
+                    aria-label={t("close")}
                     onClick={handleClose}
                     sx={(theme) => ({
                         position: "absolute",
                         right: 8,
                         top: 8,
-                        color: theme.palette.grey[500],
+                        color: theme.palette.text.secondary,
                     })}
                 >
                     <CloseIcon />
@@ -152,7 +153,7 @@ export default function AddToPurchase({
                                 fullWidth
                                 type="number"
                                 name="quantity"
-                                label="Quantity"
+                                label={t("Quantity")}
                                 variant="outlined"
                                 autoFocus
                                 value={formState.quantity}
@@ -178,7 +179,7 @@ export default function AddToPurchase({
                             <Grid size={6}>
                                 <TextField
                                     fullWidth
-                                    label={"Batch"}
+                                    label={t("Batch")}
                                     value={formState.batch_number}
                                     required
                                     name="batch_number"
@@ -201,7 +202,7 @@ export default function AddToPurchase({
                             <Grid size={6}>
                                 <TextField
                                     fullWidth
-                                    label={"Description"}
+                                    label={t("Description")}
                                     name={'name'}
                                     value={formState.name}
                                     required
@@ -223,7 +224,7 @@ export default function AddToPurchase({
                                 fullWidth
                                 type="number"
                                 name="cost"
-                                label="Cost"
+                                label={t("Cost")}
                                 variant="outlined"
                                 required
                                 value={formState.cost}
@@ -249,7 +250,7 @@ export default function AddToPurchase({
                                 fullWidth
                                 type="number"
                                 name="price"
-                                label="Price"
+                                label={t("Price")}
                                 variant="outlined"
                                 required
                                 value={formState.price}
@@ -259,11 +260,6 @@ export default function AddToPurchase({
                                 }}
                                 onFocus={(event) => {
                                     event.target.select();
-                                }}
-                                slotProps={{
-                                    inputLabel: {
-                                        shrink: true,
-                                    },
                                 }}
                             />
                         </Grid>
@@ -278,7 +274,7 @@ export default function AddToPurchase({
                         // onClick={handleClose}
                         disabled={loading}
                     >
-                        ADD TO CART
+                        {t("ADD TO CART")}
                     </Button>
                 </DialogActions>
             </Dialog>

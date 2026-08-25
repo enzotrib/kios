@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { router } from '@inertiajs/react'
 import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import Swal from 'sweetalert2';
+import { t } from '@/i18n';
 
 
 export default function UserFormDialog({ open, handleClose, user, stores, roles }) {
@@ -94,7 +95,7 @@ export default function UserFormDialog({ open, handleClose, user, stores, roles 
           }
         }}
       >
-        <DialogTitle>User Information</DialogTitle>
+        <DialogTitle>{t("User Information")}</DialogTitle>
         <DialogContent>
             {/* User Username */}
           <TextField
@@ -103,7 +104,7 @@ export default function UserFormDialog({ open, handleClose, user, stores, roles 
             margin="dense"
             id="user_name"
             name="user_name"
-            label="Username"
+            label={t("Username")}
             type="text"
             fullWidth
             variant="outlined"
@@ -120,7 +121,7 @@ export default function UserFormDialog({ open, handleClose, user, stores, roles 
             margin="dense"
             id="name"
             name="name"
-            label="Profile Name"
+            label={t("Profile Name")}
             type="text"
             fullWidth
             variant="outlined"
@@ -135,7 +136,7 @@ export default function UserFormDialog({ open, handleClose, user, stores, roles 
             margin="dense"
             id="email"
             name="email"
-            label="Email"
+            label={t("Email")}
             type="email"
             fullWidth
             variant="outlined"
@@ -150,7 +151,7 @@ export default function UserFormDialog({ open, handleClose, user, stores, roles 
             margin="dense"
             id="password"
             name="password"
-            label="Password"
+            label={t("Password")}
             type="password"
             fullWidth
             variant="outlined"
@@ -162,12 +163,12 @@ export default function UserFormDialog({ open, handleClose, user, stores, roles 
   
           {/* User Role */}
           <FormControl fullWidth variant="outlined" className="py-8" sx={{mt:'0.8rem'}}>
-            <InputLabel id="user_role-label">User Role</InputLabel>
+            <InputLabel id="user_role-label">{t("User Role")}</InputLabel>
             <Select
               labelId="user_role-label"
               id="user_role"
               name="user_role"
-              label="User Role"
+              label={t("User Role")}
               value={formState.user_role}
               onChange={handleChange}
               required
@@ -181,10 +182,10 @@ export default function UserFormDialog({ open, handleClose, user, stores, roles 
           </FormControl>
 
           <FormControl sx={{ width:'100%', mt:'1rem' }}>
-            <InputLabel>Store</InputLabel>
+            <InputLabel>{t("Store")}</InputLabel>
             <Select
                 value={formState.store_id}
-                label="Store"
+                label={t("Store")}
                 onChange={handleChange}
                 required
                 name="store_id"
@@ -198,8 +199,8 @@ export default function UserFormDialog({ open, handleClose, user, stores, roles 
         </FormControl>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button type="submit">SAVE</Button>
+          <Button onClick={handleClose}>{t("Cancel")}</Button>
+          <Button type="submit">{t("SAVE")}</Button>
         </DialogActions>
       </Dialog>
     );

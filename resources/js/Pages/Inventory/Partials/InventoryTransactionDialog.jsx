@@ -17,6 +17,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import axios from "axios";
 import Swal from "sweetalert2";
 import dayjs from "dayjs";
+import { t } from '@/i18n';
 
 const inventoryTransactionFormState = {
     store_id: 1,
@@ -99,15 +100,15 @@ export default function InventoryTransactionDialog({
                     }
                 }}
             >
-                <DialogTitle id="alert-dialog-title">{inventory_item ? "UPDATE" : "ADD"} INVENTORY ITEM</DialogTitle>
+                <DialogTitle id="alert-dialog-title">{inventory_item ? "UPDATE" : "ADD"} {t("INVENTORY ITEM")}</DialogTitle>
                 <IconButton
-                    aria-label="close"
+                    aria-label={t("close")}
                     onClick={handleClose}
                     sx={(theme) => ({
                         position: "absolute",
                         right: 8,
                         top: 8,
-                        color: theme.palette.grey[500],
+                        color: theme.palette.text.secondary,
                     })}
                 >
                     <CloseIcon />
@@ -120,27 +121,22 @@ export default function InventoryTransactionDialog({
                             <TextField
                                 fullWidth
                                 variant="outlined"
-                                label={"Quantity"}
+                                label={t("Quantity")}
                                 name="quantity"
-                                placeholder="Quantity"
+                                placeholder={t("Quantity")}
                                 type="number"
                                 value={inventoryTransactionForm.quantity}
                                 onChange={handleFieldChange}
                                 required
-                                slotProps={{
-                                    inputLabel: {
-                                        shrink: true,
-                                    },
-                                }}
                             />
                         </Grid>
                         <Grid size={{ xs: 12, sm: 6 }}>
                             <TextField
                                 fullWidth
                                 variant="outlined"
-                                label={"Date"}
+                                label={t("Date")}
                                 name="transaction_date"
-                                placeholder="Date"
+                                placeholder={t("Date")}
                                 type="date"
                                 value={inventoryTransactionForm.transaction_date}
                                 onChange={handleFieldChange}
@@ -156,7 +152,7 @@ export default function InventoryTransactionDialog({
                             <Autocomplete
                                 freeSolo
                                 options={reasonOptions.map((option) => option)}
-                                renderInput={(params) => <TextField {...params} label="Reason" name="reason" required />}
+                                renderInput={(params) => <TextField {...params} label={t("Reason")} name="reason" required />}
                                 value={inventoryTransactionForm.reason}
                                 onChange={(event, newValue) => {
                                     setInventoryTransactionForm({
@@ -170,7 +166,7 @@ export default function InventoryTransactionDialog({
                         <Grid size={12}>
                             <TextField
                                 value={inventoryTransactionForm.store_id}
-                                label="Store"
+                                label={t("Store")}
                                 fullWidth
                                 onChange={handleFieldChange}
                                 required
@@ -199,10 +195,9 @@ export default function InventoryTransactionDialog({
                             sx={{ paddingY: "15px", fontSize: "1.2rem" }}
                             type="submit"
                             name="add"
-                            color="success"
                             disabled={inventoryTransactionForm.quantity === 0}
                         >
-                            ADD QUANTITY
+                            {t("ADD QUANTITY")}
                         </Button>
                     )}
                     <Button
@@ -218,7 +213,7 @@ export default function InventoryTransactionDialog({
                             quantity: -Math.abs(inventoryTransactionForm.quantity)
                         })}
                     >
-                        DEDUCT QUANTITY
+                        {t("DEDUCT QUANTITY")}
                     </Button>
                 </DialogActions>
             </Dialog>

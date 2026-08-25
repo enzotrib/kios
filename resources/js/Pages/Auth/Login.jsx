@@ -1,15 +1,23 @@
-
-import Checkbox from '@mui/material/Checkbox';
+import {
+    Box,
+    Button,
+    Checkbox,
+    FormControlLabel,
+    Stack,
+    TextField,
+    Typography,
+    Alert,
+} from '@mui/material';
 import GuestLayout from '@/Layouts/GuestLayout';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import infomaxlogo from '@/Infomax-logo.png';
 import infoshopLogo from '@/infoshop.png';
+import { t } from '@/i18n';
 
 export default function Login({ status, canResetPassword, version }) {
+    const shopName = usePage().props.settings?.shop_name;
+    const shopLogo = usePage().props.settings?.shop_logo;
+
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
         password: '',
@@ -18,7 +26,6 @@ export default function Login({ status, canResetPassword, version }) {
 
     const submit = (e) => {
         e.preventDefault();
-
         post(route('login'), {
             onFinish: () => reset('password'),
         });
@@ -26,79 +33,124 @@ export default function Login({ status, canResetPassword, version }) {
 
     return (
         <GuestLayout>
-            <Head title="Log in" />
+            <Head title={t('Log in')} />
 
-            {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
+            {/* Logo del comercio si ya fue cargado; si no, el de la app */}
+            <Stack alignItems="center" spacing={1} sx={{ mb: 4 }}>
+                <Box
+                    component="img"
+                    src={shopLogo || infoshopLogo}
+                    alt={shopName || 'InfoShop'}
+                    sx={{ height: 56, objectFit: 'contain', maxWidth: '100%' }}
+                />
+                <Typography variant="h3" sx={{ textAlign: 'center' }}>
+                    {shopName || 'InfoShop'}
+                </Typography>
+                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                    {t('Log in')}
+                </Typography>
+            </Stack>
 
-            <form onSubmit={submit}>
-                <div>
-                    <InputLabel htmlFor="email" value="Email or User name" />
+            {status && (
+                <Alert severity="success" sx={{ mb: 3 }}>
+                    {status}
+                </Alert>
+            )}
 
-                    <TextInput
+            <Box component="form" onSubmit={submit}>
+                <Stack spacing={2.5}>
+                    <TextField
                         id="email"
-                        type="text"
                         name="email"
+                        type="text"
+                        label={t('Email or User name')}
                         value={data.email}
-                        className="mt-1 block w-full p-3 border"
-                        autoComplete="username"
-                        isFocused={true}
                         onChange={(e) => setData('email', e.target.value)}
+                        error={Boolean(errors.email)}
+                        helperText={errors.email}
+                        autoComplete="username"
+                        autoFocus
+                        fullWidth
+                        size="medium"
                     />
 
-                    <InputError message={errors.email} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
-
-                    <TextInput
+                    <TextField
                         id="password"
-                        type="password"
                         name="password"
+                        type="password"
+                        label={t('Password')}
                         value={data.password}
-                        className="mt-1 block w-full p-3 border"
-                        autoComplete="current-password"
                         onChange={(e) => setData('password', e.target.value)}
+                        error={Boolean(errors.password)}
+                        helperText={errors.password}
+                        autoComplete="current-password"
+                        fullWidth
+                        size="medium"
                     />
-                    <InputError message={errors.password} className="mt-2" />
-                </div>
 
-                <div className="block mt-4">
-                    <label className="flex items-center">
-                        <Checkbox
-                            name="remember"
-                            checked={data.remember}
-                            onChange={(e) => setData('remember', e.target.checked)}
+                    <Stack
+                        direction="row"
+                        alignItems="center"
+                        justifyContent="space-between"
+                        flexWrap="wrap"
+                    >
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    name="remember"
+                                    checked={data.remember}
+                                    onChange={(e) => setData('remember', e.target.checked)}
+                                />
+                            }
+                            label={
+                                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                                    {t('Remember me')}
+                                </Typography>
+                            }
                         />
-                        <span className="ms-2 text-sm text-gray-600">Remember me</span>
-                    </label>
-                </div>
 
-                <div className="flex items-center justify-end mt-4">
-                    {canResetPassword && (
-                        <Link
-                            href={route('password.request')}
-                            className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        >
-                            Forgot your password?
-                        </Link>
-                    )}
+                        {/* Accion terciaria (action/background/tertiary): sin fondo
+                            ni borde, pero con area de click propia. */}
+                        {canResetPassword && (
+                            <Button
+                                component={Link}
+                                href={route('password.request')}
+                                variant="text"
+                                size="small"
+                            >
+                                {t('Forgot your password?')}
+                            </Button>
+                        )}
+                    </Stack>
 
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Log in
-                    </PrimaryButton>
-                </div>
-            </form>
-            <div className="divide-y divide-gray-300 divde-solid">
-            <div className="text-center py-2"></div>
-            <div className="text-center py-3 text-gray-400 uppercase">info shop version {version} <br></br> Developed by: infomax </div>
-            </div>
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        size="large"
+                        fullWidth
+                        disabled={processing}
+                    >
+                        {processing ? t('Loading...') : t('Log in')}
+                    </Button>
+                </Stack>
+            </Box>
 
-            <div className='flex justify-center'>
-            <img src={infomaxlogo} alt="" style={{height:'60px', objectFit:'contain'}}/>
-                <img src={infoshopLogo} alt="" style={{height:'60px', objectFit:'contain'}}/>
-            </div>
-            
+            <Stack
+                alignItems="center"
+                spacing={1.5}
+                sx={{ mt: 5, pt: 3, borderTop: '1px solid var(--border)' }}
+            >
+                <Typography variant="caption" sx={{ textAlign: 'center' }}>
+                    {t('info shop version')} {version}
+                    <br />
+                    {t('Developed by: infomax')}
+                </Typography>
+
+                <Stack direction="row" spacing={1} alignItems="center" sx={{ opacity: 0.7 }}>
+                    <Box component="img" src={infomaxlogo} alt="Infomax" sx={{ height: 40, objectFit: 'contain' }} />
+                    <Box component="img" src={infoshopLogo} alt="InfoShop" sx={{ height: 40, objectFit: 'contain' }} />
+                </Stack>
+            </Stack>
         </GuestLayout>
     );
 }

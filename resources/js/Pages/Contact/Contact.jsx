@@ -21,11 +21,15 @@ import Swal from 'sweetalert2';
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import MobileContactsList from './Partial/MobileContactsList';
+import { t } from '@/i18n';
+import PageToolbar from '@/Components/design/PageToolbar';
+import SearchField from '@/Components/design/SearchField';
+import StatPill from '@/Components/design/StatPill';
 
 const columns = (handleRowClick, handleDelete) => [
-    { field: 'id', headerName: 'ID', width: 80 },
+    { field: 'id', headerName: t("ID"), width: 80 },
     {
-        field: 'name', headerName: 'Name', width: 200,
+        field: 'name', headerName: t("Name"), width: 200,
         renderCell: (params) => (
             <Link underline="hover" href='#' className='hover:underline' onClick={(event) => { event.preventDefault(); handleRowClick(params.row, 'contact_edit'); }}>
                 <p className='font-bold'>{params.value}</p>
@@ -33,7 +37,7 @@ const columns = (handleRowClick, handleDelete) => [
         ),
     },
     {
-        field: 'balance', headerName: 'Balance', width: 160,
+        field: 'balance', headerName: t("Balance"), width: 160,
         valueGetter: (value) => parseFloat(value),
         renderCell: (params) => (
             <Button
@@ -50,14 +54,14 @@ const columns = (handleRowClick, handleDelete) => [
             </Button>
         ),
     }, // Added balance
-    { field: 'phone', headerName: 'Phone', width: 120 },
-    { field: 'whatsapp', headerName: 'Whatsapp', width: 120 },
-    { field: 'email', headerName: 'Email', width: 100 },
-    { field: 'address', headerName: 'Address', width: 200 }, // Changed from collection_type to address
-    { field: 'created_at', headerName: 'Created At', width: 100 },
+    { field: 'phone', headerName: t("Phone"), width: 120 },
+    { field: 'whatsapp', headerName: t("Whatsapp"), width: 120 },
+    { field: 'email', headerName: t("Email"), width: 100 },
+    { field: 'address', headerName: t("Address"), width: 200 }, // Changed from collection_type to address
+    { field: 'created_at', headerName: t("Created At"), width: 100 },
     {
         field: "action",
-        headerName: "Actions",
+        headerName: t("Actions"),
         width: 220,
         renderCell: (params) => {
             const basePath = params.row.type === 'vendor' ? '/purchases' : '/sales';
@@ -65,7 +69,7 @@ const columns = (handleRowClick, handleDelete) => [
             return (
                 <>
                     <Link href={"/reports/" + params.row.id + '/' + params.row.type}>
-                        <Tooltip title="REPORT">
+                        <Tooltip title={t("REPORT")}>
                             <IconButton color="primary">
                                 <PrintIcon />
                             </IconButton>
@@ -74,7 +78,7 @@ const columns = (handleRowClick, handleDelete) => [
 
                     {params.row.type === "customer" && (
                         <Link href={"/pending-sales-receipt/" + params.row.id}>
-                            <Tooltip title="PENDING RECEIPT">
+                            <Tooltip title={t("PENDING RECEIPT")}>
                                 <IconButton color="primary">
                                     <PendingActionsIcon />
                                 </IconButton>
@@ -85,7 +89,7 @@ const columns = (handleRowClick, handleDelete) => [
 
                     {/* Sales or Purchase Link */}
                     <Link href={`${basePath}?contact_id=${params.row.id}&end_date=&query=&start_date=&status=pending&store=0`}>
-                        <Tooltip title="CREDIT SALE">
+                        <Tooltip title={t("CREDIT SALE")}>
                             <IconButton color="alert">
                                 <HourglassTopIcon />
                             </IconButton>
@@ -94,14 +98,14 @@ const columns = (handleRowClick, handleDelete) => [
 
                     {/* Sales or Purchase Link */}
                     <Link href={`/payments${basePath}?contact_id=${params.row.id}&store=0`}>
-                        <Tooltip title="PAYMENTS">
-                            <IconButton color="success">
+                        <Tooltip title={t("PAYMENTS")}>
+                            <IconButton>
                                 <PaymentsIcon />
                             </IconButton>
                         </Tooltip>
                     </Link>
 
-                    <Tooltip title="DELETE">
+                    <Tooltip title={t("DELETE")}>
                         <IconButton
                             color="error"
                             onClick={() => handleDelete(params.row.id, params.row.name)}
@@ -155,8 +159,6 @@ export default function Contact({ contacts, type, stores }) {
             text: `Are you sure you want to delete "${contactName}"?`,
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#dc2626',
-            cancelButtonColor: '#6b7280',
             confirmButtonText: 'Yes, delete it!',
             cancelButtonText: 'Cancel'
         });
@@ -222,60 +224,44 @@ export default function Contact({ contacts, type, stores }) {
         }
     }, [dataContacts]);
 
+    // El original hacia type[0].toUpperCase() + type.slice(1), que devuelve
+    // "Vendor"/"Customer" en ingles sin pasar por el diccionario.
+    const label = type === 'vendor' ? t('Vendor') : t('Customer');
+
     return (
         <AuthenticatedLayout>
             {/* Capitalize first letter of type and add s at the end */}
-            <Head title={type[0].toUpperCase() + type.slice(1) + "s"} />
+            <Head title={type === "vendor" ? t("Suppliers") : t("Customers")} />
+
+            <PageToolbar>
+                <StatPill
+                    label={t("Balance:")}
+                    value={totalBalance}
+                    money
+                    tone={parseFloat(totalBalance) < 0 ? "danger" : "neutral"}
+                />
+
+                <SearchField
+                    name="search_query"
+                    value={searchTerms?.search_query}
+                    onChange={(e) => setSearchTerms((prev) => ({ ...prev, search_query: e.target.value }))}
+                    placeholder={t("Search...")}
+                />
+
+                <Button
+                    variant="contained"
+                    startIcon={<AddIcon />}
+                    onClick={handleClickOpen}
+                >
+                    {t("Add")} {label}
+                </Button>
+            </PageToolbar>
 
             <Grid
                 container
                 spacing={2}
                 sx={{ alignItems: "center", width: "100%" }}
             >
-                <Grid size={{ xs: 12, sm: 2, md: 3 }}>
-                    <div className="bg-red-200 p-4 rounded text-red-950 text-sm">
-                        <div className="flex items-center justify-between">
-                            <div>Balance:</div> <div className="font-bold">{numeral(totalBalance).format('0,00.00')}</div>
-                        </div>
-                    </div>
-                </Grid>
-
-                <Grid size={{ xs: 12, sm: 10, md: 9 }} spacing={2} container sx={{ justifyContent: "end", alignItems: 'center', flexDirection: { xs: 'column', sm: 'row' } }}>
-                    <Grid size={{ xs: 12, sm: 8 }}>
-                        <TextField
-                            name="search_query"
-                            label="Search"
-                            variant="outlined"
-                            size="small"
-                            value={searchTerms?.search_query}
-                            onChange={(e) => setSearchTerms((prev) => ({ ...prev, search_query: e.target.value }))}
-                            required
-                            fullWidth
-                            onFocus={(event) => {
-                                event.target.select();
-                            }}
-                            slotProps={{
-                                inputLabel: {
-                                    shrink: true,
-                                },
-                            }}
-                        />
-                    </Grid>
-
-                    <Grid size={{ xs: 12, sm: 3 }}>
-                        <Button
-                            variant="contained"
-                            startIcon={<AddIcon />}
-                            onClick={handleClickOpen}
-                            fullWidth
-                            size="small"
-                            color="success"
-                        >
-                            Add {type[0].toUpperCase() + type.slice(1)}
-                        </Button>
-                    </Grid>
-
-                </Grid>
 
                 {!isMobile && (
                     <Box

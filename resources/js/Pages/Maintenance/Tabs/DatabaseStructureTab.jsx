@@ -12,6 +12,7 @@ import {
     ChevronDown,
     ChevronRight
 } from "lucide-react";
+import { t } from '@/i18n';
 
 export default function DatabaseStructureTab() {
     const [tables, setTables] = useState([]);
@@ -145,41 +146,41 @@ export default function DatabaseStructureTab() {
     return (
         <div className="space-y-6">
             {/* Info Box */}
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 flex items-start gap-3">
-                <Database className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+            <div className="bg-[var(--primary-soft)] border border-[var(--primary)] rounded-lg p-4 flex items-start gap-3">
+                <Database className="w-5 h-5 text-[var(--info)] flex-shrink-0 mt-0.5" />
                 <div>
-                    <p className="text-sm font-semibold text-blue-900">Database Management</p>
-                    <p className="text-xs text-blue-700 mt-1">Manage your database tables, run migrations, seed data, and create backups. All operations require proper database permissions.</p>
+                    <p className="text-sm font-semibold text-[var(--info)]">{t("Database Management")}</p>
+                    <p className="text-xs text-[var(--info)] mt-1">{t("Manage your database tables, run migrations, seed data, and create backups. All operations require proper database permissions.")}</p>
                 </div>
             </div>
 
             {/* Status Messages */}
             {message && (
-                <div className="bg-green-50 border border-green-200 rounded-lg p-4 flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                <div className="bg-[var(--success-soft)] border border-[var(--success)] rounded-lg p-4 flex items-start gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-[var(--success)] flex-shrink-0 mt-0.5" />
                     <div>
-                        <p className="text-sm font-semibold text-green-900">Success</p>
-                        <p className="text-xs text-green-700 mt-1">{message}</p>
+                        <p className="text-sm font-semibold text-[var(--success)]">{t("Success")}</p>
+                        <p className="text-xs text-[var(--success)] mt-1">{message}</p>
                     </div>
                 </div>
             )}
 
             {error && (
-                <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                <div className="bg-[var(--destructive-soft)] border border-[var(--destructive)] rounded-lg p-4">
                     <div className="flex items-start justify-between gap-3">
                         <div className="flex items-start gap-3">
-                            <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+                            <AlertCircle className="w-5 h-5 text-[var(--destructive)] flex-shrink-0 mt-0.5" />
                             <div>
-                                <p className="text-sm font-semibold text-red-900">Error Loading Database</p>
-                                <p className="text-xs text-red-700 mt-1">{error}</p>
+                                <p className="text-sm font-semibold text-[var(--destructive)]">{t("Error Loading Database")}</p>
+                                <p className="text-xs text-[var(--destructive)] mt-1">{error}</p>
                             </div>
                         </div>
                         <button
                             onClick={fetchDatabaseInfo}
                             disabled={loading}
-                            className="text-red-700 hover:text-red-900 font-semibold text-xs whitespace-nowrap"
+                            className="text-[var(--destructive)] hover:text-[var(--destructive)] font-semibold text-xs whitespace-nowrap"
                         >
-                            Retry
+                            {t("Retry")}
                         </button>
                     </div>
                 </div>
@@ -190,103 +191,103 @@ export default function DatabaseStructureTab() {
                 <button
                     onClick={runMigrations}
                     disabled={executing || loading}
-                    className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white px-4 py-3 rounded-lg font-semibold text-sm transition-colors flex items-center justify-center gap-2"
+                    className="bg-blue-600 hover:bg-blue-700 disabled:bg-[var(--surface-2)] text-white px-4 py-3 rounded-lg font-semibold text-sm transition-colors flex items-center justify-center gap-2"
                 >
                     {activeAction === 'migrate' && <Loader2 className="w-4 h-4 animate-spin" />}
                     {activeAction !== 'migrate' && <Play className="w-4 h-4" />}
-                    Run Migrations
+                    {t("Run Migrations")}
                 </button>
 
                 <button
                     onClick={runSeeders}
                     disabled={executing || loading}
-                    className="bg-purple-600 hover:bg-purple-700 disabled:bg-gray-400 text-white px-4 py-3 rounded-lg font-semibold text-sm transition-colors flex items-center justify-center gap-2"
+                    className="bg-purple-600 hover:bg-purple-700 disabled:bg-[var(--surface-2)] text-white px-4 py-3 rounded-lg font-semibold text-sm transition-colors flex items-center justify-center gap-2"
                 >
                     {activeAction === 'seed' && <Loader2 className="w-4 h-4 animate-spin" />}
                     {activeAction !== 'seed' && <Play className="w-4 h-4" />}
-                    Run Seeders
+                    {t("Run Seeders")}
                 </button>
 
                 <button
                     onClick={backupDatabase}
                     disabled={executing || loading}
-                    className="bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white px-4 py-3 rounded-lg font-semibold text-sm transition-colors flex items-center justify-center gap-2"
+                    className="bg-green-600 hover:bg-green-700 disabled:bg-[var(--surface-2)] text-white px-4 py-3 rounded-lg font-semibold text-sm transition-colors flex items-center justify-center gap-2"
                 >
                     {activeAction === 'backup' && <Loader2 className="w-4 h-4 animate-spin" />}
                     {activeAction !== 'backup' && <Download className="w-4 h-4" />}
-                    Backup Database
+                    {t("Backup Database")}
                 </button>
 
                 <button
                     onClick={fetchDatabaseInfo}
                     disabled={loading || executing}
-                    className="bg-gray-600 hover:bg-gray-700 disabled:bg-gray-400 text-white px-4 py-3 rounded-lg font-semibold text-sm transition-colors flex items-center justify-center gap-2"
+                    className="bg-gray-600 hover:bg-gray-700 disabled:bg-[var(--surface-2)] text-white px-4 py-3 rounded-lg font-semibold text-sm transition-colors flex items-center justify-center gap-2"
                 >
                     <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-                    Refresh
+                    {t("Refresh")}
                 </button>
             </div>
 
             {loading ? (
                 <div className="flex items-center justify-center py-12">
-                    <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
-                    <span className="ml-3 text-gray-600">Loading database information...</span>
+                    <Loader2 className="w-8 h-8 text-[var(--info)] animate-spin" />
+                    <span className="ml-3 text-[var(--muted-foreground)]">{t("Loading database information...")}</span>
                 </div>
             ) : (
                 <>
                     {/* Tables Section */}
                     <div>
-                        <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                            <Database className="w-5 h-5 text-purple-600" />
-                            Database Tables ({tables.length})
+                        <h3 className="text-lg font-semibold text-[var(--foreground)] mb-4 flex items-center gap-2">
+                            <Database className="w-5 h-5 text-[var(--primary)]" />
+                            {t("Database Tables (")}{tables.length})
                         </h3>
                         {tables.length === 0 ? (
-                            <div className="bg-gray-50 border border-dashed border-gray-300 rounded-lg p-6 text-center">
-                                <Database className="w-10 h-10 text-gray-400 mx-auto mb-2" />
-                                <p className="text-gray-500 text-sm">No tables found in database</p>
-                                <p className="text-xs text-gray-400 mt-1">Run migrations to create tables</p>
+                            <div className="bg-[var(--surface-2)] border border-dashed border-[var(--border)] rounded-lg p-6 text-center">
+                                <Database className="w-10 h-10 text-[var(--muted-foreground)] mx-auto mb-2" />
+                                <p className="text-[var(--muted-foreground)] text-sm">{t("No tables found in database")}</p>
+                                <p className="text-xs text-[var(--muted-foreground)] mt-1">{t("Run migrations to create tables")}</p>
                             </div>
                         ) : (
                             <div className="space-y-2">
                                 {tables.map((table, index) => (
-                                    <div key={index} className="border border-gray-200 rounded-lg overflow-hidden">
+                                    <div key={index} className="border border-[var(--border)] rounded-lg overflow-hidden">
                                         {/* Table Header - Clickable to expand */}
                                         <button
                                             onClick={() => toggleTableExpand(table.name)}
-                                            className="w-full px-4 py-3 flex items-center justify-between hover:bg-gray-50 transition-colors text-left"
+                                            className="w-full px-4 py-3 flex items-center justify-between hover:bg-[var(--surface-2)] transition-colors text-left"
                                         >
                                             <div className="flex items-center gap-3 flex-1 min-w-0">
                                                 {expandedTables[table.name] ? (
-                                                    <ChevronDown className="w-5 h-5 text-blue-600 flex-shrink-0" />
+                                                    <ChevronDown className="w-5 h-5 text-[var(--info)] flex-shrink-0" />
                                                 ) : (
-                                                    <ChevronRight className="w-5 h-5 text-gray-400 flex-shrink-0" />
+                                                    <ChevronRight className="w-5 h-5 text-[var(--muted-foreground)] flex-shrink-0" />
                                                 )}
                                                 <div className="flex-1 min-w-0">
-                                                    <h4 className="font-semibold text-gray-900 truncate">{table.name}</h4>
-                                                    <p className="text-xs text-gray-500">
-                                                        {table.columns} columns • {table.engine}
+                                                    <h4 className="font-semibold text-[var(--foreground)] truncate">{table.name}</h4>
+                                                    <p className="text-xs text-[var(--muted-foreground)]">
+                                                        {table.columns} {t("columns •")} {table.engine}
                                                     </p>
                                                 </div>
                                             </div>
                                             <div className="flex items-center gap-3 flex-shrink-0 sm:ml-4">
-                                                <div className="flex items-center gap-1 bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs font-semibold">
+                                                <div className="flex items-center gap-1 bg-[var(--primary-soft)] text-[var(--info)] px-2 py-1 rounded text-xs font-semibold">
                                                     <BarChart3 className="w-3 h-3" />
-                                                    {table.rows} rows
+                                                    {table.rows} {t("rows")}
                                                 </div>
                                             </div>
                                         </button>
 
                                         {/* Expanded Content - Columns */}
                                         {expandedTables[table.name] && (
-                                            <div className="border-t border-gray-200 bg-gray-50 p-4">
+                                            <div className="border-t border-[var(--border)] bg-[var(--surface-2)] p-4">
                                                 <div className="mb-3">
-                                                    <p className="text-xs font-semibold text-gray-700 mb-2 uppercase tracking-wide">
-                                                        Collation: {table.collation}
+                                                    <p className="text-xs font-semibold text-[var(--foreground)] mb-2 uppercase tracking-wide">
+                                                        {t("Collation:")} {table.collation}
                                                     </p>
                                                 </div>
 
                                                 <div className="mb-2">
-                                                    <p className="text-xs font-semibold text-gray-700 mb-2">Columns ({table.columnDetails?.length || 0})</p>
+                                                    <p className="text-xs font-semibold text-[var(--foreground)] mb-2">{t("Columns (")}{table.columnDetails?.length || 0})</p>
                                                 </div>
 
                                                 {table.columnDetails && table.columnDetails.length > 0 ? (
@@ -295,30 +296,30 @@ export default function DatabaseStructureTab() {
                                                         <div className="hidden md:block overflow-x-auto">
                                                             <table className="w-full text-xs">
                                                                 <thead>
-                                                                    <tr className="border-b border-gray-200 bg-white">
-                                                                        <th className="px-2 py-2 text-left text-gray-700 font-semibold">Column</th>
-                                                                        <th className="px-2 py-2 text-left text-gray-700 font-semibold">Type</th>
-                                                                        <th className="px-2 py-2 text-left text-gray-700 font-semibold">Null</th>
-                                                                        <th className="px-2 py-2 text-left text-gray-700 font-semibold">Key</th>
-                                                                        <th className="px-2 py-2 text-left text-gray-700 font-semibold">Default</th>
-                                                                        <th className="px-2 py-2 text-left text-gray-700 font-semibold">Extra</th>
+                                                                    <tr className="border-b border-[var(--border)] bg-[var(--card)]">
+                                                                        <th className="px-2 py-2 text-left text-[var(--foreground)] font-semibold">{t("Column")}</th>
+                                                                        <th className="px-2 py-2 text-left text-[var(--foreground)] font-semibold">{t("Type")}</th>
+                                                                        <th className="px-2 py-2 text-left text-[var(--foreground)] font-semibold">{t("Null")}</th>
+                                                                        <th className="px-2 py-2 text-left text-[var(--foreground)] font-semibold">{t("Key")}</th>
+                                                                        <th className="px-2 py-2 text-left text-[var(--foreground)] font-semibold">{t("Default")}</th>
+                                                                        <th className="px-2 py-2 text-left text-[var(--foreground)] font-semibold">{t("Extra")}</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
                                                                     {table.columnDetails.map((col, colIndex) => (
-                                                                        <tr key={colIndex} className="border-b border-gray-100 hover:bg-white">
-                                                                            <td className="px-2 py-2 text-gray-900 font-mono">{col.name}</td>
-                                                                            <td className="px-2 py-2 text-gray-600 font-mono text-xs">{col.type}</td>
+                                                                        <tr key={colIndex} className="border-b border-[var(--border)] hover:bg-[var(--card)]">
+                                                                            <td className="px-2 py-2 text-[var(--foreground)] font-mono">{col.name}</td>
+                                                                            <td className="px-2 py-2 text-[var(--muted-foreground)] font-mono text-xs">{col.type}</td>
                                                                             <td className="px-2 py-2">
                                                                                 {col.null ? (
-                                                                                    <span className="bg-green-100 text-green-700 px-2 py-1 rounded text-xs">YES</span>
+                                                                                    <span className="bg-[var(--success-soft)] text-[var(--success)] px-2 py-1 rounded text-xs">{t("YES")}</span>
                                                                                 ) : (
-                                                                                    <span className="bg-red-100 text-red-700 px-2 py-1 rounded text-xs">NO</span>
+                                                                                    <span className="bg-[var(--destructive-soft)] text-[var(--destructive)] px-2 py-1 rounded text-xs">{t("NO")}</span>
                                                                                 )}
                                                                             </td>
-                                                                            <td className="px-2 py-2 text-gray-600">{col.key || '-'}</td>
-                                                                            <td className="px-2 py-2 text-gray-600 font-mono text-xs">{col.default !== null ? col.default : '-'}</td>
-                                                                            <td className="px-2 py-2 text-gray-600 text-xs">{col.extra || '-'}</td>
+                                                                            <td className="px-2 py-2 text-[var(--muted-foreground)]">{col.key || '-'}</td>
+                                                                            <td className="px-2 py-2 text-[var(--muted-foreground)] font-mono text-xs">{col.default !== null ? col.default : '-'}</td>
+                                                                            <td className="px-2 py-2 text-[var(--muted-foreground)] text-xs">{col.extra || '-'}</td>
                                                                         </tr>
                                                                     ))}
                                                                 </tbody>
@@ -328,36 +329,36 @@ export default function DatabaseStructureTab() {
                                                         {/* Mobile Card View */}
                                                         <div className="md:hidden space-y-2">
                                                             {table.columnDetails.map((col, colIndex) => (
-                                                                <div key={colIndex} className="bg-white border border-gray-200 rounded-lg p-3 text-xs">
+                                                                <div key={colIndex} className="bg-[var(--card)] border border-[var(--border)] rounded-lg p-3 text-xs">
                                                                     <div className="mb-2">
-                                                                        <p className="font-semibold text-gray-900 break-words">{col.name}</p>
-                                                                        <p className="text-gray-600 font-mono text-xs mt-1">{col.type}</p>
+                                                                        <p className="font-semibold text-[var(--foreground)] break-words">{col.name}</p>
+                                                                        <p className="text-[var(--muted-foreground)] font-mono text-xs mt-1">{col.type}</p>
                                                                     </div>
-                                                                    <div className="space-y-1 border-t border-gray-200 pt-2">
+                                                                    <div className="space-y-1 border-t border-[var(--border)] pt-2">
                                                                         <div className="flex justify-between items-center gap-2">
-                                                                            <span className="text-gray-600 font-semibold">Null:</span>
+                                                                            <span className="text-[var(--muted-foreground)] font-semibold">{t("Null:")}</span>
                                                                             {col.null ? (
-                                                                                <span className="bg-green-100 text-green-700 px-2 py-0.5 rounded text-xs">YES</span>
+                                                                                <span className="bg-[var(--success-soft)] text-[var(--success)] px-2 py-0.5 rounded text-xs">{t("YES")}</span>
                                                                             ) : (
-                                                                                <span className="bg-red-100 text-red-700 px-2 py-0.5 rounded text-xs">NO</span>
+                                                                                <span className="bg-[var(--destructive-soft)] text-[var(--destructive)] px-2 py-0.5 rounded text-xs">{t("NO")}</span>
                                                                             )}
                                                                         </div>
                                                                         {col.key && (
                                                                             <div className="flex justify-between items-center gap-2">
-                                                                                <span className="text-gray-600 font-semibold">Key:</span>
-                                                                                <span className="text-gray-700">{col.key}</span>
+                                                                                <span className="text-[var(--muted-foreground)] font-semibold">{t("Key:")}</span>
+                                                                                <span className="text-[var(--foreground)]">{col.key}</span>
                                                                             </div>
                                                                         )}
                                                                         {col.default !== null && (
                                                                             <div className="flex justify-between items-center gap-2">
-                                                                                <span className="text-gray-600 font-semibold">Default:</span>
-                                                                                <span className="text-gray-700 font-mono text-xs">{col.default}</span>
+                                                                                <span className="text-[var(--muted-foreground)] font-semibold">{t("Default:")}</span>
+                                                                                <span className="text-[var(--foreground)] font-mono text-xs">{col.default}</span>
                                                                             </div>
                                                                         )}
                                                                         {col.extra && (
                                                                             <div className="flex justify-between items-center gap-2">
-                                                                                <span className="text-gray-600 font-semibold">Extra:</span>
-                                                                                <span className="text-gray-700 text-xs">{col.extra}</span>
+                                                                                <span className="text-[var(--muted-foreground)] font-semibold">{t("Extra:")}</span>
+                                                                                <span className="text-[var(--foreground)] text-xs">{col.extra}</span>
                                                                             </div>
                                                                         )}
                                                                     </div>
@@ -366,7 +367,7 @@ export default function DatabaseStructureTab() {
                                                         </div>
                                                     </>
                                                 ) : (
-                                                    <p className="text-gray-500 text-xs">No column details available</p>
+                                                    <p className="text-[var(--muted-foreground)] text-xs">{t("No column details available")}</p>
                                                 )}
                                             </div>
                                         )}
@@ -378,36 +379,36 @@ export default function DatabaseStructureTab() {
 
                     {/* Migrations Section */}
                     <div>
-                        <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                            <RefreshCw className="w-5 h-5 text-blue-600" />
-                            Migrations
+                        <h3 className="text-lg font-semibold text-[var(--foreground)] mb-4 flex items-center gap-2">
+                            <RefreshCw className="w-5 h-5 text-[var(--info)]" />
+                            {t("Migrations")}
                         </h3>
 
                         {migrations.length === 0 ? (
-                            <div className="bg-gray-50 border border-dashed border-gray-300 rounded-lg p-6 text-center">
-                                <RefreshCw className="w-10 h-10 text-gray-400 mx-auto mb-2" />
-                                <p className="text-gray-500 text-sm">No migrations found</p>
-                                <p className="text-xs text-gray-400 mt-1">Click "Run Migrations" to initialize the database</p>
+                            <div className="bg-[var(--surface-2)] border border-dashed border-[var(--border)] rounded-lg p-6 text-center">
+                                <RefreshCw className="w-10 h-10 text-[var(--muted-foreground)] mx-auto mb-2" />
+                                <p className="text-[var(--muted-foreground)] text-sm">{t("No migrations found")}</p>
+                                <p className="text-xs text-[var(--muted-foreground)] mt-1">{t("Click \"Run Migrations\" to initialize the database")}</p>
                             </div>
                         ) : (
                             <>
                                 {/* Summary Stats */}
                                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
-                                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 text-center">
-                                        <p className="text-2xl font-bold text-blue-600">{migrations.length}</p>
-                                        <p className="text-xs text-blue-700 font-semibold">Total</p>
+                                    <div className="bg-[var(--primary-soft)] border border-[var(--primary)] rounded-lg p-3 text-center">
+                                        <p className="text-2xl font-bold text-[var(--info)]">{migrations.length}</p>
+                                        <p className="text-xs text-[var(--info)] font-semibold">{t("Total")}</p>
                                     </div>
-                                    <div className="bg-green-50 border border-green-200 rounded-lg p-3 text-center">
-                                        <p className="text-2xl font-bold text-green-600">{migrations.filter(m => m.status === 'executed').length}</p>
-                                        <p className="text-xs text-green-700 font-semibold">Executed</p>
+                                    <div className="bg-[var(--success-soft)] border border-[var(--success)] rounded-lg p-3 text-center">
+                                        <p className="text-2xl font-bold text-[var(--success)]">{migrations.filter(m => m.status === 'executed').length}</p>
+                                        <p className="text-xs text-[var(--success)] font-semibold">{t("Executed")}</p>
                                     </div>
-                                    <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 text-center">
-                                        <p className="text-2xl font-bold text-yellow-600">{migrations.filter(m => m.status === 'pending').length}</p>
-                                        <p className="text-xs text-yellow-700 font-semibold">Pending</p>
+                                    <div className="bg-[var(--warning-soft)] border border-yellow-200 rounded-lg p-3 text-center">
+                                        <p className="text-2xl font-bold text-[var(--warning)]">{migrations.filter(m => m.status === 'pending').length}</p>
+                                        <p className="text-xs text-[var(--warning)] font-semibold">{t("Pending")}</p>
                                     </div>
-                                    <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-center">
-                                        <p className="text-2xl font-bold text-red-600">{migrations.filter(m => !m.inFileSystem).length}</p>
-                                        <p className="text-xs text-red-700 font-semibold">Missing Files</p>
+                                    <div className="bg-[var(--destructive-soft)] border border-[var(--destructive)] rounded-lg p-3 text-center">
+                                        <p className="text-2xl font-bold text-[var(--destructive)]">{migrations.filter(m => !m.inFileSystem).length}</p>
+                                        <p className="text-xs text-[var(--destructive)] font-semibold">{t("Missing Files")}</p>
                                     </div>
                                 </div>
 
@@ -415,45 +416,45 @@ export default function DatabaseStructureTab() {
                                 <div className="hidden md:block overflow-x-auto">
                                     <table className="w-full text-sm">
                                         <thead>
-                                            <tr className="border-b border-gray-200 bg-gray-50">
-                                                <th className="px-4 py-2 text-left text-gray-700 font-semibold">Migration Name</th>
-                                                <th className="px-4 py-2 text-center text-gray-700 font-semibold">Status</th>
-                                                <th className="px-4 py-2 text-center text-gray-700 font-semibold">Batch</th>
-                                                <th className="px-4 py-2 text-center text-gray-700 font-semibold">File</th>
+                                            <tr className="border-b border-[var(--border)] bg-[var(--surface-2)]">
+                                                <th className="px-4 py-2 text-left text-[var(--foreground)] font-semibold">{t("Migration Name")}</th>
+                                                <th className="px-4 py-2 text-center text-[var(--foreground)] font-semibold">{t("Status")}</th>
+                                                <th className="px-4 py-2 text-center text-[var(--foreground)] font-semibold">{t("Batch")}</th>
+                                                <th className="px-4 py-2 text-center text-[var(--foreground)] font-semibold">{t("File")}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {migrations.map((migration, index) => (
-                                                <tr key={index} className="border-b border-gray-100 hover:bg-gray-50">
-                                                    <td className="px-4 py-3 text-gray-900 font-mono text-xs break-all">{migration.name}</td>
+                                                <tr key={index} className="border-b border-[var(--border)] hover:bg-[var(--surface-2)]">
+                                                    <td className="px-4 py-3 text-[var(--foreground)] font-mono text-xs break-all">{migration.name}</td>
                                                     <td className="px-4 py-3 text-center">
                                                         {migration.status === 'executed' ? (
-                                                            <span className="inline-flex items-center gap-1 bg-green-100 text-green-700 px-2 py-1 rounded text-xs font-semibold">
-                                                                ✓ Executed
+                                                            <span className="inline-flex items-center gap-1 bg-[var(--success-soft)] text-[var(--success)] px-2 py-1 rounded text-xs font-semibold">
+                                                                {t("✓ Executed")}
                                                             </span>
                                                         ) : (
-                                                            <span className="inline-flex items-center gap-1 bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-xs font-semibold">
-                                                                ◐ Pending
+                                                            <span className="inline-flex items-center gap-1 bg-[var(--warning-soft)] text-[var(--warning)] px-2 py-1 rounded text-xs font-semibold">
+                                                                {t("◐ Pending")}
                                                             </span>
                                                         )}
                                                     </td>
                                                     <td className="px-4 py-3 text-center">
                                                         {migration.batch ? (
-                                                            <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs font-semibold">
+                                                            <span className="bg-[var(--primary-soft)] text-[var(--info)] px-2 py-1 rounded text-xs font-semibold">
                                                                 #{migration.batch}
                                                             </span>
                                                         ) : (
-                                                            <span className="text-gray-400 text-xs">-</span>
+                                                            <span className="text-[var(--muted-foreground)] text-xs">-</span>
                                                         )}
                                                     </td>
                                                     <td className="px-4 py-3 text-center">
                                                         {migration.inFileSystem ? (
-                                                            <span className="inline-flex items-center gap-1 bg-green-100 text-green-700 px-2 py-1 rounded text-xs font-semibold">
-                                                                ✓ Present
+                                                            <span className="inline-flex items-center gap-1 bg-[var(--success-soft)] text-[var(--success)] px-2 py-1 rounded text-xs font-semibold">
+                                                                {t("✓ Present")}
                                                             </span>
                                                         ) : (
-                                                            <span className="inline-flex items-center gap-1 bg-red-100 text-red-700 px-2 py-1 rounded text-xs font-semibold">
-                                                                ✗ Missing
+                                                            <span className="inline-flex items-center gap-1 bg-[var(--destructive-soft)] text-[var(--destructive)] px-2 py-1 rounded text-xs font-semibold">
+                                                                {t("✗ Missing")}
                                                             </span>
                                                         )}
                                                     </td>
@@ -466,42 +467,42 @@ export default function DatabaseStructureTab() {
                                 {/* Mobile Migrations Card View */}
                                 <div className="md:hidden space-y-2">
                                     {migrations.map((migration, index) => (
-                                        <div key={index} className="bg-white border border-gray-200 rounded-lg p-3">
+                                        <div key={index} className="bg-[var(--card)] border border-[var(--border)] rounded-lg p-3">
                                             <div className="mb-2">
-                                                <p className="font-semibold text-gray-900 text-xs break-all">{migration.name}</p>
+                                                <p className="font-semibold text-[var(--foreground)] text-xs break-all">{migration.name}</p>
                                             </div>
-                                            <div className="space-y-2 border-t border-gray-200 pt-2 text-xs">
+                                            <div className="space-y-2 border-t border-[var(--border)] pt-2 text-xs">
                                                 <div className="flex justify-between items-center gap-2">
-                                                    <span className="text-gray-600 font-semibold">Status:</span>
+                                                    <span className="text-[var(--muted-foreground)] font-semibold">{t("Status:")}</span>
                                                     {migration.status === 'executed' ? (
-                                                        <span className="inline-flex items-center gap-1 bg-green-100 text-green-700 px-2 py-0.5 rounded text-xs font-semibold">
-                                                            ✓ Executed
+                                                        <span className="inline-flex items-center gap-1 bg-[var(--success-soft)] text-[var(--success)] px-2 py-0.5 rounded text-xs font-semibold">
+                                                            {t("✓ Executed")}
                                                         </span>
                                                     ) : (
-                                                        <span className="inline-flex items-center gap-1 bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded text-xs font-semibold">
-                                                            ◐ Pending
+                                                        <span className="inline-flex items-center gap-1 bg-[var(--warning-soft)] text-[var(--warning)] px-2 py-0.5 rounded text-xs font-semibold">
+                                                            {t("◐ Pending")}
                                                         </span>
                                                     )}
                                                 </div>
                                                 <div className="flex justify-between items-center gap-2">
-                                                    <span className="text-gray-600 font-semibold">Batch:</span>
+                                                    <span className="text-[var(--muted-foreground)] font-semibold">{t("Batch:")}</span>
                                                     {migration.batch ? (
-                                                        <span className="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-xs font-semibold">
+                                                        <span className="bg-[var(--primary-soft)] text-[var(--info)] px-2 py-0.5 rounded text-xs font-semibold">
                                                             #{migration.batch}
                                                         </span>
                                                     ) : (
-                                                        <span className="text-gray-400 text-xs">-</span>
+                                                        <span className="text-[var(--muted-foreground)] text-xs">-</span>
                                                     )}
                                                 </div>
                                                 <div className="flex justify-between items-center gap-2">
-                                                    <span className="text-gray-600 font-semibold">File:</span>
+                                                    <span className="text-[var(--muted-foreground)] font-semibold">{t("File:")}</span>
                                                     {migration.inFileSystem ? (
-                                                        <span className="inline-flex items-center gap-1 bg-green-100 text-green-700 px-2 py-0.5 rounded text-xs font-semibold">
-                                                            ✓ Present
+                                                        <span className="inline-flex items-center gap-1 bg-[var(--success-soft)] text-[var(--success)] px-2 py-0.5 rounded text-xs font-semibold">
+                                                            {t("✓ Present")}
                                                         </span>
                                                     ) : (
-                                                        <span className="inline-flex items-center gap-1 bg-red-100 text-red-700 px-2 py-0.5 rounded text-xs font-semibold">
-                                                            ✗ Missing
+                                                        <span className="inline-flex items-center gap-1 bg-[var(--destructive-soft)] text-[var(--destructive)] px-2 py-0.5 rounded text-xs font-semibold">
+                                                            {t("✗ Missing")}
                                                         </span>
                                                     )}
                                                 </div>
@@ -511,12 +512,12 @@ export default function DatabaseStructureTab() {
                                 </div>
 
                                 {/* Legend */}
-                                <div className="mt-4 pt-4 border-t border-gray-200">
-                                    <p className="text-xs text-gray-600 mb-2 font-semibold">Legend:</p>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-gray-600">
-                                        <p><span className="inline-block w-3 h-3 bg-green-500 rounded-full mr-2"></span>Executed: Already run in database</p>
-                                        <p><span className="inline-block w-3 h-3 bg-yellow-500 rounded-full mr-2"></span>Pending: Waiting to be executed</p>
-                                        <p><span className="inline-block w-3 h-3 bg-red-500 rounded-full mr-2"></span>Missing: File not found in database/migrations</p>
+                                <div className="mt-4 pt-4 border-t border-[var(--border)]">
+                                    <p className="text-xs text-[var(--muted-foreground)] mb-2 font-semibold">{t("Legend:")}</p>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-[var(--muted-foreground)]">
+                                        <p><span className="inline-block w-3 h-3 bg-green-500 rounded-full mr-2"></span>{t("Executed: Already run in database")}</p>
+                                        <p><span className="inline-block w-3 h-3 bg-yellow-500 rounded-full mr-2"></span>{t("Pending: Waiting to be executed")}</p>
+                                        <p><span className="inline-block w-3 h-3 bg-red-500 rounded-full mr-2"></span>{t("Missing: File not found in database/migrations")}</p>
                                     </div>
                                 </div>
                             </>

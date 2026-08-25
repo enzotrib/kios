@@ -9,6 +9,7 @@ import StorageIcon from "@mui/icons-material/Storage";
 import UpdateV2Tab from "./Tabs/UpdateV2Tab";
 import DatabaseStructureTab from "./Tabs/DatabaseStructureTab";
 import BackupFilesTab from "./Tabs/BackupFilesTab";
+import { t } from '@/i18n';
 
 export default function Maintenance() {
     const [activeTab, setActiveTab] = useState(0);
@@ -20,22 +21,22 @@ export default function Maintenance() {
     return (
         <AuthenticatedLayout
             header={
-                <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Maintenance
+                <h2 className="font-semibold text-xl text-[var(--foreground)] leading-tight">
+                    {t("Maintenance")}
                 </h2>
             }
         >
-            <Head title="Maintenance" />
+            <Head title={t("Maintenance")} />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <div className="bg-[var(--card)] overflow-hidden shadow-sm sm:rounded-lg">
                         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                             <Tabs
                                 value={activeTab}
                                 onChange={handleTabChange}
                                 sx={{
-                                    backgroundColor: '#f9fafb',
+                                    backgroundColor: 'var(--surface-2)',
                                     '& .MuiTabs-indicator': {
                                         backgroundColor: '#2563eb',
                                     }
@@ -45,7 +46,7 @@ export default function Maintenance() {
                                     icon={<CloudUploadIcon />}
                                     iconPosition="start"
                                     label={
-                                        <span className="hidden sm:inline">System Update</span>
+                                        <span className="hidden sm:inline">{t("System Update")}</span>
                                     }
                                     sx={{
                                         minWidth: 'auto',
@@ -56,7 +57,7 @@ export default function Maintenance() {
                                     icon={<StorageIcon />}
                                     iconPosition="start"
                                     label={
-                                        <span className="hidden sm:inline">Database Management</span>
+                                        <span className="hidden sm:inline">{t("Database Management")}</span>
                                     }
                                     sx={{
                                         minWidth: 'auto',
@@ -67,7 +68,7 @@ export default function Maintenance() {
                                     icon={<ArchiveIcon />}
                                     iconPosition="start"
                                     label={
-                                        <span className="hidden sm:inline">Backup Files</span>
+                                        <span className="hidden sm:inline">{t("Backup Files")}</span>
                                     }
                                     sx={{
                                         minWidth: 'auto',

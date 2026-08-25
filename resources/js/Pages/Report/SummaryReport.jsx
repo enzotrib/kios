@@ -11,6 +11,7 @@ import { TrendingUp } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, XAxis, Legend } from "recharts";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/Components/ui/card";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/Components/ui/chart";
+import { t } from '@/i18n';
 
 export default function SalesReport({ stores, report }) {
     const [dataReport, setDataReport] = useState(report);
@@ -46,7 +47,7 @@ export default function SalesReport({ stores, report }) {
 
     return (
         <AuthenticatedLayout>
-            <Head title="Summary Report" />
+            <Head title={t("Summary Report")} />
             <Grid
                 container
                 spacing={2}
@@ -55,20 +56,15 @@ export default function SalesReport({ stores, report }) {
             >
                 <Grid size={{ xs: 12, sm: 3 }}>
                     <TextField
-                        label="Store"
+                        label={t("Store")}
                         name="store"
                         fullWidth
                         select
-                        slotProps={{
-                            inputLabel: {
-                                shrink: true,
-                            },
-                        }}
                         value={searchTerms.store}
                         onChange={handleFieldChange}
                         required
                     >
-                        <MenuItem value={'All'}>All</MenuItem>
+                        <MenuItem value={'All'}>{t("All")}</MenuItem>
                         {stores.map((store) => (
                             <MenuItem key={store.id} value={store.id}>
                                 {store.name}
@@ -79,9 +75,9 @@ export default function SalesReport({ stores, report }) {
 
                 <Grid size={{ xs: 6, sm: 3, md: 2 }}>
                     <TextField
-                        label="Start Date"
+                        label={t("Start Date")}
                         name="start_date"
-                        placeholder="Start Date"
+                        placeholder={t("Start Date")}
                         fullWidth
                         type="date"
                         slotProps={{
@@ -97,9 +93,9 @@ export default function SalesReport({ stores, report }) {
 
                 <Grid size={{ xs: 6, sm: 3, md: 2 }}>
                     <TextField
-                        label="End Date"
+                        label={t("End Date")}
                         name="end_date"
-                        placeholder="End Date"
+                        placeholder={t("End Date")}
                         fullWidth
                         type="date"
                         slotProps={{
@@ -134,34 +130,34 @@ export default function SalesReport({ stores, report }) {
                                     <TableHead>
                                         <TableRow>
                                             <TableCell className="border-none p-4 pl-16" colSpan={2}>
-                                                <h2 className="font-bold text-current-color text-xl"><strong>Sales</strong></h2>
+                                                <h2 className="font-bold text-current-color text-xl"><strong>{t("Sales")}</strong></h2>
                                             </TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
                                         <TableRow>
                                             <TableCell component="th" scope="row">
-                                                Total Sale
-                                                <p className="text-xs text-gray-500">with discount</p>
+                                                {t("Total Sale")}
+                                                <p className="text-xs text-[var(--muted-foreground)]">{t("with discount")}</p>
                                                 </TableCell>
                                             <TableCell align="right">
                                                 {numeral(Number(report.total_sales)+Number(report.total_discount)).format('0,0.00')}
-                                                <p className="text-xs text-red-500">-{numeral(Number(report.total_discount)).format('0,0.00')}</p>
+                                                <p className="text-xs text-[var(--destructive)]">-{numeral(Number(report.total_discount)).format('0,0.00')}</p>
                                                 </TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell component="th" scope="row">
-                                                Total Sale
-                                                <p className="text-xs text-gray-500">without discount</p>
+                                                {t("Total Sale")}
+                                                <p className="text-xs text-[var(--muted-foreground)]">{t("without discount")}</p>
                                                 </TableCell>
                                             <TableCell align="right">{numeral(report.total_sales).format('0,0.00')}</TableCell>
                                         </TableRow>
                                         <TableRow>
-                                            <TableCell component="th" scope="row">Received</TableCell>
+                                            <TableCell component="th" scope="row">{t("Received")}</TableCell>
                                             <TableCell align="right">{numeral(report.total_received).format('0,0.00')}</TableCell>
                                         </TableRow>
                                         <TableRow>
-                                            <TableCell component="th" scope="row">Profit</TableCell>
+                                            <TableCell component="th" scope="row">{t("Profit")}</TableCell>
                                             <TableCell align="right">{numeral(report.total_profit).format('0,0.00')}</TableCell>
                                         </TableRow>
                                     </TableBody>
@@ -176,21 +172,21 @@ export default function SalesReport({ stores, report }) {
                                     <TableHead>
                                         <TableRow>
                                             <TableCell sx={{ border: 'none', padding: '0.3rem', paddingLeft: '1rem' }}>
-                                                <h2 className="font-bold text-current-color text-xl"><strong>Cash Flow</strong></h2>
+                                                <h2 className="font-bold text-current-color text-xl"><strong>{t("Cash Flow")}</strong></h2>
                                             </TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
                                         <TableRow>
-                                            <TableCell component="th" scope="row">Cash Sale</TableCell>
+                                            <TableCell component="th" scope="row">{t("Cash Sale")}</TableCell>
                                             <TableCell align="right">{numeral(report.cash_sale).format('0,0.00')}</TableCell>
                                         </TableRow>
                                         <TableRow>
-                                            <TableCell component="th" scope="row">Cash Refund</TableCell>
+                                            <TableCell component="th" scope="row">{t("Cash Refund")}</TableCell>
                                             <TableCell align="right">{numeral(report.cash_refund).format('0,0.00')}</TableCell>
                                         </TableRow>
                                         <TableRow>
-                                            <TableCell component="th" scope="row">Cash Purchase</TableCell>
+                                            <TableCell component="th" scope="row">{t("Cash Purchase")}</TableCell>
                                             <TableCell align="right">{numeral(report.cash_purchase).format('0,0.00')}</TableCell>
                                         </TableRow>
                                     </TableBody>
@@ -205,21 +201,21 @@ export default function SalesReport({ stores, report }) {
                                     <TableHead>
                                         <TableRow>
                                             <TableCell sx={{ border: 'none', padding: '0.3rem', paddingLeft: '1rem' }}>
-                                                <h2 className="font-bold text-current-color text-xl"><strong>Profit</strong></h2>
+                                                <h2 className="font-bold text-current-color text-xl"><strong>{t("Profit")}</strong></h2>
                                             </TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
                                         <TableRow>
-                                            <TableCell component="th" scope="row">Gross profit</TableCell>
+                                            <TableCell component="th" scope="row">{t("Gross profit")}</TableCell>
                                             <TableCell align="right">{numeral(report.total_profit).format('0,0.00')}</TableCell>
                                         </TableRow>
                                         <TableRow>
-                                            <TableCell component="th" scope="row">Expenses</TableCell>
+                                            <TableCell component="th" scope="row">{t("Expenses")}</TableCell>
                                             <TableCell align="right">{numeral(report.total_expenses).format('0,0.00')}</TableCell>
                                         </TableRow>
                                         <TableRow>
-                                            <TableCell component="th" scope="row">Net profit</TableCell>
+                                            <TableCell component="th" scope="row">{t("Net profit")}</TableCell>
                                             <TableCell align="right">{numeral(parseFloat(report.total_profit) - parseFloat(report.total_expenses)).format('0,0.00')}</TableCell>
                                         </TableRow>
                                     </TableBody>
@@ -234,7 +230,7 @@ export default function SalesReport({ stores, report }) {
                 <Grid size={{ xs: 12, md: 4 }}>
                     <Card>
                         <CardHeader>
-                            <CardTitle>Sales Chart</CardTitle>
+                            <CardTitle>{t("Sales Chart")}</CardTitle>
                         </CardHeader>
                         <CardContent sx={{ height: '350px', pt: 3 }}>
                             <ChartContainer config={{ "Total Sales": { color: "var(--chart-1)" }, "Received": { color: "var(--chart-2)" }, "Profit": { color: "var(--chart-3)" } }} className="h-full w-full">
@@ -255,7 +251,7 @@ export default function SalesReport({ stores, report }) {
                 <Grid size={{ xs: 12, md: 4 }}>
                     <Card>
                         <CardHeader>
-                            <CardTitle>Cash Flow Chart</CardTitle>
+                            <CardTitle>{t("Cash Flow Chart")}</CardTitle>
                         </CardHeader>
                         <CardContent sx={{ height: '350px', pt: 3 }}>
                             <ChartContainer config={{ "Cash Sale": { color: "var(--chart-1)" }, "Cash Refund": { color: "var(--chart-2)" }, "Cash Purchase": { color: "var(--chart-3)" } }} className="h-full w-full">
@@ -276,7 +272,7 @@ export default function SalesReport({ stores, report }) {
                 <Grid size={{ xs: 12, md: 4 }}>
                     <Card>
                         <CardHeader>
-                            <CardTitle>Profit Chart</CardTitle>
+                            <CardTitle>{t("Profit Chart")}</CardTitle>
                         </CardHeader>
                         <CardContent sx={{ height: '350px', pt: 3 }}>
                             <ChartContainer config={{ "Gross Profit": { color: "var(--chart-1)" }, "Expenses": { color: "var(--chart-2)" }, "Net Profit": { color: "var(--chart-3)" } }} className="h-full w-full">

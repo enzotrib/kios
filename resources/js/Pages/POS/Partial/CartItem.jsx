@@ -16,6 +16,7 @@ import { useSales as useCart } from '@/Context/SalesContext';
 import { SharedContext } from "@/Context/SharedContext";
 import productplaceholder from "@/Pages/Product/product-placeholder.webp";
 import { useCurrencyFormatter } from '@/lib/currencyFormatter';
+import { t } from '@/i18n';
 
 export default function CartItems() {
   const formatCurrency = useCurrencyFormatter();
@@ -91,7 +92,7 @@ export default function CartItems() {
                     sx={{ color: 'text.primary', display: 'inline' }}
                   >
                     {(item.price - item.discount) * item.quantity === 0 ? (
-                      <span className='bg-green-600 text-white px-2 py-1 rounded-md'>Free</span>
+                      <span className='bg-green-600 text-white px-2 py-1 rounded-md'>{t("Free")}</span>
                     ) : (
                       <>
                         {formatCurrency(item.price - item.discount, false)} X {item.quantity} = <b>{formatCurrency((item.price - item.discount) * item.quantity, false)}
@@ -107,7 +108,7 @@ export default function CartItems() {
             <Box className="flex flex-row">
               <div className="relative w-full flex flex-row">
                 <QuantityInput cartItem={{ ...item, cart_index: index }}></QuantityInput>
-                <IconButton aria-label="delete" color='error' sx={{ ml: '8px' }} onClick={() => removeFromCart(index)}>
+                <IconButton aria-label={t("delete")} color='error' sx={{ ml: '8px' }} onClick={() => removeFromCart(index)}>
                   <DeleteIcon />
                 </IconButton>
               </div>
@@ -125,8 +126,8 @@ export default function CartItems() {
               },
             }}
           >
-            <MenuItem onClick={() => handleCartMenuClick(menuItem, 'free')}>ADD FREE ITEMS</MenuItem>
-            <MenuItem onClick={() => handleCartMenuClick(menuItem, 'duplicate')}>DUPLICATE</MenuItem>
+            <MenuItem onClick={() => handleCartMenuClick(menuItem, 'free')}>{t("ADD FREE ITEMS")}</MenuItem>
+            <MenuItem onClick={() => handleCartMenuClick(menuItem, 'duplicate')}>{t("DUPLICATE")}</MenuItem>
           </Menu>
         </React.Fragment>
       ))}

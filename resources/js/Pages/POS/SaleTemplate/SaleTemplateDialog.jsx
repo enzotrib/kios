@@ -12,6 +12,7 @@ import Swal from "sweetalert2";
 
 import { useSales } from "@/Context/SalesContext";
 import { name } from "dayjs/locale/en-gb";
+import { t } from '@/i18n';
 
 export default function SaleTemplateDialog({open, setOpen}) {
 
@@ -75,16 +76,16 @@ export default function SaleTemplateDialog({open, setOpen}) {
                 aria-describedby="dialog-description"
             >
                 <DialogTitle id="alert-dialog-title">
-                    SAVE YOUR GROUP TEMPLATE
+                    {t("SAVE YOUR GROUP TEMPLATE")}
                 </DialogTitle>
                 <IconButton
-                    aria-label="close"
+                    aria-label={t("close")}
                     onClick={handleClose}
                     sx={(theme) => ({
                         position: "absolute",
                         right: 8,
                         top: 8,
-                        color: theme.palette.grey[500],
+                        color: theme.palette.text.secondary,
                     })}
                 >
                     <CloseIcon />
@@ -95,7 +96,7 @@ export default function SaleTemplateDialog({open, setOpen}) {
                             <TextField
                                 fullWidth
                                 name="name"
-                                label="Name"
+                                label={t("Name")}
                                 variant="outlined"
                                 value={formState.name}
                                 onChange={handleInputChange}
@@ -106,18 +107,13 @@ export default function SaleTemplateDialog({open, setOpen}) {
                                 onFocus={(event) => {
                                     event.target.select();
                                 }}
-                                slotProps={{
-                                    inputLabel: {
-                                        shrink: true,
-                                    },
-                                }}
                             />
                         </Grid>
                         <Grid size={12}>
                             <TextField
                                 fullWidth
                                 name="note"
-                                label="Note"
+                                label={t("Note")}
                                 variant="outlined"
                                 value={formState.note}
                                 onChange={handleInputChange}
@@ -126,11 +122,6 @@ export default function SaleTemplateDialog({open, setOpen}) {
                                 }}
                                 onFocus={(event) => {
                                     event.target.select();
-                                }}
-                                slotProps={{
-                                    inputLabel: {
-                                        shrink: true,
-                                    },
                                 }}
                             />
                             </Grid>
@@ -146,7 +137,7 @@ export default function SaleTemplateDialog({open, setOpen}) {
                                 type="submit"
                                 color={'primary'}
                             >
-                                SAVE
+                                {t("SAVE")}
                             </Button>
                         </Grid>
                     </Grid>

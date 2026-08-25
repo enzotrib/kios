@@ -11,6 +11,7 @@ import MUIDatePicker from '@/Components/ui/MUIDatePicker';
 import MUITimePicker from '@/Components/ui/MUITimePicker';
 
 import { SharedContext } from '@/Context/SharedContext';
+import { t } from '@/i18n';
 
 export default function CartItemsTop({ customers }) {
   const return_sale = usePage().props.return_sale;
@@ -88,7 +89,7 @@ export default function CartItemsTop({ customers }) {
         <Grid size={{ xs: 12, sm: 6 }} sx={{ width: '100%' }}>
           <MUIDatePicker
             name="sale_date"
-            label="Date"
+            label={t("Date")}
             value={saleDate}
             onChange={setSaleDate}
             size="small"
@@ -111,7 +112,7 @@ export default function CartItemsTop({ customers }) {
             <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
               <MUITimePicker
                 name="sale_time"
-                label="Time"
+                label={t("Time")}
                 value={saleTime}
                 onChange={setSaleTime}
                 size="small"
@@ -121,7 +122,7 @@ export default function CartItemsTop({ customers }) {
                 size="small"
                 onClick={handleTimeSave}
                 color="primary"
-                title="Save time"
+                title={t("Save time")}
               >
                 <CheckIcon />
               </IconButton>
@@ -130,7 +131,7 @@ export default function CartItemsTop({ customers }) {
             <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
               <TextField
                 name="sale_time"
-                label="Time"
+                label={t("Time")}
                 value={dayjs(saleTime, 'HH:mm').format('hh:mm A')}
                 size="small"
                 fullWidth
@@ -145,7 +146,7 @@ export default function CartItemsTop({ customers }) {
                 size="small"
                 onClick={handleTimeEditClick}
                 color="primary"
-                title="Edit time"
+                title={t("Edit time")}
               >
                 <EditIcon />
               </IconButton>
@@ -154,7 +155,7 @@ export default function CartItemsTop({ customers }) {
                   size="small"
                   onClick={handleTimeReset}
                   color="secondary"
-                  title="Reset to current time"
+                  title={t("Reset to current time")}
                 >
                   <RefreshIcon />
                 </IconButton>
@@ -199,7 +200,7 @@ export default function CartItemsTop({ customers }) {
                       }}
                     >
                       <AddIcon sx={{ fontSize: 18 }} />
-                      Add new customer
+                      {t("Add new customer")}
                     </Box>
                     <Divider sx={{ mt: 1 }} />
                   </Box>
@@ -220,7 +221,7 @@ export default function CartItemsTop({ customers }) {
               setSelectedCustomer(newValue);
             }}
             size='small'
-            renderInput={(params) => <TextField {...params} label="Customer" />}
+            renderInput={(params) => <TextField {...params} label={t("Customer")} />}
           />
         )}
       </Grid>

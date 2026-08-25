@@ -1,6 +1,7 @@
-const CartSummary = () => (
+
+import { t } from '@/i18n';const CartSummary = () => (
     <div>
-        <h1>CartSummary</h1>
+        <h1>{t("CartSummary")}</h1>
     </div>
 );
 

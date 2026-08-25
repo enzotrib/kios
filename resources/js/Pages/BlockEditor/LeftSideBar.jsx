@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, Drawer, Typography, Divider, Button } from "@mui/material";
+import { t } from '@/i18n';
 
 const LeftSideBar = ({addBlock})=>{
     return(
@@ -14,7 +15,7 @@ const LeftSideBar = ({addBlock})=>{
             >
                 <Box p={2}>
                     <Typography variant="h6" gutterBottom>
-                        Blocks
+                        {t("Blocks")}
                     </Typography>
                     <Divider />
                     <Button
@@ -24,7 +25,7 @@ const LeftSideBar = ({addBlock})=>{
                         sx={{ mt: 2 }}
                         onClick={() => addBlock("core/paragraph")}
                     >
-                        Add Paragraph
+                        {t("Add Paragraph")}
                     </Button>
                     <Button
                         variant="contained"
@@ -33,7 +34,7 @@ const LeftSideBar = ({addBlock})=>{
                         sx={{ mt: 2 }}
                         onClick={() => addBlock("core/image")}
                     >
-                        Add Image
+                        {t("Add Image")}
                     </Button>
                     <Button
                         variant="contained"
@@ -42,7 +43,7 @@ const LeftSideBar = ({addBlock})=>{
                         sx={{ mt: 2 }}
                         onClick={() => addBlock("core/container")}
                     >
-                        Add Container
+                        {t("Add Container")}
                     </Button>
                 </Box>
             </Drawer>

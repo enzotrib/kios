@@ -9,6 +9,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Swal from 'sweetalert2';
 import {  Grid } from '@mui/material';
+import { t } from '@/i18n';
 
 export default function FormDialog({ open, handleClose, store }) {
 
@@ -97,7 +98,7 @@ export default function FormDialog({ open, handleClose, store }) {
           }
         }}
       >
-        <DialogTitle>Store Information</DialogTitle>
+        <DialogTitle>{t("Store Information")}</DialogTitle>
         <DialogContent>
           <Grid container flexDirection={'column'} spacing={2.6}>
            {/* Store Name */}
@@ -106,7 +107,7 @@ export default function FormDialog({ open, handleClose, store }) {
             autoFocus
             required
             name="name"
-            label="Store name"
+            label={t("Store name")}
             type="text"
             fullWidth
             variant="outlined"
@@ -118,7 +119,7 @@ export default function FormDialog({ open, handleClose, store }) {
           <TextField
             required
             name="address"
-            label="Store Address"
+            label={t("Store Address")}
             type="text"
             fullWidth
             variant="outlined"
@@ -130,7 +131,7 @@ export default function FormDialog({ open, handleClose, store }) {
           <TextField
             required
             name="contact_number"
-            label="Contact Number"
+            label={t("Contact Number")}
             type="text"
             fullWidth
             variant="outlined"
@@ -142,7 +143,7 @@ export default function FormDialog({ open, handleClose, store }) {
           <TextField
           required
             name="sale_prefix"
-            label="Sale Prefeix"
+            label={t("Sale Prefeix")}
             type="text"
             fullWidth
             variant="outlined"
@@ -154,7 +155,7 @@ export default function FormDialog({ open, handleClose, store }) {
           <TextField
             required
             name="current_sale_number"
-            label="Current Sale Number"
+            label={t("Current Sale Number")}
             type="text"
             fullWidth
             variant="outlined"
@@ -164,8 +165,8 @@ export default function FormDialog({ open, handleClose, store }) {
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button type="submit">SAVE</Button>
+          <Button onClick={handleClose}>{t("Cancel")}</Button>
+          <Button type="submit">{t("SAVE")}</Button>
         </DialogActions>
       </Dialog>
     </>

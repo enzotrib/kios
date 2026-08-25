@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import TinyMCEEditor from '@/Components/TinyMCEEditor';
+import { t } from '@/i18n';
 
 const Template = () => {
     const [templateContent, setTemplateContent] = useState('');
@@ -67,13 +68,13 @@ const Template = () => {
                                     id="template"
                                     name="template"
                                     select
-                                    label="Template"
+                                    label={t("Template")}
                                     value={selectedTemplate}
                                     onChange={(event) => handleTemplateChange(event.target.value)}
                                     fullWidth
                                 >
-                                    <MenuItem value="invoice-template">Invoice Template</MenuItem>
-                                    <MenuItem value="quotation-template">Quotation Template</MenuItem>
+                                    <MenuItem value="invoice-template">{t("Invoice Template")}</MenuItem>
+                                    <MenuItem value="quotation-template">{t("Quotation Template")}</MenuItem>
                                     {/* <MenuItem value="receipt-template">Receipt Template</MenuItem>
                                     <MenuItem value="barcode-template">Barcode Template</MenuItem> */}
                                 </TextField>
@@ -89,11 +90,10 @@ const Template = () => {
                         type="submit"
                         variant="outlined"
                         size="large"
-                        color="success"
                         onClick={handleSubmit}
                         fullWidth
                     >
-                        UPDATE
+                        {t("UPDATE")}
                     </Button>
                 </Grid>
                     <TinyMCEEditor content={templateContent} setContent={setTemplateContent} selectedTemplate={selectedTemplate}/>

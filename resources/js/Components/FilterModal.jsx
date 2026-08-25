@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 import TuneIcon from '@mui/icons-material/Tune';
 import Select2 from 'react-select';
+import { t } from '@/i18n';
 
 /**
  * Global FilterModal Component
@@ -185,7 +186,7 @@ export default function FilterModal({ fields = [], filters = {}, handleFilterCha
                         color="primary"
                         title={buttonTitle}
                         sx={{
-                            border: '1px solid #ccc',
+                            border: '1px solid var(--border)',
                             borderRadius: '4px',
                             padding: '8px',
                         }}
@@ -203,10 +204,10 @@ export default function FilterModal({ fields = [], filters = {}, handleFilterCha
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClearFilters} color="error" variant="outlined">
-                        Clear All
+                        {t("Clear All")}
                     </Button>
                     <Button onClick={handleCloseModal} color="inherit">
-                        Close
+                        {t("Close")}
                     </Button>
                 </DialogActions>
             </Dialog>

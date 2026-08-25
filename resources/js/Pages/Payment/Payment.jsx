@@ -21,17 +21,18 @@ import { useCurrencyFormatter } from '@/lib/currencyFormatter';
 import { DataGrid } from "@mui/x-data-grid";
 import CustomPagination from "@/Components/CustomPagination";
 import ViewDetailsDialog from "@/Components/ViewDetailsDialog";
+import { t } from '@/i18n';
 
 const columns = (handleRowClick, formatCurrency) => [
     {
-        field: "id", headerName: "ID", width: 80,
+        field: "id", headerName: t("ID"), width: 80,
         renderCell: (params) => {
             return params.value.toString().padStart(4, "0");
         },
     },
     {
         field: "transaction_date",
-        headerName: "Date",
+        headerName: t("Date"),
         width: 100,
         renderCell: (params) => {
             // Format the date to 'YYYY-MM-DD'
@@ -39,15 +40,15 @@ const columns = (handleRowClick, formatCurrency) => [
         },
     },
     {
-        field: "transaction_type", headerName: "Type", width: 100,
+        field: "transaction_type", headerName: t("Type"), width: 100,
         renderCell: (params) => {
             return params.value.toUpperCase();
         },
     },
-    { field: "contact_name", headerName: "Customer Name", width: 200 },
+    { field: "contact_name", headerName: t("Customer Name"), width: 200 },
     {
         field: "reference_id",
-        headerName: "Reference",
+        headerName: t("Reference"),
         width: 120,
         headerAlign: 'center',
         align: 'center',
@@ -62,17 +63,17 @@ const columns = (handleRowClick, formatCurrency) => [
             );
         },
     },
-    { field: "payment_method", headerName: "Payment Method", width: 150 },
-    { field: "note", headerName: "Note", width: 100 },
+    { field: "payment_method", headerName: t("Payment Method"), width: 150 },
+    { field: "note", headerName: t("Note"), width: 100 },
     {
-        field: "amount", headerName: "Total Amount", width: 120, align: 'right', headerAlign: 'right',
+        field: "amount", headerName: t("Total Amount"), width: 120, align: 'right', headerAlign: 'right',
         renderCell: (params) => {
             return formatCurrency(params.value, false);
         },
     },
     {
         field: "actions",
-        headerName: "Actions",
+        headerName: t("Actions"),
         width: 100,
         renderCell: (params) => {
             // Format the date to 'YYYY-MM-DD'
@@ -184,7 +185,7 @@ export default function Payment({ payments, transactionType, contacts, selected_
 
     return (
         <AuthenticatedLayout>
-            <Head title="Payments" />
+            <Head title={t("Payments")} />
             <Grid
                 container
                 spacing={2}
@@ -195,7 +196,7 @@ export default function Payment({ payments, transactionType, contacts, selected_
                 <Grid size={{ xs: 12, sm: 2 }}>
                     <TextField
                         value={paymentSelect}
-                        label="Select payments"
+                        label={t("Select payments")}
                         onChange={(e) => handleSelectPayments(e.target.value)}
                         required
                         name="payment_type"
@@ -203,9 +204,9 @@ export default function Payment({ payments, transactionType, contacts, selected_
                         select
                         size="small"
                     >
-                        <MenuItem value={"sales"}>Sales Payment</MenuItem>
+                        <MenuItem value={"sales"}>{t("Sales Payment")}</MenuItem>
                         <MenuItem value={"purchases"}>
-                            Purchase Payment
+                            {t("Purchase Payment")}
                         </MenuItem>
                     </TextField>
                 </Grid>
@@ -213,7 +214,7 @@ export default function Payment({ payments, transactionType, contacts, selected_
                 <Grid size={{ xs: 12, sm: 3 }}>
                     <Select2
                         className="w-full"
-                        placeholder="Select a contact..."
+                        placeholder={t("Select a contact...")}
                         styles={{
                             control: (baseStyles, state) => ({
                                 ...baseStyles,
@@ -231,7 +232,7 @@ export default function Payment({ payments, transactionType, contacts, selected_
                 <Grid size={{ xs: 12, sm: 2 }}>
                     <TextField
                         value={searchTerms.payment_method}
-                        label="Select Payment Method"
+                        label={t("Select Payment Method")}
                         onChange={handleSearchChange}
                         required
                         name="payment_method"
@@ -239,21 +240,21 @@ export default function Payment({ payments, transactionType, contacts, selected_
                         select
                         fullWidth
                     >
-                        <MenuItem value={"All"}>All</MenuItem>
-                        <MenuItem value={"Cash"}>Cash</MenuItem>
-                        <MenuItem value={"Card"}>Card</MenuItem>
-                        <MenuItem value={"Credit"}>Credit</MenuItem>
-                        <MenuItem value={"Cheque"}>Cheque</MenuItem>
-                        <MenuItem value={"Account Balance"}>Account Balance</MenuItem>
-                        <MenuItem value={"Account"}>Account</MenuItem>
+                        <MenuItem value={"All"}>{t("All")}</MenuItem>
+                        <MenuItem value={"Cash"}>{t("Cash")}</MenuItem>
+                        <MenuItem value={"Card"}>{t("Card")}</MenuItem>
+                        <MenuItem value={"Credit"}>{t("Credit")}</MenuItem>
+                        <MenuItem value={"Cheque"}>{t("Cheque")}</MenuItem>
+                        <MenuItem value={"Account Balance"}>{t("Account Balance")}</MenuItem>
+                        <MenuItem value={"Account"}>{t("Account")}</MenuItem>
                     </TextField>
                 </Grid>
 
                 <Grid size={{ xs: 6, sm: 2 }}>
                     <TextField
-                        label="Start Date"
+                        label={t("Start Date")}
                         name="start_date"
-                        placeholder="Start Date"
+                        placeholder={t("Start Date")}
                         fullWidth
                         size="large"
                         type="date"
@@ -270,9 +271,9 @@ export default function Payment({ payments, transactionType, contacts, selected_
 
                 <Grid size={{ xs: 6, sm: 2 }}>
                     <TextField
-                        label="End Date"
+                        label={t("End Date")}
                         name="end_date"
-                        placeholder="End Date"
+                        placeholder={t("End Date")}
                         fullWidth
                         size="large"
                         type="date"

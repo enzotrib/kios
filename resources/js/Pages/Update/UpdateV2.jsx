@@ -15,6 +15,7 @@ import {
     Shield,
     Zap
 } from "lucide-react";
+import { t } from '@/i18n';
 
 export default function UpdateV2() {
     const [file, setFile] = useState(null);
@@ -153,104 +154,104 @@ export default function UpdateV2() {
     return (
         <AuthenticatedLayout
             header={
-                <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    System Update V2
+                <h2 className="font-semibold text-xl text-[var(--foreground)] leading-tight">
+                    {t("System Update V2")}
                 </h2>
             }
         >
-            <Head title="Update V2" />
+            <Head title={t("Update V2")} />
             
             <div className="py-6 px-4 max-w-5xl mx-auto">
                 {/* Info Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-3 mb-6">
-                    <div className="bg-white rounded-lg p-4 border border-gray-200">
+                    <div className="bg-[var(--card)] rounded-lg p-4 border border-[var(--border)]">
                         <div className="flex items-center gap-3">
-                            <div className="bg-blue-100 p-2 rounded-lg">
-                                <FolderSync className="w-5 h-5 text-blue-600" />
+                            <div className="bg-[var(--primary-soft)] p-2 rounded-lg">
+                                <FolderSync className="w-5 h-5 text-[var(--info)]" />
                             </div>
                             <div>
-                                <p className="text-xs text-gray-500">Migration Based</p>
-                                <p className="text-sm font-semibold text-gray-900">Auto Updates</p>
+                                <p className="text-xs text-[var(--muted-foreground)]">{t("Migration Based")}</p>
+                                <p className="text-sm font-semibold text-[var(--foreground)]">{t("Auto Updates")}</p>
                             </div>
                         </div>
                     </div>
 
-                    <div className="bg-white rounded-lg p-4 border border-gray-200">
+                    <div className="bg-[var(--card)] rounded-lg p-4 border border-[var(--border)]">
                         <div className="flex items-center gap-3">
-                            <div className="bg-green-100 p-2 rounded-lg">
-                                <Shield className="w-5 h-5 text-green-600" />
+                            <div className="bg-[var(--success-soft)] p-2 rounded-lg">
+                                <Shield className="w-5 h-5 text-[var(--success)]" />
                             </div>
                             <div>
-                                <p className="text-xs text-gray-500">Auto Backup</p>
-                                <p className="text-sm font-semibold text-gray-900">Safe Updates</p>
+                                <p className="text-xs text-[var(--muted-foreground)]">{t("Auto Backup")}</p>
+                                <p className="text-sm font-semibold text-[var(--foreground)]">{t("Safe Updates")}</p>
                             </div>
                         </div>
                     </div>
 
-                    <div className="bg-white rounded-lg p-4 border border-gray-200">
+                    <div className="bg-[var(--card)] rounded-lg p-4 border border-[var(--border)]">
                         <div className="flex items-center gap-3">
                             <div className="bg-purple-100 p-2 rounded-lg">
-                                <Database className="w-5 h-5 text-purple-600" />
+                                <Database className="w-5 h-5 text-[var(--primary)]" />
                             </div>
                             <div>
-                                <p className="text-xs text-gray-500">Smart Rollback</p>
-                                <p className="text-sm font-semibold text-gray-900">Fail-Safe</p>
+                                <p className="text-xs text-[var(--muted-foreground)]">{t("Smart Rollback")}</p>
+                                <p className="text-sm font-semibold text-[var(--foreground)]">{t("Fail-Safe")}</p>
                             </div>
                         </div>
                     </div>
 
-                    <div className="bg-white rounded-lg p-4 border border-gray-200">
+                    <div className="bg-[var(--card)] rounded-lg p-4 border border-[var(--border)]">
                         <div className="flex items-center gap-3">
                             <div className="bg-orange-100 p-2 rounded-lg">
                                 <Zap className="w-5 h-5 text-orange-600" />
                             </div>
                             <div>
-                                <p className="text-xs text-gray-500">Pre-flight Checks</p>
-                                <p className="text-sm font-semibold text-gray-900">Validated</p>
+                                <p className="text-xs text-[var(--muted-foreground)]">{t("Pre-flight Checks")}</p>
+                                <p className="text-sm font-semibold text-[var(--foreground)]">{t("Validated")}</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 {/* Main Upload Card */}
-                <div className="bg-white rounded-lg border border-gray-200 p-6 mb-4">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Upload Update Package</h3>
+                <div className="bg-[var(--card)] rounded-lg border border-[var(--border)] p-6 mb-4">
+                    <h3 className="text-lg font-semibold text-[var(--foreground)] mb-4">{t("Upload Update Package")}</h3>
                     
                     {/* Dropzone */}
                     <div
                         {...getRootProps()}
                         className={`
                             border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-all
-                            ${isDragActive ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-gray-400'}
+                            ${isDragActive ? 'border-blue-500 bg-[var(--primary-soft)]' : 'border-[var(--border)] hover:border-[var(--border)]'}
                             ${uploading ? 'opacity-50 cursor-not-allowed' : ''}
-                            ${file ? 'bg-gray-50' : 'bg-white'}
+                            ${file ? 'bg-[var(--surface-2)]' : 'bg-[var(--card)]'}
                         `}
                     >
                         <input {...getInputProps()} />
                         <div className="flex flex-col items-center gap-3">
                             {!file ? (
                                 <>
-                                    <div className="bg-gray-100 p-4 rounded-full">
-                                        <Upload className="w-8 h-8 text-gray-600" />
+                                    <div className="bg-[var(--surface-2)] p-4 rounded-full">
+                                        <Upload className="w-8 h-8 text-[var(--muted-foreground)]" />
                                     </div>
                                     <div>
-                                        <p className="text-sm font-semibold text-gray-900">
+                                        <p className="text-sm font-semibold text-[var(--foreground)]">
                                             {isDragActive ? 'Drop the file here' : 'Drag & drop your update package'}
                                         </p>
-                                        <p className="text-xs text-gray-500 mt-1">
-                                            or click to browse (ZIP files only, max 50MB)
+                                        <p className="text-xs text-[var(--muted-foreground)] mt-1">
+                                            {t("or click to browse (ZIP files only, max 50MB)")}
                                         </p>
                                     </div>
                                 </>
                             ) : (
                                 <>
-                                    <div className="bg-blue-100 p-4 rounded-full">
-                                        <FileArchive className="w-8 h-8 text-blue-600" />
+                                    <div className="bg-[var(--primary-soft)] p-4 rounded-full">
+                                        <FileArchive className="w-8 h-8 text-[var(--info)]" />
                                     </div>
                                     <div>
-                                        <p className="text-sm font-semibold text-gray-900">{file.name}</p>
-                                        <p className="text-xs text-gray-500 mt-1">
-                                            {(file.size / 1024 / 1024).toFixed(2)} MB
+                                        <p className="text-sm font-semibold text-[var(--foreground)]">{file.name}</p>
+                                        <p className="text-xs text-[var(--muted-foreground)] mt-1">
+                                            {(file.size / 1024 / 1024).toFixed(2)} {t("MB")}
                                         </p>
                                     </div>
                                 </>
@@ -260,11 +261,11 @@ export default function UpdateV2() {
 
                     {/* Error Message */}
                     {error && (
-                        <div className="mt-4 bg-red-50 border border-red-200 rounded-lg p-3 flex items-start gap-3">
-                            <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+                        <div className="mt-4 bg-[var(--destructive-soft)] border border-[var(--destructive)] rounded-lg p-3 flex items-start gap-3">
+                            <AlertCircle className="w-5 h-5 text-[var(--destructive)] flex-shrink-0 mt-0.5" />
                             <div className="flex-1">
-                                <p className="text-sm font-semibold text-red-900">Update Failed</p>
-                                <p className="text-xs text-red-700 mt-1">{error}</p>
+                                <p className="text-sm font-semibold text-[var(--destructive)]">{t("Update Failed")}</p>
+                                <p className="text-xs text-[var(--destructive)] mt-1">{error}</p>
                             </div>
                         </div>
                     )}
@@ -273,16 +274,16 @@ export default function UpdateV2() {
                     {uploading && (
                         <div className="mt-4">
                             <div className="flex justify-between items-center mb-2">
-                                <span className="text-sm font-semibold text-gray-900">
+                                <span className="text-sm font-semibold text-[var(--foreground)]">
                                     {status === 'validating' && 'Validating...'}
                                     {status === 'uploading' && `Uploading... ${uploadProgress}%`}
                                     {status === 'processing' && 'Processing update...'}
                                 </span>
                                 {status === 'processing' && (
-                                    <Loader2 className="w-4 h-4 text-blue-600 animate-spin" />
+                                    <Loader2 className="w-4 h-4 text-[var(--info)] animate-spin" />
                                 )}
                             </div>
-                            <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+                            <div className="w-full bg-[var(--surface-2)] rounded-full h-2 overflow-hidden">
                                 <div 
                                     className="bg-blue-600 h-2 rounded-full transition-all duration-300 ease-out"
                                     style={{ width: `${status === 'processing' ? 100 : uploadProgress}%` }}
@@ -300,14 +301,14 @@ export default function UpdateV2() {
                                     className="flex-1 bg-blue-600 text-white px-4 py-2.5 rounded-lg font-semibold text-sm hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
                                 >
                                     <Upload className="w-4 h-4" />
-                                    Start Update
+                                    {t("Start Update")}
                                 </button>
                                 <button
                                     onClick={resetForm}
-                                    className="px-4 py-2.5 border border-gray-300 text-gray-700 rounded-lg font-semibold text-sm hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
+                                    className="px-4 py-2.5 border border-[var(--border)] text-[var(--foreground)] rounded-lg font-semibold text-sm hover:bg-[var(--surface-2)] transition-colors flex items-center justify-center gap-2"
                                 >
                                     <X className="w-4 h-4" />
-                                    Cancel
+                                    {t("Cancel")}
                                 </button>
                             </>
                         )}
@@ -317,7 +318,7 @@ export default function UpdateV2() {
                                 className="flex-1 bg-green-600 text-white px-4 py-2.5 rounded-lg font-semibold text-sm hover:bg-green-700 transition-colors flex items-center justify-center gap-2"
                             >
                                 <CheckCircle2 className="w-4 h-4" />
-                                Upload Another Update
+                                {t("Upload Another Update")}
                             </button>
                         )}
                         {status === 'error' && (
@@ -325,7 +326,7 @@ export default function UpdateV2() {
                                 onClick={resetForm}
                                 className="flex-1 bg-gray-600 text-white px-4 py-2.5 rounded-lg font-semibold text-sm hover:bg-gray-700 transition-colors flex items-center justify-center gap-2"
                             >
-                                Try Again
+                                {t("Try Again")}
                             </button>
                         )}
                     </div>
@@ -333,14 +334,14 @@ export default function UpdateV2() {
 
                 {/* Logs Display */}
                 {logs.length > 0 && (
-                    <div className="bg-white rounded-lg border border-gray-200 p-6">
+                    <div className="bg-[var(--card)] rounded-lg border border-[var(--border)] p-6">
                         <div className="flex items-center justify-between mb-4">
-                            <h3 className="text-lg font-semibold text-gray-900">Update Logs</h3>
+                            <h3 className="text-lg font-semibold text-[var(--foreground)]">{t("Update Logs")}</h3>
                             <button
                                 onClick={() => setLogs([])}
-                                className="text-xs text-gray-500 hover:text-gray-700 font-semibold"
+                                className="text-xs text-[var(--muted-foreground)] hover:text-[var(--foreground)] font-semibold"
                             >
-                                Clear Logs
+                                {t("Clear Logs")}
                             </button>
                         </div>
                         
@@ -352,10 +353,10 @@ export default function UpdateV2() {
                                         log.type === 'error' ? 'text-red-400' :
                                         log.type === 'success' ? 'text-green-400' :
                                         log.type === 'warning' ? 'text-yellow-400' :
-                                        'text-gray-300'
+                                        'text-[var(--muted-foreground)]'
                                     }`}
                                 >
-                                    <span className="text-gray-500">[{log.timestamp}]</span>
+                                    <span className="text-[var(--muted-foreground)]">[{log.timestamp}]</span>
                                     <span className="flex-1">{log.message}</span>
                                 </div>
                             ))}
@@ -365,14 +366,14 @@ export default function UpdateV2() {
                 )}
 
                 {/* Help Section */}
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-4">
-                    <h4 className="text-sm font-semibold text-blue-900 mb-2">Before You Update</h4>
-                    <ul className="text-xs text-blue-800 space-y-1">
-                        <li>• Ensure you have at least 100MB of free disk space</li>
-                        <li>• The system will automatically create a backup before updating</li>
-                        <li>• Maintenance mode will be enabled during the update process</li>
-                        <li>• If the update fails, the system will automatically rollback</li>
-                        <li>• Check the logs below for detailed progress information</li>
+                <div className="bg-[var(--primary-soft)] border border-[var(--primary)] rounded-lg p-4 mt-4">
+                    <h4 className="text-sm font-semibold text-[var(--info)] mb-2">{t("Before You Update")}</h4>
+                    <ul className="text-xs text-[var(--info)] space-y-1">
+                        <li>{t("• Ensure you have at least 100MB of free disk space")}</li>
+                        <li>{t("• The system will automatically create a backup before updating")}</li>
+                        <li>{t("• Maintenance mode will be enabled during the update process")}</li>
+                        <li>{t("• If the update fails, the system will automatically rollback")}</li>
+                        <li>{t("• Check the logs below for detailed progress information")}</li>
                     </ul>
                 </div>
             </div>

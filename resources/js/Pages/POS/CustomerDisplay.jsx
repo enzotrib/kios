@@ -16,6 +16,7 @@ import Paper from "@mui/material/Paper";
 import { Head } from "@inertiajs/react";
 
 import { SalesProvider, useSales as useCart } from "@/Context/SalesContext";
+import { t } from '@/i18n';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: "#fff",
@@ -24,7 +25,7 @@ const Item = styled(Paper)(({ theme }) => ({
     textAlign: "center",
     color: theme.palette.text.secondary,
     ...theme.applyStyles("dark", {
-        backgroundColor: "#1A2027",
+        backgroundColor: "var(--card)",
     }),
 }));
 
@@ -46,19 +47,19 @@ const CartComponent = () => {
                         }}
                     >
                         <Typography variant="h4" color="initial">
-                            {item.name} | Qty.{item.quantity}
+                            {item.name} {t("| Qty.")}{item.quantity}
                         </Typography>
                         <Typography variant="h4" color="initial">
-                         <b>RS.{((item.price-item.discount) * item.quantity).toFixed(2)}</b>
+                         <b>{t("RS.")}{((item.price-item.discount) * item.quantity).toFixed(2)}</b>
                         </Typography>
                     </Item>
                 ))}
                 <Item variant="outlined" sx={{justifyContent:'space-between',  display: "flex", padding: 2,}}>
                     <Typography variant="h4" color="initial">
-                        <strong>Total</strong>
+                        <strong>{t("Total")}</strong>
                     </Typography>
                     <Typography variant="h4" color="initial">
-                    <strong>Rs.{(cartTotal).toFixed(2)}</strong>
+                    <strong>{t("Rs.")}{(cartTotal).toFixed(2)}</strong>
                     </Typography>
                 </Item>
             </Stack>
@@ -70,7 +71,7 @@ const CartComponent = () => {
 
 const CustomerDisplay = () => (
     <SalesProvider>
-        <Head title="Customer Display" />
+        <Head title={t("Customer Display")} />
         <CartComponent />
     </SalesProvider>
 );

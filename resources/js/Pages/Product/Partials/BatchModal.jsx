@@ -9,6 +9,7 @@ import axios from "axios";
 import Select2 from "react-select";
 
 import Swal from "sweetalert2";
+import { t } from '@/i18n';
 
 export default function BatchModal({
     batchModalOpen,
@@ -186,25 +187,24 @@ export default function BatchModal({
                             <Button
                                 fullWidth
                                 variant="contained"
-                                color="success"
                                 onClick={() => {
                                     setIsNew(true);
                                     setFormState(initialFormState);
                                 }}
                             >
-                                CREATE NEW BATCH
+                                {t("CREATE NEW BATCH")}
                             </Button>
                         )}
                     </div>
                 </DialogTitle>
                 <IconButton
-                    aria-label="close"
+                    aria-label={t("close")}
                     onClick={handleClose}
                     sx={(theme) => ({
                         position: "absolute",
                         right: 8,
                         top: 8,
-                        color: theme.palette.grey[500],
+                        color: theme.palette.text.secondary,
                     })}
                 >
                     <CloseIcon />
@@ -221,7 +221,7 @@ export default function BatchModal({
                                 fullWidth
                                 size="large"
                                 name="batch_number"
-                                label="Batch Number"
+                                label={t("Batch Number")}
                                 variant="outlined"
                                 autoFocus
                                 value={formState.batch_number}
@@ -247,7 +247,7 @@ export default function BatchModal({
                                 type="number"
                                 name="price"
                                 size="large"
-                                label="Price"
+                                label={t("Price")}
                                 variant="outlined"
                                 required
                                 value={formState.price}
@@ -271,7 +271,7 @@ export default function BatchModal({
                                 fullWidth
                                 type={"number"}
                                 name="cost"
-                                label="Cost"
+                                label={t("Cost")}
                                 variant="outlined"
                                 required
                                 value={formState.cost}
@@ -297,7 +297,7 @@ export default function BatchModal({
                                 fullWidth
                                 type={"number"}
                                 name="discount_percentage"
-                                label="Discount (%)"
+                                label={t("Discount (%)")}
                                 variant="outlined"
                                 required
                                 value={formState.discount_percentage}
@@ -312,7 +312,7 @@ export default function BatchModal({
                                 fullWidth
                                 type={"number"}
                                 name="discount"
-                                label="Flat Discount"
+                                label={t("Flat Discount")}
                                 variant="outlined"
                                 required
                                 value={formState.discount}
@@ -328,7 +328,7 @@ export default function BatchModal({
                                 fullWidth
                                 type={"date"}
                                 name="expiry_date"
-                                label="Expiry Date"
+                                label={t("Expiry Date")}
                                 variant="outlined"
                                 value={formState.expiry_date}
                                 onChange={handleInputChange}
@@ -336,17 +336,12 @@ export default function BatchModal({
                                 onFocus={(event) => {
                                     event.target.select();
                                 }}
-                                slotProps={{
-                                    inputLabel: {
-                                        shrink: true,
-                                    },
-                                }}
                             />
                         </Grid>
                         <Grid size={{ xs: 12, sm: 12 }} sx={{ zIndex: 100, }}>
                             <Select2
                                 className="w-full"
-                                placeholder="Select a supplier..."
+                                placeholder={t("Select a supplier...")}
                                 name="contact_id"
                                 styles={{
                                     control: (baseStyles, state) => ({
@@ -384,7 +379,7 @@ export default function BatchModal({
                                         checked={formState.is_active}
                                     />
                                 }
-                                label="Is batch active? "
+                                label={t("Is batch active?")}
                                 labelPlacement="top"
                             />
                         </Grid>
@@ -404,7 +399,7 @@ export default function BatchModal({
                                         checked={formState.is_featured}
                                     />
                                 }
-                                label="Is featured? "
+                                label={t("Is featured?")}
                                 labelPlacement="top"
                             />
                         </Grid>

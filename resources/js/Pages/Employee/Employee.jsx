@@ -25,12 +25,14 @@ import SalaryFormDialog from "./Partials/SalaryFormDialog";
 import EmployeeBalanceDialog from "./Partials/EmployeeBalanceDialog";
 import PrintIcon from "@mui/icons-material/Print";
 import { data } from "autoprefixer";
+import { t } from '@/i18n';
+import SearchField from '@/Components/design/SearchField';
 
 const columns = (handleRowClick) => [
-    { field: "id", headerName: "ID", width: 80 },
+    { field: "id", headerName: t("ID"), width: 80 },
     {
         field: "name",
-        headerName: "Name",
+        headerName: t("Name"),
         width: 200,
         renderCell: (params) => (
             <Link underline="hover" href='#' className='hover:underline' onClick={(event) => { event.preventDefault(); handleRowClick(params.row, 'employee_edit'); }}>
@@ -40,17 +42,17 @@ const columns = (handleRowClick) => [
     },
     {
         field: "contact_number",
-        headerName: "Contact Number",
+        headerName: t("Contact Number"),
         width: 150,
     },
     {
         field: "address",
-        headerName: "Address",
+        headerName: t("Address"),
         width: 300,
     },
     {
         field: "joined_at",
-        headerName: "Joined At",
+        headerName: t("Joined At"),
         width: 120,
         renderCell: (params) => {
             return dayjs(params.value).format("YYYY-MM-DD");
@@ -58,7 +60,7 @@ const columns = (handleRowClick) => [
     },
     {
         field: "salary",
-        headerName: "Salary",
+        headerName: t("Salary"),
         width: 180,
         align: 'right', headerAlign: 'right',
 
@@ -79,7 +81,7 @@ const columns = (handleRowClick) => [
     },
     {
         field: "balance",
-        headerName: "Balance",
+        headerName: t("Balance"),
         width: 120,
         align: 'right', headerAlign: 'right',
         renderCell: (params) => (
@@ -99,17 +101,17 @@ const columns = (handleRowClick) => [
     },
     {
         field: "role",
-        headerName: "Role",
+        headerName: t("Role"),
         width: 120,
     },
     {
         field: "status",
-        headerName: "Status",
+        headerName: t("Status"),
         width: 120,
     },
     {
         field: 'action',
-        headerName: 'Actions',
+        headerName: t("Actions"),
         width: 150, align: 'right', headerAlign: 'right',
         renderCell: (params) => (
             <>
@@ -222,7 +224,7 @@ export default function Employee({ employees, stores, }) {
 
     return (
         <AuthenticatedLayout>
-            <Head title="Employees" />
+            <Head title={t("Employees")} />
             <Grid
                 container
                 spacing={2}
@@ -231,20 +233,18 @@ export default function Employee({ employees, stores, }) {
             >
 
                 <Grid size={{ xs: 12, sm: 3 }}>
-                    <TextField
-                        label="Search..."
+                    <SearchField
                         name="search_query"
-                        placeholder="Start typing..."
+                        placeholder={t("Start typing...")}
                         value={searchTerms.search_query}
                         onChange={handleSearchChange}
-                        fullWidth
                     />
                 </Grid>
                 <Grid size={{ xs: 6, sm: 2 }}>
                     <TextField
-                        label="Start Date"
+                        label={t("Start Date")}
                         name="start_date"
-                        placeholder="Start Date"
+                        placeholder={t("Start Date")}
                         fullWidth
                         type="date"
                         slotProps={{
@@ -259,9 +259,9 @@ export default function Employee({ employees, stores, }) {
                 </Grid>
                 <Grid size={{ xs: 6, sm: 2 }}>
                     <TextField
-                        label="End Date"
+                        label={t("End Date")}
                         name="end_date"
-                        placeholder="End Date"
+                        placeholder={t("End Date")}
                         fullWidth
                         type="date"
                         slotProps={{
@@ -282,9 +282,8 @@ export default function Employee({ employees, stores, }) {
                         startIcon={<AddCircleIcon />}
                         size="large"
                         fullWidth
-                        color="success"
                     >
-                        ADD EMPLOYEE
+                        {t("ADD EMPLOYEE")}
                     </Button>
                 </Grid>
             </Grid>

@@ -17,6 +17,7 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 
 import FormDialog from "./Partial/FormDialog";
 import { Container } from "postcss";
+import { t } from '@/i18n';
 
 export default function Store({ stores, current_store_id, message }) {
     const auth = usePage().props.auth.user;
@@ -39,10 +40,10 @@ export default function Store({ stores, current_store_id, message }) {
     };
 
     const columns = (handleEdit) => [
-        { field: "id", headerName: "ID", width: 50 },
+        { field: "id", headerName: t("ID"), width: 50 },
         {
             field: "name",
-            headerName: "Store Name",
+            headerName: t("Store Name"),
             width: 250,
             renderCell: (params) => (
                 <Button
@@ -54,12 +55,12 @@ export default function Store({ stores, current_store_id, message }) {
                 </Button>
             ),
         },
-        { field: "address", headerName: "Address", width: 300 },
-        { field: "contact_number", headerName: "Contact Number", width: 180 },
-        { field: "created_at", headerName: "Created At", width: 120 },
+        { field: "address", headerName: t("Address"), width: 300 },
+        { field: "contact_number", headerName: t("Contact Number"), width: 180 },
+        { field: "created_at", headerName: t("Created At"), width: 120 },
         {
             field: "current_store",
-            headerName: "Current store",
+            headerName: t("Current store"),
             width: 130,
             renderCell: (params) => (
                 <Button
@@ -111,7 +112,7 @@ export default function Store({ stores, current_store_id, message }) {
 
     return (
         <AuthenticatedLayout>
-            <Head title="Store" />
+            <Head title={t("Store")} />
             <Grid
                 container
                 spacing={2}
@@ -123,7 +124,7 @@ export default function Store({ stores, current_store_id, message }) {
                         startIcon={<AddIcon />}
                         onClick={handleClickOpen}
                     >
-                        Add Store
+                        {t("Add Store")}
                     </Button>
                 </Grid>
             </Grid>
@@ -156,10 +157,10 @@ export default function Store({ stores, current_store_id, message }) {
                                 {store.address}
                             </Typography>
                             <Typography variant="body2" color="textSecondary">
-                                Contact: {store.contact_number}
+                                {t("Contact:")} {store.contact_number}
                             </Typography>
                             <Typography variant="body2" color="textSecondary">
-                                Created At:{" "}
+                                {t("Created At:")}{" "}
                                 {new Date(
                                     store.created_at
                                 ).toLocaleDateString()}

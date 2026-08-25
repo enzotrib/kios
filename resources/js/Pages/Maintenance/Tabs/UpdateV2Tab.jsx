@@ -13,6 +13,7 @@ import {
     Shield,
     Zap
 } from "lucide-react";
+import { t } from '@/i18n';
 
 export default function UpdateV2Tab() {
     const [file, setFile] = useState(null);
@@ -151,94 +152,94 @@ export default function UpdateV2Tab() {
         <div className="space-y-4">
             {/* Info Cards */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
-                <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                <div className="bg-[var(--surface-2)] rounded-lg p-4 border border-[var(--border)]">
                     <div className="flex items-center gap-3">
-                        <div className="bg-blue-100 p-2 rounded-lg">
-                            <FolderSync className="w-5 h-5 text-blue-600" />
+                        <div className="bg-[var(--primary-soft)] p-2 rounded-lg">
+                            <FolderSync className="w-5 h-5 text-[var(--info)]" />
                         </div>
                         <div>
-                            <p className="text-xs text-gray-500">Migration Based</p>
-                            <p className="text-sm font-semibold text-gray-900">Auto Updates</p>
+                            <p className="text-xs text-[var(--muted-foreground)]">{t("Migration Based")}</p>
+                            <p className="text-sm font-semibold text-[var(--foreground)]">{t("Auto Updates")}</p>
                         </div>
                     </div>
                 </div>
 
-                <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                <div className="bg-[var(--surface-2)] rounded-lg p-4 border border-[var(--border)]">
                     <div className="flex items-center gap-3">
-                        <div className="bg-green-100 p-2 rounded-lg">
-                            <Shield className="w-5 h-5 text-green-600" />
+                        <div className="bg-[var(--success-soft)] p-2 rounded-lg">
+                            <Shield className="w-5 h-5 text-[var(--success)]" />
                         </div>
                         <div>
-                            <p className="text-xs text-gray-500">Auto Backup</p>
-                            <p className="text-sm font-semibold text-gray-900">Safe Updates</p>
+                            <p className="text-xs text-[var(--muted-foreground)]">{t("Auto Backup")}</p>
+                            <p className="text-sm font-semibold text-[var(--foreground)]">{t("Safe Updates")}</p>
                         </div>
                     </div>
                 </div>
 
-                <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                <div className="bg-[var(--surface-2)] rounded-lg p-4 border border-[var(--border)]">
                     <div className="flex items-center gap-3">
                         <div className="bg-purple-100 p-2 rounded-lg">
-                            <Database className="w-5 h-5 text-purple-600" />
+                            <Database className="w-5 h-5 text-[var(--primary)]" />
                         </div>
                         <div>
-                            <p className="text-xs text-gray-500">Smart Rollback</p>
-                            <p className="text-sm font-semibold text-gray-900">Fail-Safe</p>
+                            <p className="text-xs text-[var(--muted-foreground)]">{t("Smart Rollback")}</p>
+                            <p className="text-sm font-semibold text-[var(--foreground)]">{t("Fail-Safe")}</p>
                         </div>
                     </div>
                 </div>
 
-                <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                <div className="bg-[var(--surface-2)] rounded-lg p-4 border border-[var(--border)]">
                     <div className="flex items-center gap-3">
                         <div className="bg-orange-100 p-2 rounded-lg">
                             <Zap className="w-5 h-5 text-orange-600" />
                         </div>
                         <div>
-                            <p className="text-xs text-gray-500">Pre-flight Checks</p>
-                            <p className="text-sm font-semibold text-gray-900">Validated</p>
+                            <p className="text-xs text-[var(--muted-foreground)]">{t("Pre-flight Checks")}</p>
+                            <p className="text-sm font-semibold text-[var(--foreground)]">{t("Validated")}</p>
                         </div>
                     </div>
                 </div>
             </div>
 
             {/* Upload Card */}
-            <div className="bg-gray-50 rounded-lg border border-gray-200 p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Upload Update Package</h3>
+            <div className="bg-[var(--surface-2)] rounded-lg border border-[var(--border)] p-6">
+                <h3 className="text-lg font-semibold text-[var(--foreground)] mb-4">{t("Upload Update Package")}</h3>
                 
                 {/* Dropzone */}
                 <div
                     {...getRootProps()}
                     className={`
                         border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-all
-                        ${isDragActive ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-gray-400'}
+                        ${isDragActive ? 'border-blue-500 bg-[var(--primary-soft)]' : 'border-[var(--border)] hover:border-[var(--border)]'}
                         ${uploading ? 'opacity-50 cursor-not-allowed' : ''}
-                        ${file ? 'bg-white' : 'bg-white'}
+                        ${file ? 'bg-[var(--card)]' : 'bg-[var(--card)]'}
                     `}
                 >
                     <input {...getInputProps()} />
                     <div className="flex flex-col items-center gap-3">
                         {!file ? (
                             <>
-                                <div className="bg-gray-100 p-4 rounded-full">
-                                    <Upload className="w-8 h-8 text-gray-600" />
+                                <div className="bg-[var(--surface-2)] p-4 rounded-full">
+                                    <Upload className="w-8 h-8 text-[var(--muted-foreground)]" />
                                 </div>
                                 <div>
-                                    <p className="text-sm font-semibold text-gray-900">
+                                    <p className="text-sm font-semibold text-[var(--foreground)]">
                                         {isDragActive ? 'Drop the file here' : 'Drag & drop your update package'}
                                     </p>
-                                    <p className="text-xs text-gray-500 mt-1">
-                                        or click to browse (ZIP files only, max 50MB)
+                                    <p className="text-xs text-[var(--muted-foreground)] mt-1">
+                                        {t("or click to browse (ZIP files only, max 50MB)")}
                                     </p>
                                 </div>
                             </>
                         ) : (
                             <>
-                                <div className="bg-blue-100 p-4 rounded-full">
-                                    <FileArchive className="w-8 h-8 text-blue-600" />
+                                <div className="bg-[var(--primary-soft)] p-4 rounded-full">
+                                    <FileArchive className="w-8 h-8 text-[var(--info)]" />
                                 </div>
                                 <div>
-                                    <p className="text-sm font-semibold text-gray-900">{file.name}</p>
-                                    <p className="text-xs text-gray-500 mt-1">
-                                        {(file.size / 1024 / 1024).toFixed(2)} MB
+                                    <p className="text-sm font-semibold text-[var(--foreground)]">{file.name}</p>
+                                    <p className="text-xs text-[var(--muted-foreground)] mt-1">
+                                        {(file.size / 1024 / 1024).toFixed(2)} {t("MB")}
                                     </p>
                                 </div>
                             </>
@@ -248,11 +249,11 @@ export default function UpdateV2Tab() {
 
                 {/* Error Message */}
                 {error && (
-                    <div className="mt-4 bg-red-50 border border-red-200 rounded-lg p-3 flex items-start gap-3">
-                        <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+                    <div className="mt-4 bg-[var(--destructive-soft)] border border-[var(--destructive)] rounded-lg p-3 flex items-start gap-3">
+                        <AlertCircle className="w-5 h-5 text-[var(--destructive)] flex-shrink-0 mt-0.5" />
                         <div className="flex-1">
-                            <p className="text-sm font-semibold text-red-900">Update Failed</p>
-                            <p className="text-xs text-red-700 mt-1">{error}</p>
+                            <p className="text-sm font-semibold text-[var(--destructive)]">{t("Update Failed")}</p>
+                            <p className="text-xs text-[var(--destructive)] mt-1">{error}</p>
                         </div>
                     </div>
                 )}
@@ -261,16 +262,16 @@ export default function UpdateV2Tab() {
                 {uploading && (
                     <div className="mt-4">
                         <div className="flex justify-between items-center mb-2">
-                            <span className="text-sm font-semibold text-gray-900">
+                            <span className="text-sm font-semibold text-[var(--foreground)]">
                                 {status === 'validating' && 'Validating...'}
                                 {status === 'uploading' && `Uploading... ${uploadProgress}%`}
                                 {status === 'processing' && 'Processing update...'}
                             </span>
                             {status === 'processing' && (
-                                <Loader2 className="w-4 h-4 text-blue-600 animate-spin" />
+                                <Loader2 className="w-4 h-4 text-[var(--info)] animate-spin" />
                             )}
                         </div>
-                        <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+                        <div className="w-full bg-[var(--surface-2)] rounded-full h-2 overflow-hidden">
                             <div 
                                 className="bg-blue-600 h-2 rounded-full transition-all duration-300 ease-out"
                                 style={{ width: `${status === 'processing' ? 100 : uploadProgress}%` }}
@@ -281,11 +282,11 @@ export default function UpdateV2Tab() {
 
                 {/* Success Message */}
                 {status === 'success' && (
-                    <div className="mt-4 bg-green-50 border border-green-200 rounded-lg p-3 flex items-start gap-3">
-                        <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                    <div className="mt-4 bg-[var(--success-soft)] border border-[var(--success)] rounded-lg p-3 flex items-start gap-3">
+                        <CheckCircle2 className="w-5 h-5 text-[var(--success)] flex-shrink-0 mt-0.5" />
                         <div className="flex-1">
-                            <p className="text-sm font-semibold text-green-900">Update Completed</p>
-                            <p className="text-xs text-green-700 mt-1">Your system has been updated successfully.</p>
+                            <p className="text-sm font-semibold text-[var(--success)]">{t("Update Completed")}</p>
+                            <p className="text-xs text-[var(--success)] mt-1">{t("Your system has been updated successfully.")}</p>
                         </div>
                     </div>
                 )}
@@ -299,14 +300,14 @@ export default function UpdateV2Tab() {
                                 className="flex-1 bg-blue-600 text-white px-4 py-2.5 rounded-lg font-semibold text-sm hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
                             >
                                 <Upload className="w-4 h-4" />
-                                Start Update
+                                {t("Start Update")}
                             </button>
                             <button
                                 onClick={() => setFile(null)}
-                                className="bg-gray-300 text-gray-900 px-4 py-2.5 rounded-lg font-semibold text-sm hover:bg-gray-400 transition-colors flex items-center justify-center gap-2"
+                                className="bg-[var(--surface-2)] text-[var(--foreground)] px-4 py-2.5 rounded-lg font-semibold text-sm hover:bg-[var(--surface-2)] transition-colors flex items-center justify-center gap-2"
                             >
                                 <X className="w-4 h-4" />
-                                Clear
+                                {t("Clear")}
                             </button>
                         </>
                     )}
@@ -315,7 +316,7 @@ export default function UpdateV2Tab() {
                             onClick={resetForm}
                             className="w-full bg-blue-600 text-white px-4 py-2.5 rounded-lg font-semibold text-sm hover:bg-blue-700 transition-colors"
                         >
-                            Upload Another
+                            {t("Upload Another")}
                         </button>
                     )}
                 </div>
@@ -324,7 +325,7 @@ export default function UpdateV2Tab() {
             {/* Logs Section */}
             {logs.length > 0 && (
                 <div className="bg-gray-900 rounded-lg p-4">
-                    <h3 className="text-sm font-semibold text-white mb-3">Update Logs</h3>
+                    <h3 className="text-sm font-semibold text-white mb-3">{t("Update Logs")}</h3>
                     <div className="bg-black rounded p-3 h-64 overflow-y-auto font-mono text-xs space-y-1">
                         {logs.map((log, index) => (
                             <div 
@@ -336,7 +337,7 @@ export default function UpdateV2Tab() {
                                     ${log.type === 'warning' ? 'text-yellow-400' : ''}
                                 `}
                             >
-                                <span className="text-gray-600">[{log.timestamp}]</span> {log.message}
+                                <span className="text-[var(--muted-foreground)]">[{log.timestamp}]</span> {log.message}
                             </div>
                         ))}
                         <div ref={logsEndRef} />

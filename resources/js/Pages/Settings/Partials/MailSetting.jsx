@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Button,  Grid, Paper, TextField, Typography } from '@mui/material';
 import { useEffect } from 'react';
+import { t } from '@/i18n';
 
 const MailSetting = ({ handleSubmit, settingFormData, handleChange, setSettingFormData, settings }) => {
 
@@ -50,7 +51,7 @@ const MailSetting = ({ handleSubmit, settingFormData, handleChange, setSettingFo
                                     <TextField
                                         fullWidth
                                         variant="outlined"
-                                        label={"Mail Host"}
+                                        label={t("Mail Host")}
                                         name="mail_host"
                                         required
                                         value={settingFormData.mail_host}
@@ -61,7 +62,7 @@ const MailSetting = ({ handleSubmit, settingFormData, handleChange, setSettingFo
                                     <TextField
                                         fullWidth
                                         variant="outlined"
-                                        label={"Mail Port"}
+                                        label={t("Mail Port")}
                                         name="mail_port"
                                         required
                                         value={settingFormData.mail_port}
@@ -72,7 +73,7 @@ const MailSetting = ({ handleSubmit, settingFormData, handleChange, setSettingFo
                                     <TextField
                                         fullWidth
                                         variant="outlined"
-                                        label={"Mail Username"}
+                                        label={t("Mail Username")}
                                         name="mail_username"
                                         required
                                         value={settingFormData.mail_username}
@@ -83,7 +84,7 @@ const MailSetting = ({ handleSubmit, settingFormData, handleChange, setSettingFo
                                     <TextField
                                         fullWidth
                                         variant="outlined"
-                                        label={"Mail Password"}
+                                        label={t("Mail Password")}
                                         name="mail_password"
                                         required
                                         value={settingFormData.mail_password}
@@ -94,7 +95,7 @@ const MailSetting = ({ handleSubmit, settingFormData, handleChange, setSettingFo
                                     <TextField
                                         fullWidth
                                         variant="outlined"
-                                        label={"Mail Encryption"}
+                                        label={t("Mail Encryption")}
                                         name="mail_encryption"
                                         required
                                         value={settingFormData.mail_encryption}
@@ -105,7 +106,7 @@ const MailSetting = ({ handleSubmit, settingFormData, handleChange, setSettingFo
                                     <TextField
                                         fullWidth
                                         variant="outlined"
-                                        label={"Mail From Address"}
+                                        label={t("Mail From Address")}
                                         name="mail_from_address"
                                         required
                                         value={settingFormData.mail_from_address}
@@ -116,7 +117,7 @@ const MailSetting = ({ handleSubmit, settingFormData, handleChange, setSettingFo
                                     <TextField
                                         fullWidth
                                         variant="outlined"
-                                        label={"Mail From Name"}
+                                        label={t("Mail From Name")}
                                         name="mail_from_name"
                                         required
                                         value={settingFormData.mail_from_name}
@@ -127,7 +128,7 @@ const MailSetting = ({ handleSubmit, settingFormData, handleChange, setSettingFo
                                     <TextField
                                         fullWidth
                                         variant="outlined"
-                                        label={"Admin Email"}
+                                        label={t("Admin Email")}
                                         name="admin_email"
                                         required
                                         value={settingFormData.admin_email}
@@ -156,17 +157,16 @@ const MailSetting = ({ handleSubmit, settingFormData, handleChange, setSettingFo
                                     });
                             }}
                         >
-                            Test Mail
+                            {t("Test Mail")}
                         </Button>
 
                         <Button
                             type="submit"
                             variant="outlined"
                             size="large"
-                            color="success"
                             fullWidth
                         >
-                            UPDATE
+                            {t("UPDATE")}
                         </Button>
                     </Grid>
                         </Paper>

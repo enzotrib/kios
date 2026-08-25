@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Button,  Grid, Paper, TextField, Typography } from '@mui/material';
 import { useEffect } from 'react';
+import { t } from '@/i18n';
 
 const TelegramSetting = ({ handleSubmit, settingFormData, handleChange, setSettingFormData, settings }) => {
 
@@ -44,7 +45,7 @@ const TelegramSetting = ({ handleSubmit, settingFormData, handleChange, setSetti
                                     <TextField
                                         fullWidth
                                         variant="outlined"
-                                        label={"Telegram Bot Token"}
+                                        label={t("Telegram Bot Token")}
                                         name="token"
                                         required
                                         value={settingFormData.token}
@@ -55,7 +56,7 @@ const TelegramSetting = ({ handleSubmit, settingFormData, handleChange, setSetti
                                     <TextField
                                         fullWidth
                                         variant="outlined"
-                                        label={"Telegram Chat ID"}
+                                        label={t("Telegram Chat ID")}
                                         name="chat_id"
                                         required
                                         value={settingFormData.chat_id}
@@ -89,17 +90,16 @@ const TelegramSetting = ({ handleSubmit, settingFormData, handleChange, setSetti
                                         });
                                     }}
                                 >
-                                    TEST TELEGRAM
+                                    {t("TEST TELEGRAM")}
                                 </Button>
 
                                 <Button
                                     type="submit"
                                     variant="outlined"
                                     size="large"
-                                    color="success"
                                     fullWidth
                                 >
-                                    UPDATE
+                                    {t("UPDATE")}
                                 </Button>
                             </Grid>
                         </Paper>

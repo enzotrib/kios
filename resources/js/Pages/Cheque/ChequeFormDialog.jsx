@@ -15,6 +15,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
 import Swal from "sweetalert2";
 import dayjs from "dayjs";
+import { t } from '@/i18n';
 
 const initialChequeFormState = {
     cheque_number: '',
@@ -118,13 +119,13 @@ export default function ChequeFormDialog({
                     {selectedCheque ? "EDIT CHEQUE" : "ADD CHEQUE"}
                 </DialogTitle>
                 <IconButton
-                    aria-label="close"
+                    aria-label={t("close")}
                     onClick={handleClose}
                     sx={(theme) => ({
                         position: "absolute",
                         right: 8,
                         top: 8,
-                        color: theme.palette.grey[500],
+                        color: theme.palette.text.secondary,
                     })}
                 >
                     <CloseIcon />
@@ -135,7 +136,7 @@ export default function ChequeFormDialog({
                             <TextField
                                 fullWidth
                                 name="cheque_number"
-                                label="Cheque Number"
+                                label={t("Cheque Number")}
                                 variant="outlined"
                                 value={chequeForm.cheque_number}
                                 onChange={handleFieldChange}
@@ -147,7 +148,7 @@ export default function ChequeFormDialog({
                             <TextField
                                 fullWidth
                                 name="name"
-                                label="Name"
+                                label={t("Name")}
                                 variant="outlined"
                                 value={chequeForm.name}
                                 onChange={handleFieldChange}
@@ -159,7 +160,7 @@ export default function ChequeFormDialog({
                                 fullWidth
                                 type="number"
                                 name="amount"
-                                label="Amount"
+                                label={t("Amount")}
                                 variant="outlined"
                                 value={chequeForm.amount}
                                 onChange={handleFieldChange}
@@ -170,7 +171,7 @@ export default function ChequeFormDialog({
                             <TextField
                                 fullWidth
                                 name="bank"
-                                label="Bank"
+                                label={t("Bank")}
                                 variant="outlined"
                                 value={chequeForm.bank}
                                 onChange={handleFieldChange}
@@ -178,7 +179,7 @@ export default function ChequeFormDialog({
                         </Grid>
                         <Grid size={{ xs: 12, sm: 6 }}>
                             <TextField
-                                label="Cheque Date"
+                                label={t("Cheque Date")}
                                 name="cheque_date"
                                 fullWidth
                                 type="date"
@@ -189,7 +190,7 @@ export default function ChequeFormDialog({
                         </Grid>
                         <Grid size={{ xs: 12, sm: 6 }}>
                             <TextField
-                                label="Issued Date"
+                                label={t("Issued Date")}
                                 name="issued_date"
                                 fullWidth
                                 type="date"
@@ -201,7 +202,7 @@ export default function ChequeFormDialog({
 
                         <Grid size={{ xs: 12, sm: 6 }}>
                             <TextField
-                                label="Status"
+                                label={t("Status")}
                                 name="status"
                                 fullWidth
                                 select
@@ -209,30 +210,30 @@ export default function ChequeFormDialog({
                                 onChange={handleFieldChange}
                                 required
                             >
-                                <MenuItem value={"pending"}>Pending</MenuItem>
-                                <MenuItem value={"completed"}>Completed</MenuItem>
-                                <MenuItem value={"bounced"}>Bounced</MenuItem>
+                                <MenuItem value={"pending"}>{t("Pending")}</MenuItem>
+                                <MenuItem value={"completed"}>{t("Completed")}</MenuItem>
+                                <MenuItem value={"bounced"}>{t("Bounced")}</MenuItem>
                             </TextField>
                         </Grid>
                         <Grid size={{ xs: 12, sm: 6 }}>
                             <TextField
                                 fullWidth
                                 name="direction"
-                                label="Direction"
+                                label={t("Direction")}
                                 select
                                 value={chequeForm.direction}
                                 onChange={handleFieldChange}
                                 required
                             >
-                                <MenuItem value={"issued"}>Issued</MenuItem>
-                                <MenuItem value={"received"}>Received</MenuItem>
+                                <MenuItem value={"issued"}>{t("Issued")}</MenuItem>
+                                <MenuItem value={"received"}>{t("Received")}</MenuItem>
                             </TextField>
                         </Grid>
                         <Grid size={{ xs: 12, sm: 12 }}>
                             <TextField
                                 fullWidth
                                 variant="outlined"
-                                label="Remark"
+                                label={t("Remark")}
                                 name="remark"
                                 value={chequeForm.remark}
                                 onChange={handleFieldChange}
@@ -241,7 +242,7 @@ export default function ChequeFormDialog({
                         <Grid size={{ xs: 12, sm: 12 }}>
                             <TextField
                                 value={chequeForm.store_id}
-                                label="Store"
+                                label={t("Store")}
                                 fullWidth
                                 onChange={handleFieldChange}
                                 required

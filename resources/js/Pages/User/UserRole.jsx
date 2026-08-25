@@ -9,10 +9,11 @@ import Typography from '@mui/material/Typography';
 
 import { DataGrid, GridToolbar} from '@mui/x-data-grid';
 import UserRoleDialog from './UserRoleDialog';
+import { t } from '@/i18n';
 
   const columns = (handleEdit) => [
-    { field: 'id', headerName: 'ID', width: 100 },
-    { field: 'name', headerName: 'Profile Name', width: 200,
+    { field: 'id', headerName: t("ID"), width: 100 },
+    { field: 'name', headerName: t("Profile Name"), width: 200,
       renderCell: (params) => (
         <Button
           onClick={() => handleEdit(params.row)}
@@ -23,7 +24,7 @@ import UserRoleDialog from './UserRoleDialog';
         </Button>
       ),
     },
-    { field: 'permissions_list', headerName: 'User Name', width: 500 },
+    { field: 'permissions_list', headerName: t("User Name"), width: 500 },
   ];
 
  export default function UserRole({roles, permissions}) {
@@ -50,10 +51,10 @@ import UserRoleDialog from './UserRoleDialog';
     return (
         <AuthenticatedLayout>
           
-            <Head title="User Roles" />
+            <Head title={t("User Roles")} />
                 <Grid container spacing={2} sx={{ alignItems: 'center', justifyContent: 'end' }}>
                     <Grid size={{xs:12, sm:4, md:3}}>
-                        <Button fullWidth variant="contained" startIcon={<AddIcon />} onClick={handleClickOpen}>Add Role</Button>
+                        <Button fullWidth variant="contained" startIcon={<AddIcon />} onClick={handleClickOpen}>{t("Add Role")}</Button>
                     </Grid>
                 </Grid>
 

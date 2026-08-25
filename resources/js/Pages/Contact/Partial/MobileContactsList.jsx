@@ -3,6 +3,7 @@ import { IconButton, Tooltip, Dialog, DialogTitle, DialogContent, DialogActions,
 import { ClipboardClock, PrinterIcon, ReceiptText, ShoppingCart, Trash2 } from 'lucide-react';
 import { Link } from '@inertiajs/react';
 import Catalog from '@/Pages/CatalogPOS/Catalog';
+import { t } from '@/i18n';
 
 const MobileContactsList = ({ contacts, handleContactEdit, handleDelete }) => {
     const [dialog, setDialog] = useState({ open: false, id: null });
@@ -17,14 +18,14 @@ const MobileContactsList = ({ contacts, handleContactEdit, handleDelete }) => {
                     <li className="p-3 w-full shadow-sm" key={contact.id}>
                         <div className="flex justify-between items-center">
                             <div
-                                className="uppercase tracking-wide text-sm text-blue-900 font-semibold"
+                                className="uppercase tracking-wide text-sm text-[var(--info)] font-semibold"
                                 onClick={() => handleContactEdit(contact, 'contact_edit')}
                             >
                                 {contact.name}
                             </div>
                             <div className="flex ml-2">
                                 <Link href={`/reports/${contact.id}/${contact.type}`}>
-                                    <Tooltip title="REPORT">
+                                    <Tooltip title={t("REPORT")}>
                                         <IconButton color="primary">
                                             <PrinterIcon size={20} />
                                         </IconButton>
@@ -34,14 +35,14 @@ const MobileContactsList = ({ contacts, handleContactEdit, handleDelete }) => {
                                 {contact.type === 'customer' && (
                                     <>
                                         <Link href={`/pending-sales-receipt/${contact.id}`}>
-                                            <Tooltip title="PENDING RECEIPT">
+                                            <Tooltip title={t("PENDING RECEIPT")}>
                                                 <IconButton color="primary">
                                                     <ClipboardClock size={20} />
                                                 </IconButton>
                                             </Tooltip>
                                         </Link>
                                         <Link href={`/sales/?pending-sales-receipt=${contact.id}`}>
-                                            <Tooltip title="PENDING RECEIPT">
+                                            <Tooltip title={t("PENDING RECEIPT")}>
                                                 <IconButton color="primary">
                                                     <ReceiptText size={20} />
                                                 </IconButton>
@@ -50,7 +51,7 @@ const MobileContactsList = ({ contacts, handleContactEdit, handleDelete }) => {
                                     </>
                                 )}
 
-                                <Tooltip title="DELETE">
+                                <Tooltip title={t("DELETE")}>
                                     <IconButton
                                         color="error"
                                         onClick={() => handleDelete(contact.id, contact.name)}
@@ -63,12 +64,12 @@ const MobileContactsList = ({ contacts, handleContactEdit, handleDelete }) => {
 
                         <div className="mt-2 grid grid-cols-2 gap-4">
                             <div onClick={() => handleContactEdit(contact, 'add_payment')}>
-                                <div className="text-gray-500 text-sm">Balance</div>
-                                <div className="text-gray-700 text-sm font-bold">Rs. {contact.balance}</div>
+                                <div className="text-[var(--muted-foreground)] text-sm">{t("Balance")}</div>
+                                <div className="text-[var(--foreground)] text-sm font-bold">{t("Rs.")} {contact.balance}</div>
                             </div>
                             <div>
-                                <div className="text-gray-500 text-sm">Phone</div>
-                                <div className="text-gray-700 text-sm font-bold">{contact.phone ?? '-'}</div>
+                                <div className="text-[var(--muted-foreground)] text-sm">{t("Phone")}</div>
+                                <div className="text-[var(--foreground)] text-sm font-bold">{contact.phone ?? '-'}</div>
                             </div>
                         </div>
                     </li>

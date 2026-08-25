@@ -5,6 +5,7 @@ import DeleteIcon from '@mui/icons-material/Delete'; // Import the Delete icon
 import Badge from '@mui/material/Badge';
 import { usePurchase } from "@/Context/PurchaseContext";
 import { useCurrencyFormatter } from '@/lib/currencyFormatter';
+import { t } from '@/i18n';
 
 export default function PurchaseCartItems() {
     const {
@@ -26,13 +27,13 @@ export default function PurchaseCartItems() {
             <Table>
                 <TableHead>
                     <TableRow>
-                        <TableCell>Name</TableCell>
-                        <TableCell>Batch</TableCell>
-                        <TableCell>Price</TableCell>
-                        <TableCell>Quantity</TableCell>
-                        <TableCell>Cost</TableCell>
-                        <TableCell>Total</TableCell>
-                        <TableCell>Action</TableCell>
+                        <TableCell>{t("Name")}</TableCell>
+                        <TableCell>{t("Batch")}</TableCell>
+                        <TableCell>{t("Price")}</TableCell>
+                        <TableCell>{t("Quantity")}</TableCell>
+                        <TableCell>{t("Cost")}</TableCell>
+                        <TableCell>{t("Total")}</TableCell>
+                        <TableCell>{t("Action")}</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -41,11 +42,11 @@ export default function PurchaseCartItems() {
                             <TableCell sx={{ padding: '10px 10px' }}>{item.name}</TableCell>
                             <TableCell sx={{ padding: '7px 10px' }}>
                                 {item.status === "new" ? (
-                                    <Button variant="contained" fullWidth color="success" sx={{display:'flex', justifyContent:'start', boxShadow:'none'}}>
+                                    <Button variant="contained" fullWidth sx={{display:'flex', justifyContent:'start', boxShadow:'none'}}>
                                       {item.batch_number}
                                     </Button>
                                 ) : (
-                                    <Button variant="contained" fullWidth color="white" sx={{display:'flex', justifyContent:'start', boxShadow:'none'}}>
+                                    <Button variant="contained" fullWidth sx={{display:'flex', justifyContent:'start', boxShadow:'none'}}>
                                       {item.batch_number}
                                     </Button>
                                 )}</TableCell>
@@ -55,7 +56,7 @@ export default function PurchaseCartItems() {
                             <TableCell sx={{ padding: '7px 10px' }}>{(parseFloat(item.cost) * parseFloat(item.quantity)).toFixed(2)}</TableCell>
                             <TableCell sx={{ padding: '7px 10px' }}>
                                 <IconButton
-                                    aria-label="delete"
+                                    aria-label={t("delete")}
                                     onClick={() => removeFromCart(index)}
                                     color="error"
                                 >
@@ -66,7 +67,7 @@ export default function PurchaseCartItems() {
                     ))}
                     <TableRow>
                         <TableCell colSpan={5} style={{ textAlign: 'right' }}>
-                            <strong>Total Cost Amount:</strong>
+                            <strong>{t("Total Cost Amount:")}</strong>
                         </TableCell>
                         <TableCell>
                             <strong>{formatCurrency(cartTotal)}</strong>
@@ -74,7 +75,7 @@ export default function PurchaseCartItems() {
                     </TableRow>
                     <TableRow>
                         <TableCell colSpan={5} style={{ textAlign: 'right' }}>
-                            <strong>Total Profit Amount:</strong>
+                            <strong>{t("Total Profit Amount:")}</strong>
                         </TableCell>
                         <TableCell>
                             <strong>{formatCurrency(totalProfit)}</strong>
@@ -82,7 +83,7 @@ export default function PurchaseCartItems() {
                     </TableRow>
                     <TableRow>
                         <TableCell colSpan={5} style={{ textAlign: 'right' }}>
-                            <strong>Total Items:</strong>
+                            <strong>{t("Total Items:")}</strong>
                         </TableCell>
                         <TableCell>
                             <strong>{cartState.length}</strong>

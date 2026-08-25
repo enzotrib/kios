@@ -17,6 +17,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import dayjs from "dayjs";
 import { useCurrencyStore } from "@/stores/currencyStore";
+import { t } from '@/i18n';
 export default function DailyCashDialog({
     open,
     setOpen,
@@ -100,16 +101,16 @@ export default function DailyCashDialog({
                 }}
             >
                 <DialogTitle id="transaction-dialog-title">
-                    ADD CASH LOG
+                    {t("ADD CASH LOG")}
                 </DialogTitle>
                 <IconButton
-                    aria-label="close"
+                    aria-label={t("close")}
                     onClick={handleClose}
                     sx={(theme) => ({
                         position: "absolute",
                         right: 8,
                         top: 8,
-                        color: theme.palette.grey[500],
+                        color: theme.palette.text.secondary,
                     })}
                 >
                     <CloseIcon />
@@ -121,7 +122,7 @@ export default function DailyCashDialog({
                                 fullWidth
                                 type="number"
                                 name="amount"
-                                label="Amount"
+                                label={t("Amount")}
                                 variant="outlined"
                                 autoFocus
                                 required
@@ -148,7 +149,7 @@ export default function DailyCashDialog({
 
                         <Grid size={{ xs: 12, sm: 4 }}>
                             <TextField
-                                label="Date"
+                                label={t("Date")}
                                 name="transaction_date"
                                 fullWidth
                                 type="date"
@@ -166,7 +167,7 @@ export default function DailyCashDialog({
                         <Grid size={{ xs: 12, sm: 4 }}>
                             <TextField
                                 select
-                                label="Transaction Type"
+                                label={t("Transaction Type")}
                                 name="transaction_type"
                                 fullWidth
                                 value={formState.transaction_type}
@@ -189,12 +190,12 @@ export default function DailyCashDialog({
                                     });
                                 }}
                             >
-                                <MenuItem value="deposit">Deposit</MenuItem>
+                                <MenuItem value="deposit">{t("Deposit")}</MenuItem>
                                 <MenuItem value="withdrawal">
-                                    Withdrawal
+                                    {t("Withdrawal")}
                                 </MenuItem>
-                                <MenuItem value="open_cashier">Open Cashier</MenuItem>
-                                <MenuItem value="close_cashier">Close Cashier</MenuItem>
+                                <MenuItem value="open_cashier">{t("Open Cashier")}</MenuItem>
+                                <MenuItem value="close_cashier">{t("Close Cashier")}</MenuItem>
                             </TextField>
                         </Grid>
 
@@ -202,7 +203,7 @@ export default function DailyCashDialog({
                             <TextField
                                 fullWidth
                                 variant="outlined"
-                                label={"Description"}
+                                label={t("Description")}
                                 name="description"
                                 value={formState.description}
                                 onChange={handleFieldChange}
@@ -213,7 +214,7 @@ export default function DailyCashDialog({
                         <Grid size={12}>
                             <TextField
                                 value={formState.store_id}
-                                label="Store"
+                                label={t("Store")}
                                 onChange={handleFieldChange}
                                 required
                                 name="store_id"

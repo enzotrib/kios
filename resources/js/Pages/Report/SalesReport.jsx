@@ -18,6 +18,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
 import ViewDetailsDialog from "@/Components/ViewDetailsDialog";
+import { t } from '@/i18n';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -78,11 +79,11 @@ export default function SalesReport({ stores, report }) {
 
     const headers = [
         { label: "#", align: "left", sx: {} },
-        { label: "DATE", align: "left", sx: { width: "120px" } },
-        { label: "DESCRIPTION", align: "left", sx: {} },
-        { label: "RECEIVABLE", align: "right", sx: {} },
-        { label: "SETTLED", align: "right", sx: {} },
-        { label: "PROFIT", align: "right", sx: {} },
+        { label: t("DATE"), align: "left", sx: { width: "120px" } },
+        { label: t("DESCRIPTION"), align: "left", sx: {} },
+        { label: t("RECEIVABLE"), align: "right", sx: {} },
+        { label: t("SETTLED"), align: "right", sx: {} },
+        { label: t("PROFIT"), align: "right", sx: {} },
     ];
 
     const initialTotals = {
@@ -111,7 +112,7 @@ export default function SalesReport({ stores, report }) {
 
     return (
         <AuthenticatedLayout>
-            <Head title="Sale Report" />
+            <Head title={t("Sale Report")} />
             <Grid
                 container
                 spacing={2}
@@ -120,21 +121,16 @@ export default function SalesReport({ stores, report }) {
             >
                 <Grid size={{ xs: 12, sm: 3 }}>
                     <TextField
-                        label="Store"
+                        label={t("Store")}
                         name="store"
                         size="small"
                         fullWidth
                         select
-                        slotProps={{
-                            inputLabel: {
-                                shrink: true,
-                            },
-                        }}
                         value={searchTerms.store}
                         onChange={handleFieldChange}
                         required
                     >
-                        <MenuItem value={'All'}>All</MenuItem>
+                        <MenuItem value={'All'}>{t("All")}</MenuItem>
                         {stores.map((store) => (
                             <MenuItem key={store.id} value={store.id}>
                                 {store.name}
@@ -145,9 +141,9 @@ export default function SalesReport({ stores, report }) {
 
                 <Grid size={{ xs: 6, sm: 3, md: 2 }}>
                     <TextField
-                        label="Start Date"
+                        label={t("Start Date")}
                         name="start_date"
-                        placeholder="Start Date"
+                        placeholder={t("Start Date")}
                         size="small"
                         fullWidth
                         type="date"
@@ -164,9 +160,9 @@ export default function SalesReport({ stores, report }) {
 
                 <Grid size={{ xs: 6, sm: 3, md: 2 }}>
                     <TextField
-                        label="End Date"
+                        label={t("End Date")}
                         name="end_date"
-                        placeholder="End Date"
+                        placeholder={t("End Date")}
                         fullWidth
                         size="small"
                         type="date"
@@ -195,7 +191,7 @@ export default function SalesReport({ stores, report }) {
             <Grid container sx={{ width: '100%', justifyContent: 'center', mt: 2 }}>
                 <Paper sx={{ width: { xs: '94vw', sm: '100%' }, overflow: 'hidden', maxWidth: '820px' }} >
                     <TableContainer component={Paper} sx={{ width: '100%', overflow: 'auto', height: 'auto' }}>
-                        <Table aria-label="customized table">
+                        <Table aria-label={t("customized table")}>
                             <TableHead>
                                 <TableRow>
                                     {headers.map((header, index) => (
@@ -241,14 +237,14 @@ export default function SalesReport({ stores, report }) {
                                 ) : (
                                     <StyledTableRow>
                                         <StyledTableCell colSpan={6} align="center">
-                                            No data available
+                                            {t("No data available")}
                                         </StyledTableCell>
                                     </StyledTableRow>
                                 )}
 
                                 <StyledTableRow sx={{ backgroundColor: 'black' }}>
                                     <StyledTableCell colSpan={3} align="right">
-                                        <strong>Total:</strong>
+                                        <strong>{t("Total:")}</strong>
                                     </StyledTableCell>
                                     <StyledTableCell align="right"
                                         sx={{
@@ -281,7 +277,7 @@ export default function SalesReport({ stores, report }) {
                                 {/* Row for Revenue */}
                                 <StyledTableRow>
                                     <StyledTableCell colSpan={5} align="right">
-                                        <strong>Revenue:</strong>
+                                        <strong>{t("Revenue:")}</strong>
                                     </StyledTableCell>
                                     <StyledTableCell align="right">
                                         <strong>{numeral(totals.totalRevenue).format('0,0.00')}</strong>
@@ -291,7 +287,7 @@ export default function SalesReport({ stores, report }) {
                                 {/* Row for Balance */}
                                 <StyledTableRow>
                                     <StyledTableCell colSpan={5} align="right">
-                                        <strong>Balance/Receivable:</strong>
+                                        <strong>{t("Balance/Receivable:")}</strong>
                                     </StyledTableCell>
                                     <StyledTableCell align="right">
                                         <strong>{numeral(totals.totalBalance).format('0,0.00')}</strong>

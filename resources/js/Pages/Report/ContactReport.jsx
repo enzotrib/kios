@@ -10,6 +10,7 @@ import numeral from "numeral";
 
 import { styled } from "@mui/material/styles";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import { t } from '@/i18n';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -70,10 +71,10 @@ export default function ContactReport({
 
     const headers = [
         { label: "#", align: "left", sx: {} },
-        { label: "DATE", align: "left", sx: { width: "120px" } },
-        { label: "DESCRIPTION", align: "left", sx: {} },
-        { label: "DEBIT (OWED)", align: "right", sx: {} },
-        { label: "CREDIT(PAID)", align: "right", sx: {} },
+        { label: t("DATE"), align: "left", sx: { width: "120px" } },
+        { label: t("DESCRIPTION"), align: "left", sx: {} },
+        { label: t("DEBIT (OWED)"), align: "right", sx: {} },
+        { label: t("CREDIT(PAID)"), align: "right", sx: {} },
     ];
 
     const initialTotals = {
@@ -98,7 +99,7 @@ export default function ContactReport({
 
     return (
         <AuthenticatedLayout>
-            <Head title="Contact Report" />
+            <Head title={t("Contact Report")} />
             <Grid
                 container
                 spacing={2}
@@ -107,20 +108,15 @@ export default function ContactReport({
             >
                 <Grid size={{ xs: 12, sm: 4, md: 2 }}>
                     <TextField
-                        label="Store"
+                        label={t("Store")}
                         name="store"
                         fullWidth
                         select
-                        slotProps={{
-                            inputLabel: {
-                                shrink: true,
-                            },
-                        }}
                         value={searchTerms.store}
                         onChange={handleFieldChange}
                         required
                     >
-                        <MenuItem value={0}>All</MenuItem>
+                        <MenuItem value={0}>{t("All")}</MenuItem>
                         {stores.map((store) => (
                             <MenuItem key={store.id} value={store.id}>
                                 {store.name}
@@ -131,9 +127,9 @@ export default function ContactReport({
 
                 <Grid size={{ xs: 6, sm: 2 }}>
                     <TextField
-                        label="Start Date"
+                        label={t("Start Date")}
                         name="start_date"
-                        placeholder="Start Date"
+                        placeholder={t("Start Date")}
                         fullWidth
                         type="date"
                         slotProps={{
@@ -148,9 +144,9 @@ export default function ContactReport({
                 </Grid>
                 <Grid size={{ xs: 6, sm: 2 }}>
                     <TextField
-                        label="End Date"
+                        label={t("End Date")}
                         name="end_date"
-                        placeholder="End Date"
+                        placeholder={t("End Date")}
                         fullWidth
                         type="date"
                         slotProps={{
@@ -192,9 +188,9 @@ export default function ContactReport({
                 >
                     <Alert sx={{ width: "100%" }} severity="info" icon={false}>
                         <strong>
-                            Name: {contact.name}
+                            {t("Name:")} {contact.name}
                             <br />
-                            Balance {numeral(contact.balance).format("0,00.00")}
+                            {t("Balance")} {numeral(contact.balance).format("0,00.00")}
                         </strong>
                     </Alert>
                 </Box>
@@ -215,7 +211,7 @@ export default function ContactReport({
                         overflow: "auto",
                     }}
                 >
-                    <Table aria-label="customized table">
+                    <Table aria-label={t("customized table")}>
                         <TableHead>
                             <TableRow>
                                 {headers.map((header, index) => (
@@ -273,22 +269,22 @@ export default function ContactReport({
                             ) : (
                                 <StyledTableRow>
                                     <StyledTableCell colSpan={6} align="center">
-                                        No data available
+                                        {t("No data available")}
                                     </StyledTableCell>
                                 </StyledTableRow>
                             )}
 
                             <StyledTableRow sx={{ backgroundColor: "black" }}>
                                 <StyledTableCell colSpan={3} align="right">
-                                    <strong>Total:</strong>
+                                    <strong>{t("Total:")}</strong>
                                 </StyledTableCell>
 
                                 {/* Total Debit */}
                                 <StyledTableCell
                                     align="right"
                                     sx={{
-                                        backgroundColor: "#295F98", // Conditional color
-                                        color: "white", // Text color for contrast
+                                        backgroundColor: 'var(--primary)', // Conditional color
+                                        color: 'var(--primary-foreground)', // Text color for contrast
                                     }}
                                 >
                                     <strong>
@@ -302,8 +298,8 @@ export default function ContactReport({
                                 <StyledTableCell
                                     align="right"
                                     sx={{
-                                        backgroundColor: "#295F98", // Conditional color
-                                        color: "white", // Text color for contrast
+                                        backgroundColor: 'var(--primary)', // Conditional color
+                                        color: 'var(--primary-foreground)', // Text color for contrast
                                     }}
                                 >
                                     <strong>
@@ -337,7 +333,7 @@ export default function ContactReport({
                                                 : totals.totalBalance < 0
                                                 ? "green"
                                                 : "gray", // Conditional color
-                                        color: "white", // Text color for contrast
+                                        color: 'var(--primary-foreground)', // Text color for contrast
                                     }}
                                 >
                                     <strong>

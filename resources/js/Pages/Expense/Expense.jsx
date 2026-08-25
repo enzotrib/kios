@@ -21,29 +21,31 @@ import numeral from "numeral";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import CustomPagination from "@/Components/CustomPagination";
 import ExpenseDialog from "./Partials/ExpenseDialog";
+import { t } from '@/i18n';
+import SearchField from '@/Components/design/SearchField';
 
 const columns = (handleRowClick) => [
-    { field: "id", headerName: "ID", width: 80 },
+    { field: "id", headerName: t("ID"), width: 80 },
     {
         field: "expense_date",
-        headerName: "Date",
+        headerName: t("Date"),
         width: 100,
         renderCell: (params) => {
             // Format the date to 'YYYY-MM-DD'
             return dayjs(params.value).format("YYYY-MM-DD");
         },
     },
-    { field: "description", headerName: "Description", width: 300 },
+    { field: "description", headerName: t("Description"), width: 300 },
     {
         field: "source",
-        headerName: "Source",
+        headerName: t("Source"),
         width: 120,
         renderCell: (params) => {
             return params.value ? params.value.toUpperCase() : '-';
         },
     },
     {
-        field: "amount", headerName: "Amount", width: 130, align: 'right', headerAlign: 'right',
+        field: "amount", headerName: t("Amount"), width: 130, align: 'right', headerAlign: 'right',
         renderCell: (params) => {
             return numeral(params.value).format('0,0.00');
         },
@@ -51,7 +53,7 @@ const columns = (handleRowClick) => [
 
     {
         field: 'action',
-        headerName: 'Actions',
+        headerName: t("Actions"),
         width: 150, align: 'right', headerAlign: 'right',
         renderCell: (params) => (
             <>
@@ -139,7 +141,7 @@ export default function Expense({ expenses, stores }) {
 
     return (
         <AuthenticatedLayout>
-            <Head title="Expenses" />
+            <Head title={t("Expenses")} />
             <Grid
                 container
                 spacing={2}
@@ -148,21 +150,18 @@ export default function Expense({ expenses, stores }) {
             >
 
                 <Grid size={{ xs: 12, sm: 3 }}>
-                    <TextField
-                        label="Search..."
+                    <SearchField
                         name="search_query"
-                        size="small"
-                        placeholder="Start typing..."
+                        placeholder={t("Start typing...")}
                         value={searchTerms.search_query}
                         onChange={handleSearchChange}
-                        fullWidth
                     />
                 </Grid>
                 <Grid size={{ xs: 6, sm: 2 }}>
                     <TextField
-                        label="Start Date"
+                        label={t("Start Date")}
                         name="start_date"
-                        placeholder="Start Date"
+                        placeholder={t("Start Date")}
                         fullWidth
                         size="small"
                         type="date"
@@ -180,10 +179,10 @@ export default function Expense({ expenses, stores }) {
 
                 <Grid size={{ xs: 6, sm: 2 }}>
                     <TextField
-                        label="End Date"
+                        label={t("End Date")}
                         name="end_date"
                         size="small"
-                        placeholder="End Date"
+                        placeholder={t("End Date")}
                         fullWidth
                         type="date"
                         slotProps={{
@@ -205,9 +204,8 @@ export default function Expense({ expenses, stores }) {
                         startIcon={<AddCircleIcon />}
                         size="large"
                         fullWidth
-                        color="success"
                     >
-                        ADD EXPENSE
+                        {t("ADD EXPENSE")}
                     </Button>
                 </Grid>
             </Grid>

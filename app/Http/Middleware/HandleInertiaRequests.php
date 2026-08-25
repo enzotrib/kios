@@ -35,8 +35,11 @@ class HandleInertiaRequests extends Middleware
         $permissions = collect();
         if ($request->user()) {
             $user = $request->user();
-            $role = Role::where('name',$user->user_role)->first();
-            $permissions = $role->permissions;
+            // Si el rol fue renombrado o borrado, users.user_role queda apuntando
+            // a la nada. Sin este guard, ->permissions sobre null tira un 500 en
+            // TODAS las paginas y el usuario no puede ni entrar a arreglarlo.
+            $role = Role::where('name', $user->user_role)->first();
+            $permissions = $role?->permissions ?? collect();
         }
 
         try {
@@ -55,11 +58,19 @@ class HandleInertiaRequests extends Middleware
 
             $modules = Setting::getModules();
             $shopName = $shopNameMeta->meta_value ?? 'InfoShop';
+
+            // El logo se guarda como ruta relativa ("storage/uploads/..."). Se
+            // convierte a URL absoluta con asset() porque una ruta relativa se
+            // resuelve contra la URL de la pagina y se rompe en rutas anidadas
+            // como /products/edit/5.
+            $shopLogoMeta = Setting::where('meta_key', 'shop_logo')->value('meta_value');
+            $shopLogo = $shopLogoMeta ? asset(ltrim($shopLogoMeta, '/')) : null;
         } catch (\Exception $e) {
             // If settings table doesn't exist, use defaults
             $currencySettings = [];
             $modules = [];
             $shopName = 'InfoShop';
+            $shopLogo = null;
         }
 
         return [
@@ -69,10 +80,12 @@ class HandleInertiaRequests extends Middleware
             ],
             'settings'=>[
                 'shop_name'=> $shopName ?? 'InfoShop',
+                'shop_logo'=> $shopLogo ?? null,
                 'currency_settings'=>$currencySettings,
             ],
             'modules'=> $modules ?? [],
             'userPermissions'=>$permissions->pluck('name'),
+            'locale'=> app()->getLocale(),
         ];
     }
 }

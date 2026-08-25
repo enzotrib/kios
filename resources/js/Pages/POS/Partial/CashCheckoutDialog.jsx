@@ -20,6 +20,7 @@ import { useSales as useCart } from '@/Context/SalesContext';
 import { SharedContext } from "@/Context/SharedContext";
 import { useCurrencyFormatter, toNumeric } from "@/lib/currencyFormatter";
 import { useCurrencyStore } from "@/stores/currencyStore";
+import { t } from '@/i18n';
 
 export default function CashCheckoutDialog({ disabled }) {
     const formatCurrency = useCurrencyFormatter();
@@ -166,7 +167,6 @@ export default function CashCheckoutDialog({ disabled }) {
         <Grid size={12}>
             <Button
                 variant="contained"
-                color="success"
                 sx={{ paddingY: "15px", flexGrow: "1" }}
                 size="large"
                 endIcon={<PaymentsIcon />}
@@ -194,13 +194,13 @@ export default function CashCheckoutDialog({ disabled }) {
                     {"Cash Checkout"}
                 </DialogTitle>
                 <IconButton
-                    aria-label="close"
+                    aria-label={t("close")}
                     onClick={handleClose}
                     sx={(theme) => ({
                         position: "absolute",
                         right: 8,
                         top: 8,
-                        color: theme.palette.grey[500],
+                        color: theme.palette.text.secondary,
                     })}
                 >
                     <CloseIcon />
@@ -244,7 +244,7 @@ export default function CashCheckoutDialog({ disabled }) {
                         // label="Discount"
                         type="number"
                         name="discount"
-                        label="Discount"
+                        label={t("Discount")}
                         variant="outlined"
                         value={discount}
                         sx={{ mt: "1.5rem", mb: "2rem", input: { textAlign: "center", fontSize: '2rem' }, }}
@@ -274,7 +274,7 @@ export default function CashCheckoutDialog({ disabled }) {
                             {/* Net total (after discount + recalculated charges) */}
                             <TextField
                                 fullWidth
-                                label="Payable Amount"
+                                label={t("Payable Amount")}
                                 variant="outlined"
                                 name="net_total"
                                 value={formatCurrency((cartTotal - discount) + recalculatedCharges, false)}
@@ -292,7 +292,7 @@ export default function CashCheckoutDialog({ disabled }) {
                             <TextField
                                 id="txtChange"
                                 fullWidth
-                                label="Change"
+                                label={t("Change")}
                                 variant="outlined"
                                 name="change_amount"
                                 sx={{input: { textAlign: "center", fontSize: '2rem' } }}
@@ -310,7 +310,7 @@ export default function CashCheckoutDialog({ disabled }) {
                     <TextField
                         fullWidth
                         variant="outlined"
-                        label={'Note'}
+                        label={t("Note")}
                         name="note"
                         multiline
                         sx={{ mt: '2rem', }}
@@ -325,7 +325,7 @@ export default function CashCheckoutDialog({ disabled }) {
                                     name="open_print_dialog"
                                 />
                             }
-                            label="Open Print Dialog"
+                            label={t("Open Print Dialog")}
                         />
                     </Grid>
 

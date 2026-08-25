@@ -16,6 +16,7 @@ import {
 } from "@/Components/ui/select";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import React from "react";
+import { t } from '@/i18n';
 
 export default function TablePagination() {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -26,7 +27,7 @@ export default function TablePagination() {
     <div
       className="tw-:w-full tw-:flex tw-:items-center tw-:justify-between tw-:gap-2">
       <div className="tw-:flex tw-:items-center tw-:gap-2">
-        <Label className="tw-:whitespace-nowrap">Rows per page:</Label>
+        <Label className="tw-:whitespace-nowrap">{t("Rows per page:")}</Label>
         <Select
           value={rowsPerPage.toString()}
           onValueChange={(rowsPerPage) => setRowsPerPage(+rowsPerPage)}>
@@ -43,14 +44,14 @@ export default function TablePagination() {
       </div>
       <div className="tw-:flex tw-:items-center tw-:gap-2">
         <span className="tw-:text-sm tw-:text-muted-foreground tw-:whitespace-nowrap">
-          {(page - 1) * rowsPerPage + 1}-{page * rowsPerPage} of {TOTAL_ITEMS}
+          {(page - 1) * rowsPerPage + 1}-{page * rowsPerPage} {t("of")} {TOTAL_ITEMS}
         </span>
 
         <Pagination>
           <PaginationContent>
             <PaginationItem>
               <Button
-                aria-label="Go to previous page"
+                aria-label={t("Go to previous page")}
                 size="icon"
                 variant="ghost"
                 disabled={page === 1}>
@@ -59,7 +60,7 @@ export default function TablePagination() {
             </PaginationItem>
             <PaginationItem>
               <Button
-                aria-label="Go to next page"
+                aria-label={t("Go to next page")}
                 size="icon"
                 variant="ghost"
                 disabled={page * rowsPerPage >= TOTAL_ITEMS}>

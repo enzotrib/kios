@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import Alpine from 'alpinejs';
 import numeral from 'numeral';
 import Mustache from 'mustache';
+import { t } from '@/i18n';
 const BarcodeView = ({ product, template, barcode_settings, }) => {
     const [renderedTemplate, setRenderedTemplate] = useState('');
 
@@ -31,7 +32,7 @@ const BarcodeView = ({ product, template, barcode_settings, }) => {
 
     return (
         <>
-            <Head title="Barcode" />
+            <Head title={t("Barcode")} />
             <div dangerouslySetInnerHTML={{ __html: renderedTemplate }} />
         </>
 

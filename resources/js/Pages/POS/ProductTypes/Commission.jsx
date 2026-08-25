@@ -1,11 +1,12 @@
 import {  Grid, TextField, InputAdornment } from "@mui/material";
+import { t } from '@/i18n';
 
 export default function Commission({ handleChange, formState }) {
     return (
         <>
             <Grid size={{ xs: 12, sm: 6 }}>
                 <TextField
-                    label="Fixed Commission"
+                    label={t("Fixed Commission")}
                     name="fixed_commission"
                     required
                     value={formState.meta_data.fixed_commission}
@@ -20,7 +21,7 @@ export default function Commission({ handleChange, formState }) {
                         input: {
                             startAdornment: (
                                 <InputAdornment position="start">
-                                    Rs.
+                                    {t("Rs.")}
                                 </InputAdornment>
                             ),
                         },

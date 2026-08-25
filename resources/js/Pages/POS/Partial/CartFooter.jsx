@@ -26,6 +26,7 @@ import CashCheckoutDialog from "./CashCheckoutDialog";
 import SaleTemplateDialog from "../SaleTemplate/SaleTemplateDialog";
 
 import Swal from "sweetalert2";
+import { t } from '@/i18n';
 
 const StyledMenu = styled((props) => (
     <Menu
@@ -68,7 +69,7 @@ const StyledMenu = styled((props) => (
             },
         },
         ...theme.applyStyles('dark', {
-            color: theme.palette.grey[300],
+            color: theme.palette.text.secondary,
         }),
     },
 }));
@@ -143,7 +144,7 @@ export default function CartFooter() {
                             size="large"
                             fullWidth
                         >
-                            EMPTY
+                            {t("EMPTY")}
                         </Button>
                     </Grid>
                 )}
@@ -161,7 +162,7 @@ export default function CartFooter() {
                         onClick={handleClick}
                         endIcon={<MoreVertIcon />}
                         sx={{
-                            bgcolor: "#1A2027",
+                            bgcolor: "var(--card)",
                             '&:hover': {
                                 bgcolor: "#2A3346",
                             },
@@ -187,7 +188,7 @@ export default function CartFooter() {
                                     onClick={onCartEmpty}
                                 >
                                     <DeleteForeverIcon />
-                                    EMPTY
+                                    {t("EMPTY")}
                                 </MenuItem>
                                 <MenuItem
                                     disableRipple
@@ -198,7 +199,7 @@ export default function CartFooter() {
                                     }}
                                 >
                                     <AddCardIcon />
-                                    PAYMENT
+                                    {t("PAYMENT")}
                                 </MenuItem>
                             </div>
                         ) : null}
@@ -207,16 +208,16 @@ export default function CartFooter() {
                             cartState.length === 0 || selectedCustomer === null || return_sale
                         } onClick={onCartHold} sx={{ width: '100%' }}>
                             <BackHandIcon />
-                            HOLD
+                            {t("HOLD")}
                         </MenuItem>
                         <MenuItem disableRipple onClick={() => { setHeldModalOpen(true); handleClose(); }} disabled={return_sale}>
                             <ShoppingCartIcon />
-                            HOLD ITEMS
+                            {t("HOLD ITEMS")}
                         </MenuItem>
                         <Divider sx={{ my: 0.5 }} />
                         <MenuItem disabled={cartState.length === 0} onClick={() => { setSaleTemplateModalOpen(true); handleClose(); }}>
                             <FolderCopy />
-                            GROUP ITEMS
+                            {t("GROUP ITEMS")}
                         </MenuItem>
                         <Divider sx={{ my: 0.5 }} />
                         {/* <Link href={`/receipt/1`} style={{ textDecoration: 'none', color: 'inherit' }}>
@@ -228,7 +229,7 @@ export default function CartFooter() {
                         <MenuItem onClick={() => setQuotationModalOpen(true)} disableRipple disabled={selectedCustomer?.id === 1 || cartState.length === 0 || selectedCustomer === null}
                         >
                             <ReceiptIcon />
-                            QUOTATION
+                            {t("QUOTATION")}
                         </MenuItem>
                     </StyledMenu>
                 </Grid>
@@ -246,7 +247,7 @@ export default function CartFooter() {
                             size="large"
                             fullWidth
                         >
-                            PAYMENTS
+                            {t("PAYMENTS")}
                         </Button>
                     </Grid>
                 )}

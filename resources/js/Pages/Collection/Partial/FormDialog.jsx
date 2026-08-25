@@ -4,6 +4,7 @@ import { router, usePage } from '@inertiajs/react';
 import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, Grid } from '@mui/material';
 
 import Swal from 'sweetalert2';
+import { t } from '@/i18n';
 
 
 export default function FormDialog({ open, handleClose, collection }) {
@@ -133,7 +134,7 @@ export default function FormDialog({ open, handleClose, collection }) {
           }
         }}
       >
-        <DialogTitle>Collection Information</DialogTitle>
+        <DialogTitle>{t("Collection Information")}</DialogTitle>
         <DialogContent>
           <Grid container spacing={2}>
             <Grid size={12}>
@@ -143,7 +144,7 @@ export default function FormDialog({ open, handleClose, collection }) {
                 required
                 margin="dense"
                 name="name"
-                label="Collection Name"
+                label={t("Collection Name")}
                 type="text"
                 fullWidth
                 variant="outlined"
@@ -156,7 +157,7 @@ export default function FormDialog({ open, handleClose, collection }) {
               {/* Collection Type */}
               <TextField
                 value={collectionType}
-                label="Type"
+                label={t("Type")}
                 onChange={handleChange}
                 name="collection_type"
                 required
@@ -166,9 +167,9 @@ export default function FormDialog({ open, handleClose, collection }) {
                 variant="outlined"
                 style={{ marginTop: '1.5rem', marginBottom: '0.5rem' }}
               >
-                <MenuItem value={'category'}>Category</MenuItem>
-                <MenuItem value={'brand'}>Brand</MenuItem>
-                <MenuItem value={'tag'}>Tag</MenuItem>
+                <MenuItem value={'category'}>{t("Category")}</MenuItem>
+                <MenuItem value={'brand'}>{t("Brand")}</MenuItem>
+                <MenuItem value={'tag'}>{t("Tag")}</MenuItem>
               </TextField>
             </Grid>
 
@@ -177,7 +178,7 @@ export default function FormDialog({ open, handleClose, collection }) {
                 {/* Parent Collection */}
                 <TextField
                   value={parentId}
-                  label="Parent Collection (Optional)"
+                  label={t("Parent Collection (Optional)")}
                   onChange={(e) => setParentId(e.target.value)}
                   name="parent_id"
                   select
@@ -187,7 +188,7 @@ export default function FormDialog({ open, handleClose, collection }) {
                   style={{ marginTop: '1.5rem', marginBottom: '0.5rem' }}
                 >
                   <MenuItem value="">
-                    <em className="text-gray-500">None (Root Level)</em>
+                    <em className="text-[var(--muted-foreground)]">{t("None (Root Level)")}</em>
                   </MenuItem>
                   {hierarchicalCollections.map((col) => (
                     <MenuItem key={col.id} value={col.id}>
@@ -206,7 +207,7 @@ export default function FormDialog({ open, handleClose, collection }) {
               <TextField
                 margin="dense"
                 name="description"
-                label="Description"
+                label={t("Description")}
                 type="text"
                 fullWidth
                 variant="outlined"
@@ -217,8 +218,8 @@ export default function FormDialog({ open, handleClose, collection }) {
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button type="submit">SAVE</Button>
+          <Button onClick={handleClose}>{t("Cancel")}</Button>
+          <Button type="submit">{t("SAVE")}</Button>
         </DialogActions>
       </Dialog>
     </>

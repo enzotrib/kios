@@ -14,6 +14,7 @@ import AddToPurchase from "./AddToPurchase";
 
 import { usePurchase } from "@/Context/PurchaseContext";
 import { useCurrencyStore } from "@/stores/currencyStore";
+import { t } from '@/i18n';
 
 export default function ProductSearch() {
     const { addToCart } = usePurchase();
@@ -89,13 +90,14 @@ export default function ProductSearch() {
                 alignItems: "center",
                 width: "100%",
                 height: "55px",
-                backgroundColor: "white",
-                borderRadius: "5px",
+                backgroundColor: "var(--surface-2)",
+                border: "1px solid var(--border)",
+                borderRadius: "var(--radius)",
             }}
         >
             <Select2
                 className="w-full"
-                placeholder="Select a product..."
+                placeholder={t("Select a product...")}
                 styles={{
                     control: (baseStyles, state) => ({
                         ...baseStyles,
@@ -122,7 +124,7 @@ export default function ProductSearch() {
                     sx={{ minWidth: "200px", ml:'1rem' }}
                     startIcon={<AddBoxIcon />}
                 >
-                    Add Product
+                    {t("Add Product")}
                 </Button>
             </Link>
             <AddToPurchase

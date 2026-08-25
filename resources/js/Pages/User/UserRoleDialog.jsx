@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { router } from '@inertiajs/react'
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField, FormGroup, FormControlLabel, Switch,  Grid } from '@mui/material';
 import Swal from 'sweetalert2';
+import { t } from '@/i18n';
 
 
 
@@ -117,7 +118,7 @@ export default function UserRoleDialog({ open, handleClose, user_role }) {
       }}
       fullScreen={isMobile}
     >
-      <DialogTitle>User Role and Permissions</DialogTitle>
+      <DialogTitle>{t("User Role and Permissions")}</DialogTitle>
       <DialogContent>
         {/* User Role - TextField */}
         <TextField
@@ -126,7 +127,7 @@ export default function UserRoleDialog({ open, handleClose, user_role }) {
           margin="dense"
           id="user_role"
           name="user_role"
-          label="User Role"
+          label={t("User Role")}
           type="text"
           fullWidth
           variant="outlined"
@@ -136,7 +137,7 @@ export default function UserRoleDialog({ open, handleClose, user_role }) {
         />
 
         <FormGroup sx={{ mt: '1rem' }}>
-          <h4>Permissions</h4>
+          <h4>{t("Permissions")}</h4>
           <Grid container spacing={2}>
             {permissions.map((permission, index) => (
               <Grid
@@ -161,8 +162,8 @@ export default function UserRoleDialog({ open, handleClose, user_role }) {
         </FormGroup>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
-        <Button type="submit">SAVE</Button>
+        <Button onClick={handleClose}>{t("Cancel")}</Button>
+        <Button type="submit">{t("SAVE")}</Button>
       </DialogActions>
     </Dialog>
   );

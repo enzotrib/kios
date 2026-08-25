@@ -9,6 +9,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { Button } from "@mui/material";
+import { t } from '@/i18n';
 
 export default function ReloadFormDialog({ open, setOpen, reloadData, refreshReloads }) {
     const [formData, setFormData] = useState({
@@ -70,7 +71,7 @@ export default function ReloadFormDialog({ open, setOpen, reloadData, refreshRel
                 }
             }}
         >
-            <DialogTitle>Edit Account Number</DialogTitle>
+            <DialogTitle>{t("Edit Account Number")}</DialogTitle>
             <DialogContent>
                 <Grid container spacing={2} sx={{ mt: 2 }}>
                     <Grid size={12}>
@@ -78,7 +79,7 @@ export default function ReloadFormDialog({ open, setOpen, reloadData, refreshRel
                             fullWidth
                             id="account_number"
                             name="account_number"
-                            label="Account Number"
+                            label={t("Account Number")}
                             type="text"
                             variant="outlined"
                             required
@@ -89,8 +90,8 @@ export default function ReloadFormDialog({ open, setOpen, reloadData, refreshRel
                 </Grid>
             </DialogContent>
             <DialogActions>
-                <Button onClick={() => setOpen(false)}>Cancel</Button>
-                <Button type="submit">SAVE</Button>
+                <Button onClick={() => setOpen(false)}>{t("Cancel")}</Button>
+                <Button type="submit">{t("SAVE")}</Button>
             </DialogActions>
         </Dialog>
     );

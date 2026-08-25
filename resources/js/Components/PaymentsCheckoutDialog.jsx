@@ -30,6 +30,7 @@ import { X } from "lucide-react";
 import React, { useState, useEffect, useContext, useMemo } from 'react';
 import { useCurrencyFormatter, toNumeric } from "@/lib/currencyFormatter";
 import { useCurrencyStore } from "@/stores/currencyStore";
+import { t } from '@/i18n';
 
 export default function PaymentsCheckoutDialog({
     useCart,
@@ -247,15 +248,15 @@ export default function PaymentsCheckoutDialog({
                     }
                 }}
             >
-                <DialogTitle id="alert-dialog-title">ADD PAYMENTS</DialogTitle>
+                <DialogTitle id="alert-dialog-title">{t("ADD PAYMENTS")}</DialogTitle>
                 <IconButton
-                    aria-label="close"
+                    aria-label={t("close")}
                     onClick={handleClose}
                     sx={(theme) => ({
                         position: "absolute",
                         right: 8,
                         top: 8,
-                        color: theme.palette.grey[600],
+                        color: theme.palette.text.secondary,
                     })}
                 >
                     <X size={26} />
@@ -267,7 +268,7 @@ export default function PaymentsCheckoutDialog({
                                 fullWidth
                                 type="number"
                                 name="discount"
-                                label="Discount"
+                                label={t("Discount")}
                                 variant="outlined"
                                 value={discount}
                                 onChange={handleDiscountChange}
@@ -301,7 +302,7 @@ export default function PaymentsCheckoutDialog({
                                 size="large"
                                 fullWidth
                                 name="net_total"
-                                label="Total"
+                                label={t("Total")}
                                 variant="outlined"
                                 sx={{
                                     input: { fontWeight: 'bold' },
@@ -336,7 +337,7 @@ export default function PaymentsCheckoutDialog({
                                     fullWidth
                                     type="number"
                                     name="amount"
-                                    label="Amount"
+                                    label={t("Amount")}
                                     variant="outlined"
                                     value={amount}
                                     onChange={(e) => setAmount(e.target.value)}
@@ -368,9 +369,8 @@ export default function PaymentsCheckoutDialog({
                                         variant="contained"
                                         startIcon={<PaymentsIcon />}
                                         onClick={() => addPayment('Cash')}
-                                        color="success"
                                     >
-                                        CASH
+                                        {t("CASH")}
                                     </Button>
                                 </Grid>
                                 {selectedContact?.id !== 1 && (
@@ -384,7 +384,7 @@ export default function PaymentsCheckoutDialog({
                                             onClick={() => addPayment('Credit')}
                                             color="error"
                                         >
-                                            CREDIT
+                                            {t("CREDIT")}
                                         </Button>
                                     </Grid>
                                 )}
@@ -397,7 +397,7 @@ export default function PaymentsCheckoutDialog({
                                         startIcon={<CreditCardIcon />}
                                         onClick={() => addPayment('Cheque')}
                                     >
-                                        CHEQUE
+                                        {t("CHEQUE")}
                                     </Button>
                                 </Grid>
                                 <Grid size={{xs:6,sm:4}}>
@@ -409,7 +409,7 @@ export default function PaymentsCheckoutDialog({
                                         startIcon={<FontAwesomeIcon icon={faCreditCard} size={"2xl"} />}
                                         onClick={() => addPayment('Card')}
                                     >
-                                        CARD
+                                        {t("CARD")}
                                     </Button>
                                 </Grid>
                             </Grid>
@@ -455,14 +455,14 @@ export default function PaymentsCheckoutDialog({
                                     name="open_print_dialog"
                                 />
                             }
-                            label="Open Print Dialog"
+                            label={t("Open Print Dialog")}
                         />
                     </Grid>
 
                     <TextField
                         fullWidth
                         variant="outlined"
-                        label={"Note"}
+                        label={t("Note")}
                         name="note"
                         multiline
                         sx={{ mt: "1rem" }}

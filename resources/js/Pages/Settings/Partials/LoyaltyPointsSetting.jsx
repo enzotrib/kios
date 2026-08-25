@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Button,  Grid, Paper, TextField, Typography } from '@mui/material';
 import { useEffect } from 'react';
+import { t } from '@/i18n';
 
 const LoyaltyPointsSetting = ({ handleSubmit, settingFormData, handleChange, setSettingFormData, settings }) => {
 
@@ -46,7 +47,7 @@ const LoyaltyPointsSetting = ({ handleSubmit, settingFormData, handleChange, set
                                     <TextField
                                         fullWidth
                                         variant="outlined"
-                                        label={"Amount per point"}
+                                        label={t("Amount per point")}
                                         name="amount_per_point"
                                         value={settingFormData.amount_per_point}
                                         onChange={handleChange}
@@ -56,7 +57,7 @@ const LoyaltyPointsSetting = ({ handleSubmit, settingFormData, handleChange, set
                                     <TextField
                                         fullWidth
                                         variant="outlined"
-                                        label={"Max points per purchase"}
+                                        label={t("Max points per purchase")}
                                         name="max_points_per_purchase"
                                         value={settingFormData.max_points_per_purchase}
                                         onChange={handleChange}
@@ -66,7 +67,7 @@ const LoyaltyPointsSetting = ({ handleSubmit, settingFormData, handleChange, set
                                     <TextField
                                         fullWidth
                                         variant="outlined"
-                                        label={"Points expiration days"}
+                                        label={t("Points expiration days")}
                                         name="points_expiration_days"
                                         value={settingFormData.points_expiration_days}
                                         onChange={handleChange}
@@ -76,7 +77,7 @@ const LoyaltyPointsSetting = ({ handleSubmit, settingFormData, handleChange, set
                                     <TextField
                                         fullWidth
                                         variant="outlined"
-                                        label={"Min points for redeem"}
+                                        label={t("Min points for redeem")}
                                         name="min_points_for_redeem"
                                         value={settingFormData.min_points_for_redeem}
                                         onChange={handleChange}
@@ -94,10 +95,9 @@ const LoyaltyPointsSetting = ({ handleSubmit, settingFormData, handleChange, set
                                     type="submit"
                                     variant="outlined"
                                     size="large"
-                                    color="success"
                                     fullWidth
                                 >
-                                    UPDATE
+                                    {t("UPDATE")}
                                 </Button>
                             </Grid>
                         </Paper>

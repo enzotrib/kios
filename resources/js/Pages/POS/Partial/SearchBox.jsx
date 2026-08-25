@@ -13,6 +13,7 @@ import _ from "lodash";
 
 import { useSales as useCart } from "@/Context/SalesContext";
 import { SharedContext } from "@/Context/SharedContext";
+import { t } from '@/i18n';
 
 export default function SearchBox() {
     const return_sale = usePage().props.return_sale;
@@ -112,7 +113,6 @@ export default function SearchBox() {
     return (
         <>
             <Box
-                elevation={0}
                 sx={{
                     p: "2px 2px",
                     ml: { sm: "2rem", xs: '0.5rem' },
@@ -120,8 +120,18 @@ export default function SearchBox() {
                     alignItems: "center",
                     width: "100%",
                     height: "55px",
-                    backgroundColor: "white",
-                    borderRadius: "5px",
+                    // Tokens del design system: acompana claro/oscuro en lugar
+                    // de quedar fijo en blanco.
+                    backgroundColor: "var(--surface-2)",
+                    border: "1px solid var(--border)",
+                    borderRadius: "var(--radius)",
+                    transition: "border-color .15s ease, box-shadow .15s ease",
+                    // El foco se marca en el contenedor, no en el input: adentro
+                    // el fieldset esta anulado para que no se vea un doble borde.
+                    "&:focus-within": {
+                        borderColor: "var(--primary)",
+                        boxShadow: "0 0 0 3px color-mix(in srgb, var(--primary) 25%, transparent)",
+                    },
                 }}
             >
                 <Autocomplete
@@ -168,7 +178,7 @@ export default function SearchBox() {
                             {...params}
                             inputRef={searchRef}
                             fullWidth
-                            placeholder="Search product... Use Arrow up key to focus ⬆️"
+                            placeholder={t("Search product... Use Arrow up key to focus ⬆️")}
                             id="searchBox"
                             onChange={
                                 onSearchInputChange
@@ -197,7 +207,7 @@ export default function SearchBox() {
                 <IconButton
                     type="button"
                     sx={{ p: "10px" }}
-                    aria-label="search"
+                    aria-label={t("search")}
                 >
                     <SearchIcon />
                 </IconButton>

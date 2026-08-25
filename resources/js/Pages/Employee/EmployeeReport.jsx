@@ -10,6 +10,7 @@ import numeral from "numeral";
 
 import { styled } from "@mui/material/styles";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import { t } from '@/i18n';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -68,10 +69,10 @@ export default function EmployeeReport({
 
     const headers = [
         { label: "#", align: "left", sx: {} },
-        { label: "DATE", align: "left", sx: { width: "120px" } },
-        { label: "DESCRIPTION", align: "left", sx: {} },
-        { label: "SALARY", align: "right", sx: {} },
-        { label: "SETTLED", align: "right", sx: {} },
+        { label: t("DATE"), align: "left", sx: { width: "120px" } },
+        { label: t("DESCRIPTION"), align: "left", sx: {} },
+        { label: t("SALARY"), align: "right", sx: {} },
+        { label: t("SETTLED"), align: "right", sx: {} },
     ];
 
     const initialTotals = {
@@ -96,7 +97,7 @@ export default function EmployeeReport({
 
     return (
         <AuthenticatedLayout>
-            <Head title="Salary Log" />
+            <Head title={t("Salary Log")} />
             <Grid
                 container
                 spacing={2}
@@ -105,15 +106,10 @@ export default function EmployeeReport({
             >
                 <Grid size={{ xs: 12, sm: 4, md: 2 }}>
                     <TextField
-                        label="Employee"
+                        label={t("Employee")}
                         name="employee"
                         fullWidth
                         select
-                        slotProps={{
-                            inputLabel: {
-                                shrink: true,
-                            },
-                        }}
                         value={searchTerms.employee}
                         onChange={handleFieldChange}
                         required
@@ -128,9 +124,9 @@ export default function EmployeeReport({
 
                 <Grid size={{ xs: 6, sm: 2 }}>
                     <TextField
-                        label="Start Date"
+                        label={t("Start Date")}
                         name="start_date"
-                        placeholder="Start Date"
+                        placeholder={t("Start Date")}
                         fullWidth
                         type="date"
                         slotProps={{
@@ -145,9 +141,9 @@ export default function EmployeeReport({
                 </Grid>
                 <Grid size={{ xs: 6, sm: 2 }}>
                     <TextField
-                        label="End Date"
+                        label={t("End Date")}
                         name="end_date"
-                        placeholder="End Date"
+                        placeholder={t("End Date")}
                         fullWidth
                         type="date"
                         slotProps={{
@@ -189,9 +185,9 @@ export default function EmployeeReport({
                 >
                     <Alert sx={{ width: "100%" }} severity="info" icon={false}>
                         <strong>
-                            Name: {employee.name}
+                            {t("Name:")} {employee.name}
                             <br />
-                            Balance {numeral(employee.balance).format("0,00.00")}
+                            {t("Balance")} {numeral(employee.balance).format("0,00.00")}
                         </strong>
                     </Alert>
                 </Box>
@@ -210,7 +206,7 @@ export default function EmployeeReport({
                             overflow: "auto",
                         }}
                     >
-                        <Table aria-label="customized table">
+                        <Table aria-label={t("customized table")}>
                             <TableHead>
                                 <TableRow>
                                     {headers.map((header, index) => (
@@ -252,21 +248,21 @@ export default function EmployeeReport({
                                 ) : (
                                     <StyledTableRow>
                                         <StyledTableCell colSpan={6} align="center">
-                                            No data available
+                                            {t("No data available")}
                                         </StyledTableCell>
                                     </StyledTableRow>
                                 )}
 
                                 <StyledTableRow sx={{ backgroundColor: "black" }}>
                                     <StyledTableCell colSpan={3} align="right">
-                                        <strong>Total:</strong>
+                                        <strong>{t("Total:")}</strong>
                                     </StyledTableCell>
 
                                     <StyledTableCell
                                         align="right"
                                         sx={{
-                                            backgroundColor: "#295F98",
-                                            color: "white",
+                                            backgroundColor: 'var(--primary)',
+                                            color: 'var(--primary-foreground)',
                                         }}
                                     >
                                         <strong>{numeral(totals.totalSalary).format("0,0.00")}</strong>
@@ -275,8 +271,8 @@ export default function EmployeeReport({
                                     <StyledTableCell
                                         align="right"
                                         sx={{
-                                            backgroundColor: "#295F98",
-                                            color: "white",
+                                            backgroundColor: 'var(--primary)',
+                                            color: 'var(--primary-foreground)',
                                         }}
                                     >
                                         <strong>{numeral(totals.totalSettled).format("0,0.00")}</strong>
@@ -289,7 +285,7 @@ export default function EmployeeReport({
 
                                 <StyledTableRow>
                                     <StyledTableCell colSpan={4} align="right">
-                                        Balance:
+                                        {t("Balance:")}
                                     </StyledTableCell>
                                     <StyledTableCell
                                         align="right"
@@ -300,7 +296,7 @@ export default function EmployeeReport({
                                                     : totals.totalBalance < 0
                                                     ? "red"
                                                     : "gray",
-                                            color: "white",
+                                            color: 'var(--primary-foreground)',
                                         }}
                                     >
                                         <strong>{numeral(totals.totalBalance).format("0,0.00")}</strong>

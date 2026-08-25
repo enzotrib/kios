@@ -31,6 +31,7 @@ import TelegramSetting from "./Partials/TelegramSetting";
 import LoyaltyPointsSetting from "./Partials/LoyaltyPointsSetting";
 import CurrencySetting from "./Partials/CurrencySetting";
 import BarcodeTemplateEditor from "./Partials/BarcodeTemplateEditor";
+import { t } from '@/i18n';
 
 const VisuallyHiddenInput = styled("input")({
     clip: "rect(0 0 0 0)",
@@ -232,7 +233,19 @@ export default function Setting({ settings }) {
             })
             .catch((error) => {
                 console.error("Submission failed with errors:", error);
-                console.log(formJson);
+
+                // Un 422 traia los motivos exactos pero solo se logueaban en la
+                // consola: para el usuario el boton "no hacia nada". Se muestran.
+                const errors = error.response?.data?.errors;
+                const message = errors
+                    ? Object.values(errors).flat().join('\n')
+                    : (error.response?.data?.message || t('Something went wrong. Please try again.'));
+
+                Swal.fire({
+                    title: t('Update Failed'),
+                    text: message,
+                    icon: "error",
+                });
             });
     };
 
@@ -244,7 +257,7 @@ export default function Setting({ settings }) {
 
     return (
         <AuthenticatedLayout>
-            <Head title="Settings" />
+            <Head title={t("Settings")} />
             <Box component="div">
                 <Box
                     sx={{
@@ -254,14 +267,14 @@ export default function Setting({ settings }) {
                     }}
                 >
                     <Tabs value={tabValue} onChange={handleTabChange} variant="scrollable" scrollButtons="auto">
-                        <Tab label="SHOP" value="shop" />
-                        <Tab label="RECEIPT" value="receipt" />
-                        <Tab label="BARCODE" value="barcode" />
-                        <Tab label="CURRENCY" value="currency" />
-                        <Tab label="MISC" value="misc" />
-                        <Tab label="MODULES" value="modules" />
-                        <Tab label="MAIL" value="mail" />
-                        <Tab label="TELEGRAM" value="telegram" />
+                        <Tab label={t("SHOP")} value="shop" />
+                        <Tab label={t("RECEIPT")} value="receipt" />
+                        <Tab label={t("BARCODE")} value="barcode" />
+                        <Tab label={t("CURRENCY")} value="currency" />
+                        <Tab label={t("MISC")} value="misc" />
+                        <Tab label={t("MODULES")} value="modules" />
+                        <Tab label={t("MAIL")} value="mail" />
+                        <Tab label={t("TELEGRAM")} value="telegram" />
                     </Tabs>
                 </Box>
 
@@ -299,7 +312,7 @@ export default function Setting({ settings }) {
                                                         backgroundOrigin: "content-box",
                                                     }}
                                                     image={settingFormData.shop_logo}
-                                                    title="shop logo"
+                                                    title={t("shop logo")}
                                                 />
                                                 <CardActions className="mt-0">
                                                     <Button
@@ -310,7 +323,7 @@ export default function Setting({ settings }) {
                                                         startIcon={<CloudUploadIcon />}
                                                         fullWidth
                                                     >
-                                                        Upload shop logo
+                                                        {t("Upload shop logo")}
                                                         <VisuallyHiddenInput
                                                             type="file"
                                                             onChange={handleFileChange}
@@ -333,7 +346,7 @@ export default function Setting({ settings }) {
                                                         backgroundOrigin: "content-box",
                                                     }}
                                                     image={settingFormData.app_icon}
-                                                    title="app icon"
+                                                    title={t("app icon")}
                                                 />
                                                 <CardActions className="mt-0">
                                                     <Button
@@ -344,7 +357,7 @@ export default function Setting({ settings }) {
                                                         startIcon={<CloudUploadIcon />}
                                                         fullWidth
                                                     >
-                                                        Upload app icon
+                                                        {t("Upload app icon")}
                                                         <VisuallyHiddenInput
                                                             type="file"
                                                             onChange={handleFileChange}
@@ -359,7 +372,7 @@ export default function Setting({ settings }) {
                                             <TextField
                                                 fullWidth
                                                 variant="outlined"
-                                                label={"Shop name"}
+                                                label={t("Shop name")}
                                                 name="shop_name"
                                                 multiline
                                                 required
@@ -378,10 +391,10 @@ export default function Setting({ settings }) {
                                         type="submit"
                                         variant="outlined"
                                         size="large"
-                                        color="success"
+
                                         fullWidth
                                     >
-                                        UPDATE
+                                        {t("UPDATE")}
                                     </Button>
                                 </Grid>
                             </Grid>
@@ -423,7 +436,7 @@ export default function Setting({ settings }) {
                                             <TextField
                                                 fullWidth
                                                 variant="outlined"
-                                                label={"Receipt note"}
+                                                label={t("Receipt note")}
                                                 name="sale_receipt_note"
                                                 multiline
                                                 required
@@ -435,7 +448,7 @@ export default function Setting({ settings }) {
                                             <TextField
                                                 fullWidth
                                                 variant="outlined"
-                                                label={"Second note"}
+                                                label={t("Second note")}
                                                 name="sale_receipt_second_note"
                                                 multiline
                                                 value={settingFormData.sale_receipt_second_note}
@@ -446,7 +459,7 @@ export default function Setting({ settings }) {
                                             <TextField
                                                 fullWidth
                                                 variant="outlined"
-                                                label={"Show shopname"}
+                                                label={t("Show shopname")}
                                                 name="show_receipt_shop_name"
                                                 multiline
                                                 required
@@ -454,15 +467,15 @@ export default function Setting({ settings }) {
                                                 onChange={handleChange}
                                                 select
                                             >
-                                                <MenuItem value={1}>Show</MenuItem>
-                                                <MenuItem value={0}>Hide</MenuItem>
+                                                <MenuItem value={1}>{t("Show")}</MenuItem>
+                                                <MenuItem value={0}>{t("Hide")}</MenuItem>
                                             </TextField>
                                         </Grid>
                                         <Grid size={{ xs: 6, sm: 3 }}>
                                             <TextField
                                                 fullWidth
                                                 variant="outlined"
-                                                label={"Padding Right"}
+                                                label={t("Padding Right")}
                                                 name="sale_print_padding_right"
                                                 multiline
                                                 required
@@ -474,7 +487,7 @@ export default function Setting({ settings }) {
                                             <TextField
                                                 fullWidth
                                                 variant="outlined"
-                                                label={"Padding Left"}
+                                                label={t("Padding Left")}
                                                 name="sale_print_padding_left"
                                                 multiline
                                                 required
@@ -486,7 +499,7 @@ export default function Setting({ settings }) {
                                             <TextField
                                                 fullWidth
                                                 name="sale_print_font"
-                                                label="Choose Font for Receipt"
+                                                label={t("Choose Font for Receipt")}
                                                 value={settingFormData.sale_print_font}
                                                 onChange={handleFontChange}
                                                 select
@@ -507,15 +520,15 @@ export default function Setting({ settings }) {
                                             <TextField
                                                 fullWidth
                                                 variant="outlined"
-                                                label={"Auto Open Print Dialog"}
+                                                label={t("Auto Open Print Dialog")}
                                                 name="auto_open_print_dialog"
                                                 required
                                                 value={settingFormData.auto_open_print_dialog}
                                                 onChange={handleChange}
                                                 select
                                             >
-                                                <MenuItem value="1">Yes</MenuItem>
-                                                <MenuItem value="0">No</MenuItem>
+                                                <MenuItem value="1">{t("Yes")}</MenuItem>
+                                                <MenuItem value="0">{t("No")}</MenuItem>
                                             </TextField>
                                         </Grid>
                                     </Grid>
@@ -528,10 +541,10 @@ export default function Setting({ settings }) {
                                         type="submit"
                                         variant="outlined"
                                         size="large"
-                                        color="success"
+
                                         fullWidth
                                     >
-                                        UPDATE
+                                        {t("UPDATE")}
                                     </Button>
                                 </Grid>
                             </Grid>
@@ -561,7 +574,7 @@ export default function Setting({ settings }) {
                                 <input type="hidden" name="setting_type" value={'barcode'} />
                                 <Paper elevation={3} sx={{ padding: 2, marginBottom: 2 }}>
                                     <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
-                                        Barcode Display Options
+                                        {t("Barcode Display Options")}
                                     </Typography>
                                     <Grid
                                         container
@@ -581,7 +594,7 @@ export default function Setting({ settings }) {
                                                         checked={settingFormData.show_barcode_store === "on"}
                                                     />
                                                 }
-                                                label="STORE NAME"
+                                                label={t("STORE NAME")}
                                             />
                                         </Grid>
                                         <Grid size={{ xs: 12, sm: 6 }}>
@@ -594,7 +607,7 @@ export default function Setting({ settings }) {
                                                         checked={settingFormData.show_barcode_product_price === "on"}
                                                     />
                                                 }
-                                                label="PRODUCT PRICE"
+                                                label={t("PRODUCT PRICE")}
                                             />
                                         </Grid>
                                         <Grid size={{ xs: 12, sm: 6 }}>
@@ -607,7 +620,7 @@ export default function Setting({ settings }) {
                                                         checked={settingFormData.show_barcode_product_name === "on"}
                                                     />
                                                 }
-                                                label="PRODUCT NAME"
+                                                label={t("PRODUCT NAME")}
                                             />
                                         </Grid>
                                     </Grid>
@@ -631,9 +644,9 @@ export default function Setting({ settings }) {
                                             type="submit"
                                             variant="outlined"
                                             size="large"
-                                            color="success"
+
                                         >
-                                            UPDATE OPTIONS
+                                            {t("UPDATE OPTIONS")}
                                         </Button>
                                     </Box>
                                 </Paper>

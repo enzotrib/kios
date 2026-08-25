@@ -35,11 +35,13 @@ import Swal from "sweetalert2";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import ProductsList from "./Partials/ProductsList";
+import { t } from '@/i18n';
+import SearchField from '@/Components/design/SearchField';
 
 const productColumns = (handleProductEdit, onToggleFeatured, onToggleActive, loadingBatchId) => [
     {
         field: "image_url",
-        headerName: "Image",
+        headerName: t("Image"),
         width: 100,
         filterable: false,
         sortable: false,
@@ -55,7 +57,7 @@ const productColumns = (handleProductEdit, onToggleFeatured, onToggleActive, loa
                         paddingBottom: "5px",
                         paddingLeft: "0",
                     }} // Adjust the size as needed
-                    alt="Product Image" // Alt text for accessibility
+                    alt={t("Product Image")} // Alt text for accessibility
                     loading="lazy" // Lazy load the image
                 />
             ) : (
@@ -70,13 +72,13 @@ const productColumns = (handleProductEdit, onToggleFeatured, onToggleActive, loa
                     }}
                     className="text-center"
                 >
-                    No Image
+                    {t("No Image")}
                 </span> // Render fallback if no image URL
             ),
     },
     {
         field: "name",
-        headerName: "Product Name",
+        headerName: t("Product Name"),
         width: 200,
         renderCell: (params) => (
             <Link
@@ -90,13 +92,13 @@ const productColumns = (handleProductEdit, onToggleFeatured, onToggleActive, loa
     },
     {
         field: "contact_name",
-        headerName: "Supplier",
+        headerName: t("Supplier"),
         width: 100,
     },
-    { field: "barcode", headerName: "Barcode", width: 170 },
+    { field: "barcode", headerName: t("Barcode"), width: 170 },
     {
         field: "batch_number",
-        headerName: "Batch",
+        headerName: t("Batch"),
         width: 120,
         renderCell: (params) => (
             <Button
@@ -115,14 +117,14 @@ const productColumns = (handleProductEdit, onToggleFeatured, onToggleActive, loa
     },
     {
         field: "cost",
-        headerName: "Cost",
+        headerName: t("Cost"),
         width: 100,
         align: "right",
         headerAlign: "right",
     },
     {
         field: "price",
-        headerName: "Price",
+        headerName: t("Price"),
         width: 100,
         align: "right",
         headerAlign: "right",
@@ -132,7 +134,7 @@ const productColumns = (handleProductEdit, onToggleFeatured, onToggleActive, loa
     },
     {
         field: "valuation",
-        headerName: "Valuation",
+        headerName: t("Valuation"),
         width: 100,
         align: "right",
         headerAlign: "right",
@@ -144,7 +146,7 @@ const productColumns = (handleProductEdit, onToggleFeatured, onToggleActive, loa
     },
     {
         field: "quantity",
-        headerName: "Qty",
+        headerName: t("Qty"),
         width: 90,
         align: "right",
         headerAlign: "right",
@@ -168,7 +170,7 @@ const productColumns = (handleProductEdit, onToggleFeatured, onToggleActive, loa
     },
     {
         field: "updated_at",
-        headerName: "Last Updated",
+        headerName: t("Last Updated"),
         width: 200,
         renderCell: (params) => {
             if (!params.value) return "N/A";
@@ -179,7 +181,7 @@ const productColumns = (handleProductEdit, onToggleFeatured, onToggleActive, loa
 
     {
         field: "action",
-        headerName: "Action",
+        headerName: t("Action"),
         align: "center",
         headerAlign: "center",
         width: 200,
@@ -198,7 +200,7 @@ const productColumns = (handleProductEdit, onToggleFeatured, onToggleActive, loa
                         <QrCode2Icon color="primary" />
                     </Link> */}
                     <Link href={`/product/${params.row.batch_id}/barcode-v2`}>
-                        <Barcode size={24} stroke="#1976d2" />
+                        <Barcode size={24} stroke="var(--info)" />
                     </Link>
                     <Link href={`/quantity/${params.row.stock_id}/log`}>
                         <HistoryIcon color="primary" />
@@ -209,7 +211,7 @@ const productColumns = (handleProductEdit, onToggleFeatured, onToggleActive, loa
                             onClick={() => onToggleActive(params.row.batch_id)}
                             sx={{ cursor: 'pointer' }}
                         >
-                            <ArchiveX size={24} stroke="#d32f2f" />
+                            <ArchiveX size={24} stroke="var(--destructive)" />
                         </IconButton>
                     )}
                     {params.row.is_active === 0 && (
@@ -218,7 +220,7 @@ const productColumns = (handleProductEdit, onToggleFeatured, onToggleActive, loa
                             onClick={() => onToggleActive(params.row.batch_id)}
                             sx={{ cursor: 'pointer' }}
                         >
-                            <ArchiveRestore size={24} stroke="#4caf50" />
+                            <ArchiveRestore size={24} stroke="var(--success)" />
                         </IconButton>
                     )}
                 </Box>
@@ -227,7 +229,7 @@ const productColumns = (handleProductEdit, onToggleFeatured, onToggleActive, loa
     },
     {
         field: "is_featured",
-        headerName: "Featured",
+        headerName: t("Featured"),
         headerAlign: "center",
         renderCell: (params) => {
             const isLoading = loadingBatchId === params.row.batch_id;
@@ -419,7 +421,7 @@ export default function Product({ products, stores, contacts }) {
 
     return (
         <AuthenticatedLayout>
-            <Head title="Products" />
+            <Head title={t("Products")} />
             <Grid
                 container
                 spacing={1}
@@ -436,14 +438,14 @@ export default function Product({ products, stores, contacts }) {
                             fields={[
                                 {
                                     name: 'store',
-                                    label: 'Store',
+                                    label: t("Store"),
                                     type: 'select',
                                     options: stores,
                                     size: { xs: 12, sm: 6, md: 6 }
                                 },
                                 {
                                     name: 'contact_id',
-                                    label: 'Supplier',
+                                    label: t("Supplier"),
                                     type: 'select2',
                                     options: dataContacts,
                                     size: { xs: 12, sm: 6, md: 6 },
@@ -452,14 +454,14 @@ export default function Product({ products, stores, contacts }) {
                                 },
                                 {
                                     name: 'sleeping_date',
-                                    label: 'Sleeping Products Before',
+                                    label: t("Sleeping Products Before"),
                                     type: 'date',
                                     size: { xs: 12, sm: 6, md: 6 }
                                 }
                             ]}
                             filters={filters}
                             handleFilterChange={handleFilterChange}
-                            title="Advanced Filters"
+                            title={t("Advanced Filters")}
                             buttonTitle="Advanced Filters"
                         />
                     </Grid>
@@ -467,7 +469,7 @@ export default function Product({ products, stores, contacts }) {
                     <Grid size={{ xs: 6, sm: 2, md: 2 }}>
                         <TextField
                             value={filters.status}
-                            label="Status"
+                            label={t("Status")}
                             size="small"
                             onChange={handleFilterChange}
                             required
@@ -476,11 +478,11 @@ export default function Product({ products, stores, contacts }) {
                             select
                             margin="dense"
                         >
-                            <MenuItem value={1}>Active</MenuItem>
-                            <MenuItem value={0}>Inactive</MenuItem>
-                            <MenuItem value={"alert"}>Alert</MenuItem>
+                            <MenuItem value={1}>{t("Active")}</MenuItem>
+                            <MenuItem value={0}>{t("Inactive")}</MenuItem>
+                            <MenuItem value={"alert"}>{t("Alert")}</MenuItem>
                             <MenuItem value={"out_of_stock"}>
-                                Out of Stock
+                                {t("Out of Stock")}
                             </MenuItem>
                         </TextField>
                     </Grid>
@@ -488,24 +490,19 @@ export default function Product({ products, stores, contacts }) {
                     <Grid size={{ xs: 6, sm: 2, md: 1 }}>
                         <TextField
                             value={filters.alert_quantity}
-                            label="Alert Qty"
+                            label={t("Alert Qty")}
                             size="small"
                             onChange={handleFilterChange}
-                            placeholder="Alert Qty"
+                            placeholder={t("Alert Qty")}
                             name="alert_quantity"
                             type="number"
-                            slotProps={{
-                                inputLabel: {
-                                    shrink: true,
-                                },
-                            }}
                         />
                     </Grid>
 
                     <Grid size={{ xs: 12, sm: 2, md: 2 }}>
                         <TextField
                             value={filters.sortBy}
-                            label="Sort By"
+                            label={t("Sort By")}
                             size="small"
                             onChange={handleFilterChange}
                             fullWidth
@@ -513,39 +510,27 @@ export default function Product({ products, stores, contacts }) {
                             name="sortBy"
                             margin="dense"
                         >
-                            <MenuItem value="default">Default</MenuItem>
-                            <MenuItem value="name_asc">Name (A to Z)</MenuItem>
-                            <MenuItem value="name_desc">Name (Z to A)</MenuItem>
-                            <MenuItem value="quantity_low">Quantity (Low to High)</MenuItem>
-                            <MenuItem value="quantity_high">Quantity (High to Low)</MenuItem>
-                            <MenuItem value="sleeping_most">Sleeping First</MenuItem>
-                            <MenuItem value="active_most">Active First</MenuItem>
+                            <MenuItem value="default">{t("Default")}</MenuItem>
+                            <MenuItem value="name_asc">{t("Name (A to Z)")}</MenuItem>
+                            <MenuItem value="name_desc">{t("Name (Z to A)")}</MenuItem>
+                            <MenuItem value="quantity_low">{t("Quantity (Low to High)")}</MenuItem>
+                            <MenuItem value="quantity_high">{t("Quantity (High to Low)")}</MenuItem>
+                            <MenuItem value="sleeping_most">{t("Sleeping First")}</MenuItem>
+                            <MenuItem value="active_most">{t("Active First")}</MenuItem>
                         </TextField>
                     </Grid>
 
                     <Grid size={{ xs: 12, sm: 3, md: 3 }}>
-                        <TextField
-                            fullWidth
+                        <SearchField
                             name="search_query"
-                            label="Search"
-                            size="small"
-                            variant="outlined"
                             value={filters.search_query}
                             onChange={handleFilterChange}
-                            placeholder="Barcode or Name"
-                            onFocus={(event) => {
-                                event.target.select();
-                            }}
+                            placeholder={t("Barcode or Name")}
                             onKeyDown={(e) => {
                                 if (e.key === "Enter") {
                                     e.preventDefault(); // Prevents form submission if inside a form
                                     refreshProducts(window.location.pathname); // Trigger search on Enter
                                 }
-                            }}
-                            slotProps={{
-                                inputLabel: {
-                                    shrink: true,
-                                },
                             }}
                         />
                     </Grid>
@@ -555,12 +540,11 @@ export default function Product({ products, stores, contacts }) {
                             <Button
                                 size="small"
                                 variant="contained"
-                                color="success"
                                 startIcon={<AddIcon />}
                                 fullWidth
                                 sx={{ minWidth: { xs: '100px', sm: '100px' } }}
                             >
-                                Add Product
+                                {t("Add Product")}
                             </Button>
                         </Link>
                     </Grid>

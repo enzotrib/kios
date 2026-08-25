@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import axios from "axios";
 import Swal from "sweetalert2";
 import BatchModal from "./BatchModal";
+import { t } from '@/i18n';
 
 export default function BatchesTable({ product, batches = [], onBatchesChange, contacts = [] }) {
     const [localBatches, setLocalBatches] = useState(batches);
@@ -54,8 +55,6 @@ export default function BatchesTable({ product, batches = [], onBatchesChange, c
             text: "Are you sure you want to delete this batch?",
             icon: "warning",
             showCancelButton: true,
-            confirmButtonColor: "#d32f2f",
-            cancelButtonColor: "#757575",
             confirmButtonText: "Delete",
         }).then((result) => {
             if (result.isConfirmed) {
@@ -103,10 +102,10 @@ export default function BatchesTable({ product, batches = [], onBatchesChange, c
 
     const DisplayField = ({ label, value }) => (
         <div>
-            <label className="text-xs font-medium text-gray-500 uppercase tracking-wide block mb-1">
+            <label className="text-xs font-medium text-[var(--muted-foreground)] uppercase tracking-wide block mb-1">
                 {label}
             </label>
-            <div className="text-sm font-semibold text-gray-900">
+            <div className="text-sm font-semibold text-[var(--foreground)]">
                 {value || '-'}
             </div>
         </div>
@@ -130,15 +129,15 @@ export default function BatchesTable({ product, batches = [], onBatchesChange, c
                         <div
                             key={batch.id}
                             onClick={() => handleCardClick(batch)}
-                            className="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md hover:border-blue-300 transition-all duration-200 cursor-pointer"
+                            className="bg-[var(--card)] rounded-lg border border-[var(--border)] shadow-sm hover:shadow-md hover:border-blue-300 transition-all duration-200 cursor-pointer"
                         >
                             {/* Card Header */}
-                            <div className="px-4 py-3 border-b border-gray-100 flex items-center justify-between">
+                            <div className="px-4 py-3 border-b border-[var(--border)] flex items-center justify-between">
                                 <div>
-                                    <h3 className="text-base font-bold text-gray-900">
+                                    <h3 className="text-base font-bold text-[var(--foreground)]">
                                         {batch.batch_number}
                                     </h3>
-                                    <p className="text-xs text-gray-500 mt-0.5">
+                                    <p className="text-xs text-[var(--muted-foreground)] mt-0.5">
                                         {getSupplierName(batch)}
                                     </p>
                                 </div>
@@ -158,28 +157,28 @@ export default function BatchesTable({ product, batches = [], onBatchesChange, c
                             <div className="px-4 py-3">
                                 <div className="grid grid-cols-3 gap-3">
                                     <DisplayField
-                                        label="Cost"
+                                        label={t("Cost")}
                                         value={batch.cost}
                                     />
                                     
                                     <DisplayField
-                                        label="Price"
+                                        label={t("Price")}
                                         value={batch.price}
                                     />
                                     
                                     <DisplayField
-                                        label="Discount %"
+                                        label={t("Discount %")}
                                         value={`${batch.discount_percentage || 0}%`}
                                     />
                                     
                                     <DisplayField
-                                        label="Flat Discount"
+                                        label={t("Flat Discount")}
                                         value={batch.discount || 0}
                                     />
                                     
                                     <div className="col-span-2">
                                         <DisplayField
-                                            label="Expiry Date"
+                                            label={t("Expiry Date")}
                                             value={batch.expiry_date ? dayjs(batch.expiry_date).format("DD/MM/YYYY") : "No expiry"}
                                         />
                                     </div>
@@ -188,9 +187,9 @@ export default function BatchesTable({ product, batches = [], onBatchesChange, c
                         </div>
                     ))
                 ) : (
-                    <div className="bg-gray-50 rounded-lg border-2 border-dashed border-gray-300 p-6 text-center">
-                        <p className="text-gray-600 font-medium">No batches found</p>
-                        <p className="text-xs text-gray-500 mt-1">Create batches to track inventory</p>
+                    <div className="bg-[var(--surface-2)] rounded-lg border-2 border-dashed border-[var(--border)] p-6 text-center">
+                        <p className="text-[var(--muted-foreground)] font-medium">{t("No batches found")}</p>
+                        <p className="text-xs text-[var(--muted-foreground)] mt-1">{t("Create batches to track inventory")}</p>
                     </div>
                 )}
             </div>

@@ -17,6 +17,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import dayjs from "dayjs";
 import { useCurrencyStore } from "../stores/currencyStore";
+import { t } from '@/i18n';
 
 const initialPaymentFormState = {
     amount: 0,
@@ -129,15 +130,15 @@ export default function AddPaymentDialog({
                     }
                 }}
             >
-                <DialogTitle id="alert-dialog-title">ADD PAYMENTS</DialogTitle>
+                <DialogTitle id="alert-dialog-title">{t("ADD PAYMENTS")}</DialogTitle>
                 <IconButton
-                    aria-label="close"
+                    aria-label={t("close")}
                     onClick={handleClose}
                     sx={(theme) => ({
                         position: "absolute",
                         right: 8,
                         top: 8,
-                        color: theme.palette.grey[500],
+                        color: theme.palette.text.secondary,
                     })}
                 >
                     <CloseIcon />
@@ -149,7 +150,7 @@ export default function AddPaymentDialog({
                                 fullWidth
                                 type="number"
                                 name="amount"
-                                label="Amount"
+                                label={t("Amount")}
                                 variant="outlined"
                                 autoFocus
                                 sx={{ input: { fontWeight: 'bold' } }}
@@ -178,26 +179,26 @@ export default function AddPaymentDialog({
                                     name="payment_method"
                                     value={paymentForm.payment_method}
                                     onChange={handleFieldChange}
-                                    label="Payment Method"
+                                    label={t("Payment Method")}
                                     select
                                     fullWidth
                                 >
-                                    <MenuItem value={'Cash'}>Cash</MenuItem>
-                                    <MenuItem value={'Cheque'}>Cheque</MenuItem>
-                                    <MenuItem value={'Card'}>Card</MenuItem>
-                                    <MenuItem value={'Bank'}>Bank</MenuItem>
+                                    <MenuItem value={'Cash'}>{t("Cash")}</MenuItem>
+                                    <MenuItem value={'Cheque'}>{t("Cheque")}</MenuItem>
+                                    <MenuItem value={'Card'}>{t("Card")}</MenuItem>
+                                    <MenuItem value={'Bank'}>{t("Bank")}</MenuItem>
                                     {selectedTransaction === null && (
-                                        <MenuItem value={'Account Balance'}>Account Balance</MenuItem>
+                                        <MenuItem value={'Account Balance'}>{t("Account Balance")}</MenuItem>
                                     )}
                                     {selectedTransaction !== null && (
-                                        <MenuItem value={'Account'}>Account</MenuItem>
+                                        <MenuItem value={'Account'}>{t("Account")}</MenuItem>
                                     )}
                                 </TextField>
                         </Grid>
 
                         <Grid size={{ xs: 12, sm: 4 }}>
                             <TextField
-                                label="Date"
+                                label={t("Date")}
                                 name="transaction_date"
                                 fullWidth
                                 type="date"
@@ -216,7 +217,7 @@ export default function AddPaymentDialog({
                             <Grid size={{ xs: 12, sm: 12 }}>
                                     <TextField
                                         value={paymentForm.store_id}
-                                        label="Store"
+                                        label={t("Store")}
                                         onChange={handleFieldChange}
                                         required
                                         name="store_id"
@@ -238,7 +239,7 @@ export default function AddPaymentDialog({
                     <TextField
                         fullWidth
                         variant="outlined"
-                        label={"Note"}
+                        label={t("Note")}
                         name="note"
                         multiline
                         sx={{ mt: "1rem" }}

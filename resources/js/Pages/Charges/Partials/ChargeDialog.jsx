@@ -16,6 +16,7 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import { router } from "@inertiajs/react";
 import Swal from "sweetalert2";
+import { t } from '@/i18n';
 
 const initialChargeFormState = {
     name: "",
@@ -129,13 +130,13 @@ export default function ChargeDialog({
                 {isEditMode ? "Edit Charge" : "Create New Charge"}
             </DialogTitle>
             <IconButton
-                aria-label="close"
+                aria-label={t("close")}
                 onClick={handleClose}
                 sx={(theme) => ({
                     position: "absolute",
                     right: 8,
                     top: 8,
-                    color: theme.palette.grey[500],
+                    color: theme.palette.text.secondary,
                 })}
             >
                 <CloseIcon />
@@ -146,13 +147,13 @@ export default function ChargeDialog({
                     {/* Name */}
                     <TextField
                         fullWidth
-                        label="Name"
+                        label={t("Name")}
                         name="name"
                         value={chargeForm.name}
                         onChange={handleFieldChange}
                         error={!!errors.name}
                         helperText={errors.name}
-                        placeholder="e.g., VAT (5%), Service Tax, Delivery Fee"
+                        placeholder={t("e.g., VAT (5%), Service Tax, Delivery Fee")}
                         variant="outlined"
                         size="small"
                     />
@@ -161,7 +162,7 @@ export default function ChargeDialog({
                     <TextField
                         fullWidth
                         select
-                        label="Charge Type"
+                        label={t("Charge Type")}
                         name="charge_type"
                         value={chargeForm.charge_type}
                         onChange={handleFieldChange}
@@ -180,7 +181,7 @@ export default function ChargeDialog({
                     {/* Rate Value */}
                     <TextField
                         fullWidth
-                        label="Rate Value"
+                        label={t("Rate Value")}
                         name="rate_value"
                         type="number"
                         inputProps={{
@@ -191,7 +192,7 @@ export default function ChargeDialog({
                         onChange={handleFieldChange}
                         error={!!errors.rate_value}
                         helperText={errors.rate_value}
-                        placeholder="e.g., 5 or 50"
+                        placeholder={t("e.g., 5 or 50")}
                         variant="outlined"
                         size="small"
                     />
@@ -200,7 +201,7 @@ export default function ChargeDialog({
                     <TextField
                         fullWidth
                         select
-                        label="Rate Type"
+                        label={t("Rate Type")}
                         name="rate_type"
                         value={chargeForm.rate_type}
                         onChange={handleFieldChange}
@@ -223,13 +224,13 @@ export default function ChargeDialog({
                         fullWidth
                         multiline
                         rows={3}
-                        label="Description"
+                        label={t("Description")}
                         name="description"
                         value={chargeForm.description}
                         onChange={handleFieldChange}
                         error={!!errors.description}
                         helperText={errors.description}
-                        placeholder="Add description for this charge..."
+                        placeholder={t("Add description for this charge...")}
                         variant="outlined"
                         size="small"
                     />
@@ -243,7 +244,7 @@ export default function ChargeDialog({
                                 onChange={handleFieldChange}
                             />
                         }
-                        label="Active"
+                        label={t("Active")}
                     />
 
                     <FormControlLabel
@@ -254,14 +255,14 @@ export default function ChargeDialog({
                                 onChange={handleFieldChange}
                             />
                         }
-                        label="Auto-apply to all sales (Default)"
+                        label={t("Auto-apply to all sales (Default)")}
                     />
                 </Stack>
             </DialogContent>
 
             <DialogActions>
                 <Button onClick={handleClose} color="inherit">
-                    Cancel
+                    {t("Cancel")}
                 </Button>
                 <Button
                     type="submit"

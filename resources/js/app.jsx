@@ -7,6 +7,8 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { PurchaseProvider } from './Context/PurchaseContext';
 import { SharedProvider } from './Context/SharedContext';
 import { useCurrencyStore } from './stores/currencyStore';
+import { setLocale } from './i18n';
+import AppThemeProvider from './design/AppThemeProvider';
 
 const appName = import.meta.env.VITE_APP_NAME || 'InfoShop';
 
@@ -23,6 +25,9 @@ createInertiaApp({
     resolve: (name) => resolvePageComponent(`./Pages/${name}.jsx`, import.meta.glob('./Pages/**/*.jsx')),
     setup({ el, App, props }) {
         const root = createRoot(el);
+
+        // Idioma de la interfaz, compartido por Laravel (config/app.php -> APP_LOCALE)
+        setLocale(props.initialPage?.props?.locale);
 
         // Initialize currency store from Inertia props
         let currencySettingsFromServer = props.initialPage?.props?.settings?.currency_settings || {};
@@ -52,11 +57,13 @@ createInertiaApp({
         });
 
         root.render(
-            <PurchaseProvider>
-                <SharedProvider>
-                    <App {...props} />
-                </SharedProvider>
-            </PurchaseProvider>
+            <AppThemeProvider>
+                <PurchaseProvider>
+                    <SharedProvider>
+                        <App {...props} />
+                    </SharedProvider>
+                </PurchaseProvider>
+            </AppThemeProvider>
         );
     },
     // progress: {

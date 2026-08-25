@@ -12,32 +12,33 @@ import FormDialog from './Partial/FormDialog';
 import { X } from 'lucide-react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { t } from '@/i18n';
 
 const columns = (handleAction) => [
   {
-    field: 'name', headerName: 'Name', width: 200,
+    field: 'name', headerName: t("Name"), width: 200,
     renderCell: (params) => (
       <p className='cursor-pointer font-bold' onClick={() => handleAction(params.row, 'edit')}>
         {params.value}
       </p>
     )
   },
-  { field: 'collection_type', headerName: 'Collection Type', width: 150 },
+  { field: 'collection_type', headerName: t("Collection Type"), width: 150 },
   {
     field: 'parent',
-    headerName: 'Parent Collection',
+    headerName: t("Parent Collection"),
     width: 180,
     renderCell: (params) => (
-      <span className="text-gray-600">
+      <span className="text-[var(--muted-foreground)]">
         {params.row.parent ? params.row.parent.name : '—'}
       </span>
     )
   },
-  { field: 'description', headerName: 'Description', width: 250 },
-  { field: 'created_at', headerName: 'Created At', width: 150 },
+  { field: 'description', headerName: t("Description"), width: 250 },
+  { field: 'created_at', headerName: t("Created At"), width: 150 },
   {
     field: 'action',
-    headerName: 'Actions',
+    headerName: t("Actions"),
     width: 150,
     renderCell: (params) => (
       <>
@@ -106,12 +107,12 @@ export default function Collection({ collections }) {
 
   return (
     <AuthenticatedLayout>
-      <Head title="Collection" />
+      <Head title={t("Collection")} />
 
       <Grid container spacing={2} sx={{ alignItems: "center", width: '100%' }}>
         <Grid size={12} container sx={{ justifyContent: "end" }}>
           <Button variant="contained" startIcon={<AddIcon />} onClick={handleClickOpen}>
-            Add Collection
+            {t("Add Collection")}
           </Button>
         </Grid>
 

@@ -10,6 +10,8 @@ import dayjs from 'dayjs';
 import { MobileTimePicker } from '@mui/x-date-pickers/MobileTimePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { t } from '@/i18n';
+import SearchField from '@/Components/design/SearchField';
 
 const Catalog = ({ open, id, onClose }) => {
     const [searchProduct, setSearchProduct] = useState("");
@@ -66,7 +68,7 @@ const Catalog = ({ open, id, onClose }) => {
         <Dialog open={open} onClose={onClose} fullScreen>
             <DialogTitle>
                 <Tabs value={value} onChange={handleChange} variant="fullWidth">
-                    <Tab value="products" label="PRODUCTS" wrapped />
+                    <Tab value="products" label={t("PRODUCTS")} wrapped />
                     <Tab
                         value="cart"
                         label={
@@ -80,10 +82,10 @@ const Catalog = ({ open, id, onClose }) => {
             <DialogContent>
                 {value === 'products' && (
                     <>
-                        <TextField
-                            label="Search"
-                            size="small"
-                            fullWidth
+                        <SearchField
+
+
+
                             value={searchProduct}
                             onChange={(e) => setSearchProduct(e.target.value)}
                             sx={{ mt: 1 }}
@@ -98,8 +100,8 @@ const Catalog = ({ open, id, onClose }) => {
                                     return (
                                         <li key={product.id + product.batch_number} className="p-2 w-full shadow-sm">
                                             <div className="flex justify-between items-start">
-                                                <div className="uppercase tracking-wide text-sm text-blue-900 font-semibold">
-                                                    {product.name} Rs. {product.price}
+                                                <div className="uppercase tracking-wide text-sm text-[var(--info)] font-semibold">
+                                                    {product.name} {t("Rs.")} {product.price}
                                                 </div>
                                                 <div className="flex ml-2">
                                                     {numeral(product.stock_quantity).format("0,0")}
@@ -113,33 +115,33 @@ const Catalog = ({ open, id, onClose }) => {
                                                     />
                                                 </div>
                                                 <div>
-                                                    <div className="text-gray-500 text-xs">Qty</div>
+                                                    <div className="text-[var(--muted-foreground)] text-xs">{t("Qty")}</div>
                                                     <input
                                                         type="number"
                                                         min="0"
-                                                        className="border border-gray-300 rounded-md py-1 px-2 w-15"
+                                                        className="border border-[var(--border)] rounded-md py-1 px-2 w-15"
                                                         value={cartItem?.quantity || ""}
                                                         onFocus={(e) => e.target.select()}
                                                         onChange={(e) => handleUpdateCart(product, "quantity", e.target.value)}
                                                     />
                                                 </div>
                                                 <div>
-                                                    <div className="text-gray-500 text-xs">Free Qty</div>
+                                                    <div className="text-[var(--muted-foreground)] text-xs">{t("Free Qty")}</div>
                                                     <input
                                                         type="number"
                                                         min="0"
-                                                        className="border border-gray-300 rounded-md py-1 px-2 w-15"
+                                                        className="border border-[var(--border)] rounded-md py-1 px-2 w-15"
                                                         value={cartItem?.free_quantity || ""}
                                                         onFocus={(e) => e.target.select()}
                                                         onChange={(e) => handleUpdateCart(product, "free_quantity", e.target.value)}
                                                     />
                                                 </div>
                                                 <div>
-                                                    <div className="text-gray-500 text-xs">Disc</div>
+                                                    <div className="text-[var(--muted-foreground)] text-xs">{t("Disc")}</div>
                                                     <input
                                                         type="number"
                                                         min="0"
-                                                        className="border border-gray-300 rounded-md py-1 px-2 w-15"
+                                                        className="border border-[var(--border)] rounded-md py-1 px-2 w-15"
                                                         value={cartItem?.flat_discount || ""}
                                                         disabled={!cartItem}
                                                         onFocus={(e) => e.target.select()}
@@ -156,7 +158,7 @@ const Catalog = ({ open, id, onClose }) => {
                 {value === 'cart' && <Cart cartState={cartState} contact_id={id} useCart={useCart} />}
             </DialogContent>
             <DialogActions>
-                <Button fullWidth onClick={onClose}>Close</Button>
+                <Button fullWidth onClick={onClose}>{t("Close")}</Button>
             </DialogActions>
         </Dialog>
     );
@@ -168,7 +170,7 @@ const Cart = ({ cartState, contact_id, useCart }) => {
     const [paymentsModalOpen, setPaymentsModalOpen] = useState(false);
     const [sale_date, setSaleDate] = useState(dayjs().format("YYYY-MM-DD"));
     const [sale_time, setSaleTime] = useState(dayjs().format("HH:mm"));
-    if (!cartState.length) return <div className="p-4">Your cart is empty</div>;
+    if (!cartState.length) return <div className="p-4">{t("Your cart is empty")}</div>;
     const { cartTotal } = useCart();
     return (
         <>
@@ -179,39 +181,39 @@ const Cart = ({ cartState, contact_id, useCart }) => {
                     return (
                         <li
                             key={`${item.id}-${item.batch_id}`}
-                            className="p-3 border rounded-md shadow-sm bg-white"
+                            className="p-3 border rounded-md shadow-sm bg-[var(--card)]"
                         >
                             {/* Top row: Name + Total */}
                             <div className="grid grid-cols-[2fr_1fr] items-center mb-2">
                                 <div className="font-semibold text-sm">
                                     #{index + 1} | {item.name}
                                 </div>
-                                <div className="text-sm font-bold text-right">Rs. {numeral(total).format("0,0.00")}</div>
+                                <div className="text-sm font-bold text-right">{t("Rs.")} {numeral(total).format("0,0.00")}</div>
                             </div>
 
                             {/* Breakdown row */}
                             <div className="grid grid-cols-[1fr_2fr] gap-2 items-center">
                                 <div>
-                                    <div className="text-gray-500 text-xs">Details</div>
+                                    <div className="text-[var(--muted-foreground)] text-xs">{t("Details")}</div>
                                 </div>
 
                                 <div>
-                                    <div className="text-gray-500 text-xs text-right">({item.price} x {item.quantity}) - {item.flat_discount} = Rs. {numeral(total).format("0,0.00")}</div>
+                                    <div className="text-[var(--muted-foreground)] text-xs text-right">({item.price} x {item.quantity}) - {item.flat_discount} {t("= Rs.")} {numeral(total).format("0,0.00")}</div>
                                 </div>
                             </div>
                         </li>
                     );
                 })}
-                <li className="p-3 border rounded-md shadow-sm bg-white">
+                <li className="p-3 border rounded-md shadow-sm bg-[var(--card)]">
                     <div className="flex justify-between items-center mb-2">
-                        <div className="font-semibold text-sm">Item Discount</div>
+                        <div className="font-semibold text-sm">{t("Item Discount")}</div>
                         <div className="text-sm font-bold">
                             {numeral(cartState.reduce((acc, item) => acc + (item.discount * item.quantity + item.flat_discount), 0)).format("0,0.00")}
                         </div>
                     </div>
                     <div className="flex justify-between items-center">
-                        <div className="font-semibold text-sm">Total</div>
-                        <div className="text-sm font-bold">Rs. {numeral(cartTotal).format("0,0.00")}</div>
+                        <div className="font-semibold text-sm">{t("Total")}</div>
+                        <div className="text-sm font-bold">{t("Rs.")} {numeral(cartTotal).format("0,0.00")}</div>
                     </div>
                 </li>
             </ul>
@@ -219,7 +221,7 @@ const Cart = ({ cartState, contact_id, useCart }) => {
                 <div className="flex justify-center mt-5 flex-col gap-2">
                     <TextField
                         type="date"
-                        label="Date"
+                        label={t("Date")}
                         variant="outlined"
                         size="small"
                         value={sale_date}
@@ -228,7 +230,7 @@ const Cart = ({ cartState, contact_id, useCart }) => {
                         sx={{ mt: 2 }}
                     />
                     <MobileTimePicker
-                        label="Time"
+                        label={t("Time")}
                         value={sale_time ? dayjs(`2000-01-01 ${sale_time}`, 'YYYY-MM-DD HH:mm') : null}
                         onChange={(newValue) => {
                             if (newValue) {
@@ -256,7 +258,7 @@ const Cart = ({ cartState, contact_id, useCart }) => {
                         endIcon={<Banknote />}
                         onClick={() => setPaymentsModalOpen(true)}
                     >
-                        PAYMENTS
+                        {t("PAYMENTS")}
                     </Button>
                 </div>
             </LocalizationProvider>

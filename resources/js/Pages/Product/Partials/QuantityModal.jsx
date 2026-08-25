@@ -9,38 +9,39 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import CreatableSelect from 'react-select/creatable';
 import { usePage, Link, router } from "@inertiajs/react";
+import { t } from '@/i18n';
 
 const reasonOptions = [
-    { value: 'Stock Entry', label: 'Stock Entry' },
-    { value: 'Purchase', label: 'Purchase' },
-    { value: 'Damaged', label: 'Damaged' },
-    { value: 'Theft', label: 'Theft' },
-    { value: 'Expense', label: 'Expense' },
-    { value: 'Return', label: 'Return' },
-    { value: 'Donation', label: 'Donation' },
-    { value: 'Sample', label: 'Sample' },
-    { value: 'Promotion', label: 'Promotion' },
-    { value: 'Write-Off', label: 'Write-Off' },
-    { value: 'Expired', label: 'Expired' },
-    { value: 'Lost', label: 'Lost' },
-    { value: 'Transfer Out', label: 'Transfer Out' },
-    { value: 'Transfer In', label: 'Transfer In' },
-    { value: 'Production', label: 'Production' },
-    { value: 'Consumption', label: 'Consumption' },
-    { value: 'Adjustment', label: 'Adjustment' },
-    { value: 'Vendor Return', label: 'Vendor Return' },
-    { value: 'Customer Return', label: 'Customer Return' },
-    { value: 'Internal Use', label: 'Internal Use' },
-    { value: 'Audit Correction', label: 'Audit Correction' },
-    { value: 'Seasonal Adjustment', label: 'Seasonal Adjustment' },
-    { value: 'Overstock Reduction', label: 'Overstock Reduction' },
-    { value: 'Understock Adjustment', label: 'Understock Adjustment' },
-    { value: 'Quality Control Reject', label: 'Quality Control Reject' },
-    { value: 'Repair', label: 'Repair' },
-    { value: 'Replacement', label: 'Replacement' },
-    { value: 'Disposal', label: 'Disposal' },
-    { value: 'Reconciliation', label: 'Reconciliation' },
-    { value: 'Miscellaneous', label: 'Miscellaneous' },
+    { value: 'Stock Entry', label: t("Stock Entry") },
+    { value: 'Purchase', label: t("Purchase") },
+    { value: 'Damaged', label: t("Damaged") },
+    { value: 'Theft', label: t("Theft") },
+    { value: 'Expense', label: t("Expense") },
+    { value: 'Return', label: t("Return") },
+    { value: 'Donation', label: t("Donation") },
+    { value: 'Sample', label: t("Sample") },
+    { value: 'Promotion', label: t("Promotion") },
+    { value: 'Write-Off', label: t("Write-Off") },
+    { value: 'Expired', label: t("Expired") },
+    { value: 'Lost', label: t("Lost") },
+    { value: 'Transfer Out', label: t("Transfer Out") },
+    { value: 'Transfer In', label: t("Transfer In") },
+    { value: 'Production', label: t("Production") },
+    { value: 'Consumption', label: t("Consumption") },
+    { value: 'Adjustment', label: t("Adjustment") },
+    { value: 'Vendor Return', label: t("Vendor Return") },
+    { value: 'Customer Return', label: t("Customer Return") },
+    { value: 'Internal Use', label: t("Internal Use") },
+    { value: 'Audit Correction', label: t("Audit Correction") },
+    { value: 'Seasonal Adjustment', label: t("Seasonal Adjustment") },
+    { value: 'Overstock Reduction', label: t("Overstock Reduction") },
+    { value: 'Understock Adjustment', label: t("Understock Adjustment") },
+    { value: 'Quality Control Reject', label: t("Quality Control Reject") },
+    { value: 'Repair', label: t("Repair") },
+    { value: 'Replacement', label: t("Replacement") },
+    { value: 'Disposal', label: t("Disposal") },
+    { value: 'Reconciliation', label: t("Reconciliation") },
+    { value: 'Miscellaneous', label: t("Miscellaneous") },
 ];
 
 export default function QuantityModal({
@@ -187,13 +188,13 @@ export default function QuantityModal({
                     </Link> */}
                 </DialogTitle>
                 <IconButton
-                    aria-label="close"
+                    aria-label={t("close")}
                     onClick={handleClose}
                     sx={(theme) => ({
                         position: "absolute",
                         right: 8,
                         top: 8,
-                        color: theme.palette.grey[500],
+                        color: theme.palette.text.secondary,
                     })}
                 >
                     <CloseIcon />
@@ -211,7 +212,7 @@ export default function QuantityModal({
                                 fullWidth
                                 type="number"
                                 name="quantity"
-                                label="Quantity"
+                                label={t("Quantity")}
                                 variant="outlined"
                                 required
                                 autoFocus
@@ -227,11 +228,6 @@ export default function QuantityModal({
                                 onFocus={(event) => {
                                     event.target.select();
                                 }}
-                                slotProps={{
-                                    inputLabel: {
-                                        shrink: true,
-                                    },
-                                }}
                             />
                         </Grid>
 
@@ -240,7 +236,7 @@ export default function QuantityModal({
                             <CreatableSelect
                                 isClearable
                                 options={reasonOptions}
-                                placeholder="Select or create a reason"
+                                placeholder={t("Select or create a reason")}
                                 name="reason"
                                 required
                                 menuContainerStyle={{'zIndex': 999}}
@@ -260,10 +256,10 @@ export default function QuantityModal({
                             <FormControl
                                 sx={{ minWidth: "200px", width: "100%" }}
                             >
-                                <InputLabel>Store</InputLabel>
+                                <InputLabel>{t("Store")}</InputLabel>
                                 <Select
                                     value={formState.store_id}
-                                    label="Store"
+                                    label={t("Store")}
                                     onChange={handleInputChange}
                                     required
                                     name="store_id"

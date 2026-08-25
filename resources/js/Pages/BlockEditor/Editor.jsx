@@ -6,6 +6,7 @@ import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { nanoid } from "nanoid";
 
 import LeftSideBar from "./LeftSideBar";
+import { t } from '@/i18n';
 
 const Editor = () => {
     const [blocks, setBlocks] = useState([]);
@@ -128,7 +129,7 @@ const Editor = () => {
             <Box
                 key={block.id} // Assigning a unique key to this block
                 sx={{
-                    border: selectedBlock?.id === block.id ? "2px solid #4caf50" : "none",
+                    border: selectedBlock?.id === block.id ? "2px solid var(--success)" : "none",
                     borderRadius: "4px",
                     padding: "5px",
                     marginBottom: "5px",
@@ -177,7 +178,7 @@ const Editor = () => {
                             flexDirection: "row",
                             gap: 0.5,
                             zIndex: 10,
-                            backgroundColor: "white",
+                            backgroundColor: 'var(--card)',
                             borderRadius: "10px",
                         }}
                     >
@@ -241,7 +242,7 @@ const Editor = () => {
                 flexGrow={1}
                 p={3}
                 sx={{
-                    backgroundColor: "#f5f5f5",
+                    backgroundColor: "var(--surface-2)",
                     overflowY: "auto",
                 }}
             >
@@ -264,7 +265,7 @@ const Editor = () => {
             >
                 <Box p={2}>
                     <Typography variant="h6" gutterBottom>
-                        Block Options
+                        {t("Block Options")}
                     </Typography>
                     <Divider />
                     {selectedBlock && (
@@ -272,7 +273,7 @@ const Editor = () => {
                             {selectedBlock.name === "core/paragraph" && (
                                 <TextField
                                     fullWidth
-                                    label="Content"
+                                    label={t("Content")}
                                     value={selectedBlock.attributes.content}
                                     onChange={(e) => {
                                         updateBlock(selectedBlock.id, { content: e.target.value });
@@ -284,7 +285,7 @@ const Editor = () => {
                                 <>
                                     <TextField
                                         fullWidth
-                                        label="Image URL"
+                                        label={t("Image URL")}
                                         value={selectedBlock.attributes.url}
                                         onChange={(e) => {
                                             updateBlock(selectedBlock.id, { url: e.target.value });
@@ -293,7 +294,7 @@ const Editor = () => {
                                     />
                                     <TextField
                                         fullWidth
-                                        label="Alt Text"
+                                        label={t("Alt Text")}
                                         value={selectedBlock.attributes.alt}
                                         onChange={(e) => {
                                             updateBlock(selectedBlock.id, { alt: e.target.value });
@@ -303,11 +304,11 @@ const Editor = () => {
                                 </>
                             )}
 
-                            <Typography variant="subtitle1">Custom CSS</Typography>
+                            <Typography variant="subtitle1">{t("Custom CSS")}</Typography>
                             <TextField
                                 multiline
                                 minRows={5}
-                                placeholder="Enter custom CSS here..."
+                                placeholder={t("Enter custom CSS here...")}
                                 variant="outlined"
                                 fullWidth
                                 style={{ marginTop: "8px" }}

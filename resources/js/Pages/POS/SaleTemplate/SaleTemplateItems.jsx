@@ -9,6 +9,7 @@ import { useSales as useCart } from "@/Context/SalesContext";
 import { SharedContext } from "@/Context/SharedContext";
 import productplaceholder from "@/Pages/Product/product-placeholder.webp";
 import Swal from "sweetalert2";
+import { t } from '@/i18n';
 
 export default function SaleTemplateItem({ templates, setTemplates }) {
     const { addToCart, cartState, emptyCart } = useCart();
@@ -21,8 +22,6 @@ export default function SaleTemplateItem({ templates, setTemplates }) {
             text: "This will replace the items in your cart with the items in the selected group. Are you sure you want to do this?",
             icon: 'question',
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, replace it!',
             cancelButtonText: 'No, keep current items'
         }).then((result) => {
@@ -43,8 +42,6 @@ export default function SaleTemplateItem({ templates, setTemplates }) {
             text: "You won't be able to revert this!",
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
@@ -90,7 +87,7 @@ export default function SaleTemplateItem({ templates, setTemplates }) {
                         sx={{ height: '100%', position: 'relative' }}
                     >
                         <IconButton
-                            aria-label="delete"
+                            aria-label={t("delete")}
                             size="large"
                             color="error"
                             sx={{
