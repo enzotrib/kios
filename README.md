@@ -110,6 +110,20 @@ php artisan native:run              # desarrollo, abre la ventana
 php artisan native:build win x64    # genera el instalador
 ```
 
+### Requisitos para compilar en Windows
+
+Dos cosas que no son obvias y hacen fallar el build:
+
+**El PHP 8.3+ tiene que estar en el `PATH`, no alcanza con invocar artisan con
+él.** El proceso de compilación lanza `composer install --no-dev` como
+subproceso, y ese subproceso resuelve `php` desde el `PATH`. Si ahí hay un PHP
+más viejo, falla al verificar las dependencias.
+
+**Hay que activar el Modo de desarrollador de Windows** (Configuración →
+Sistema → Para programadores). `electron-builder` extrae un paquete que
+contiene enlaces simbólicos, y crearlos en Windows requiere ese permiso. Sin
+él, el build corta con *"Cannot create symbolic link"*.
+
 El asistente de instalación se adapta solo: con SQLite no hay servidor de base
 de datos que configurar, así que salta ese paso y queda en 4 pantallas, todas
 preguntas de negocio (nombre del comercio, sucursal, usuario administrador).

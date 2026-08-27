@@ -31,3 +31,4 @@ update.zip
 /dist
 /build
 /.native
+/nativephp
