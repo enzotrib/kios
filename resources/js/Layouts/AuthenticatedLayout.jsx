@@ -114,14 +114,30 @@ function AuthenticatedLayout({ header, children, ...props }) {
                     selected={selected}
                     sx={[
                         {
-                            minHeight: 40,
+                            minHeight: 36,
                             px: 1.5,
+                            position: "relative",
+                            // Iconos del menu mas chicos que los del contenido:
+                            // es navegacion, no tiene que competir con los datos.
+                            "& .MuiSvgIcon-root": { fontSize: 18 },
                             // Los colores salen de los design tokens (resources/css/app.css),
                             // por eso el item activo acompana el modo claro/oscuro.
                             "&.Mui-selected": {
                                 color: "var(--primary)",
-                                backgroundColor: "var(--primary-soft)",
+                                backgroundColor: "var(--surface-2)",
                                 fontWeight: 600,
+                                // Barra de acento en lugar de rellenar todo el
+                                // item: marca el estado sin gritar.
+                                "&::before": {
+                                    content: '""',
+                                    position: "absolute",
+                                    left: 0,
+                                    top: 8,
+                                    bottom: 8,
+                                    width: 3,
+                                    borderRadius: 3,
+                                    backgroundColor: "var(--primary)",
+                                },
                                 "& .MuiListItemIcon-root": {
                                     color: "var(--primary)",
                                 },

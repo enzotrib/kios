@@ -208,12 +208,12 @@ input[type=number] {
        una version oscurecida del mismo tono para que el texto se lea. */
     --primary: #593eff;
     --primary-foreground: #FFFFFF;
-    --primary-soft: #E3FBEF;
+    --primary-soft: #EDEAFF;
     --brand-accent: #70FC8E;
     /* background/brand-primary, para realces */
 
     /* --- Semanticos --- */
-    --success: #593eff;
+    --success: #0A7A55;
     --success-foreground: #FFFFFF;
     --success-soft: #E3FBEF;
     --warning: #B35F00;
@@ -241,7 +241,7 @@ input[type=number] {
 
     /* --- Graficos --- */
     --chart-1: #3D6BFF;
-    --chart-2: #593eff;
+    --chart-2: #0A7A55;
     --chart-3: #B35F00;
     --chart-4: #2563EB;
     --chart-5: #C4238A;
@@ -344,8 +344,10 @@ input[type=number] {
     --sidebar-border: #2F3B4C;
     --sidebar-ring: #70FC8E;
 
-    /* Shadow/Overlay */
-    --shadow-card: 0 4px 10px rgba(0, 0, 0, 0.35);
+    /* En oscuro la elevacion se lee por contraste de superficie. Una sombra
+       sobre un fondo casi negro no se ve, pero sí engrosa visualmente cada
+       tarjeta. */
+    --shadow-card: none;
     --shadow-raised: 0 4px 10px rgba(0, 0, 0, 0.45), 0 23px 14px rgba(0, 0, 0, 0.25);
 
     --scrollbar-thumb: #2F3B4C;

@@ -299,9 +299,21 @@ export function createAppTheme(mode = 'light') {
                 },
             },
 
+            // Alerta de bajo perfil: fondo tintado y sin borde de color fuerte.
+            // Un aviso informativo no tiene que pesar como una tarjeta.
             MuiAlert: {
                 styleOverrides: {
-                    root: { borderRadius: radiusControl, border: `1px solid ${border}` },
+                    root: {
+                        borderRadius: radiusControl,
+                        border: 'none',
+                        fontSize: '0.875rem',
+                        paddingBlock: 4,
+                    },
+                    standardWarning: { backgroundColor: 'var(--warning-soft)', color: 'var(--warning)' },
+                    standardError: { backgroundColor: 'var(--destructive-soft)', color: 'var(--destructive)' },
+                    standardSuccess: { backgroundColor: 'var(--success-soft)', color: 'var(--success)' },
+                    standardInfo: { backgroundColor: 'var(--surface-2)', color: 'var(--info)' },
+                    icon: { opacity: 1 },
                 },
             },
 

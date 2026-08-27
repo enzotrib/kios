@@ -14,10 +14,10 @@ export default function SectionHeader({ title, subtitle, action, first = false }
             alignItems={{ xs: 'flex-start', sm: 'center' }}
             justifyContent="space-between"
             spacing={1.5}
-            sx={{ mt: first ? 0 : 5, mb: 2.5 }}
+            sx={{ mt: first ? 0 : 4, mb: 2 }}
         >
             <Box>
-                <Typography variant="h2">{title}</Typography>
+                <Typography variant="h3">{title}</Typography>
                 {subtitle && (
                     <Typography variant="body2" sx={{ color: 'text.secondary', mt: 0.5 }}>
                         {subtitle}
