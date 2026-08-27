@@ -28,6 +28,9 @@
              de un cliente que uso la version de escritorio. -->
         <env name="DB_CONNECTION" value="sqlite"/>
         <env name="DB_DATABASE" value=":memory:"/>
+        <!-- El registro publico esta apagado en produccion, pero los tests
+             tienen que poder ejercitar ese codigo. -->
+        <env name="REGISTRATION_ENABLED" value="true"/>
         <env name="MAIL_MAILER" value="array"/>
         <env name="PULSE_ENABLED" value="false"/>
         <env name="QUEUE_CONNECTION" value="sync"/>

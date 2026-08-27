@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
@@ -84,8 +85,18 @@ class AuthController extends Controller
             ], 422);
         }
 
+        // user_name es NOT NULL UNIQUE: sin generarlo, este endpoint respondia
+        // con un error 500 de base de datos.
+        $baseUserName = Str::slug(Str::before($request->input('email'), '@'), '_') ?: 'usuario';
+        $userName = $baseUserName;
+        $sufijo = 1;
+        while (User::where('user_name', $userName)->exists()) {
+            $userName = $baseUserName . '_' . $sufijo++;
+        }
+
         $user = User::create([
             'name' => $request->input('name') ?: $request->input('email'),
+            'user_name' => $userName,
             'email' => $request->input('email'),
             'password' => Hash::make($request->input('password')),
             'is_active' => 1,

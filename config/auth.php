@@ -4,6 +4,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Registro publico
+    |--------------------------------------------------------------------------
+    |
+    | Controla si la ruta /register esta disponible. En una instalacion de un
+    | comercio conviene dejarlo apagado: los usuarios los crea el administrador
+    | desde la pantalla de Usuarios. Se enciende para el modo multi-tenant.
+    |
+    */
+
+    'registration_enabled' => env('REGISTRATION_ENABLED', false),
+
+    /*
+    |--------------------------------------------------------------------------
     | Authentication Defaults
     |--------------------------------------------------------------------------
     |

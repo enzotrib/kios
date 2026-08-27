@@ -9,7 +9,11 @@ use App\Http\Controllers\ReportController;
 
 // Authentication
 Route::post('/auth/login', [AuthController::class, 'login']);
-Route::post('/auth/register', [AuthController::class, 'register']);
+// Mismo criterio que la ruta web: sin esta bandera, /api/auth/register queda
+// abierta para que cualquiera se cree un usuario activo con acceso al POS.
+if (config('auth.registration_enabled')) {
+    Route::post('/auth/register', [AuthController::class, 'register']);
+}
 Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
 // Public health check
