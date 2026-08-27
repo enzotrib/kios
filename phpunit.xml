@@ -22,8 +22,12 @@
         <env name="APP_MAINTENANCE_DRIVER" value="file"/>
         <env name="BCRYPT_ROUNDS" value="4"/>
         <env name="CACHE_STORE" value="array"/>
-        <!-- <env name="DB_CONNECTION" value="sqlite"/> -->
-        <!-- <env name="DB_DATABASE" value=":memory:"/> -->
+        <!-- Los tests corren sobre SQLite en memoria. Ademas de ser mas rapido,
+             actua de guardian: cualquier SQL que dependa de MySQL (comillas
+             dobles como texto, DATE_FORMAT, etc.) falla aca y no en la maquina
+             de un cliente que uso la version de escritorio. -->
+        <env name="DB_CONNECTION" value="sqlite"/>
+        <env name="DB_DATABASE" value=":memory:"/>
         <env name="MAIL_MAILER" value="array"/>
         <env name="PULSE_ENABLED" value="false"/>
         <env name="QUEUE_CONNECTION" value="sync"/>

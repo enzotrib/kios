@@ -25,6 +25,10 @@ class UserFactory extends Factory
     {
         return [
             'name' => fake()->name(),
+            // user_name es NOT NULL UNIQUE en la migracion: sin esto ningun test
+            // que cree un usuario puede correr (falla igual en MySQL, que esta
+            // configurado con strict => true).
+            'user_name' => fake()->unique()->userName(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),

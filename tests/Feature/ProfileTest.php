@@ -27,7 +27,7 @@ class ProfileTest extends TestCase
 
         $response = $this
             ->actingAs($user)
-            ->patch('/profile', [
+            ->post('/profile', [
                 'name' => 'Test User',
                 'email' => 'test@example.com',
             ]);
@@ -49,7 +49,7 @@ class ProfileTest extends TestCase
 
         $response = $this
             ->actingAs($user)
-            ->patch('/profile', [
+            ->post('/profile', [
                 'name' => 'Test User',
                 'email' => $user->email,
             ]);
@@ -76,7 +76,9 @@ class ProfileTest extends TestCase
             ->assertRedirect('/');
 
         $this->assertGuest();
-        $this->assertNull($user->fresh());
+        // El modelo User usa SoftDeletes: el registro sigue existiendo
+        // con deleted_at marcado, no se borra fisicamente.
+        $this->assertSoftDeleted($user);
     }
 
     public function test_correct_password_must_be_provided_to_delete_account(): void

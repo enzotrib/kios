@@ -14,6 +14,7 @@ class ExampleTest extends TestCase
     {
         $response = $this->get('/');
 
-        $response->assertStatus(200);
+        // La raiz redirige segun la sesion (login o panel), no responde 200.
+        $response->assertRedirect();
     }
 }

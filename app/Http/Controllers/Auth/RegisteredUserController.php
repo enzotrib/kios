@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -36,8 +37,20 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        // user_name es NOT NULL UNIQUE en la tabla users, pero el registro no lo
+        // pedia ni lo generaba: cualquier alta desde /register fallaba con un
+        // error de base de datos. Se deriva del correo y se le agrega un sufijo
+        // si ya existe.
+        $baseUserName = Str::slug(Str::before($request->email, '@'), '_') ?: 'usuario';
+        $userName = $baseUserName;
+        $sufijo = 1;
+        while (User::where('user_name', $userName)->exists()) {
+            $userName = $baseUserName . '_' . $sufijo++;
+        }
+
         $user = User::create([
             'name' => $request->name,
+            'user_name' => $userName,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);

@@ -22,3 +22,7 @@ yarn-error.log
 /.vscode
 /.zed
 update.zip
+
+# Base de datos SQLite de pruebas locales
+*.sqlite
+*.sqlite-journal
