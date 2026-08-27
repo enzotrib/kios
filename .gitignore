@@ -26,3 +26,8 @@ update.zip
 # Base de datos SQLite de pruebas locales
 *.sqlite
 *.sqlite-journal
+
+# Artefactos del empaquetado de escritorio (NativePHP)
+/dist
+/build
+/.native

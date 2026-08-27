@@ -15,6 +15,7 @@
         "laravel/framework": "^11.9",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
+        "nativephp/desktop": "^2.2",
         "opcodesio/log-viewer": "^3.12",
         "rappasoft/laravel-authentication-log": "^4.0",
         "spatie/laravel-activitylog": "^4.9",
@@ -62,7 +63,8 @@
             "@php artisan package:discover --ansi"
         ],
         "post-update-cmd": [
-            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
+            "@php artisan native:install --force --quiet "
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
@@ -71,6 +73,10 @@
             "@php artisan key:generate --ansi",
             "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
             "@php artisan migrate --graceful --ansi"
+        ],
+        "native:dev": [
+            "Composer\\Config::disableProcessTimeout",
+            "npx concurrently -k -c \"#93c5fd,#c4b5fd\" \"php artisan native:run --no-interaction\" \"npm run dev\" --names=app,vite"
         ]
     },
     "extra": {

@@ -8,7 +8,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/licencia-MIT-70FC8E" alt="Licencia MIT">
-  <img src="https://img.shields.io/badge/PHP-8.2%2B-777BB4" alt="PHP 8.2+">
+  <img src="https://img.shields.io/badge/PHP-8.3%2B-777BB4" alt="PHP 8.3+">
   <img src="https://img.shields.io/badge/Laravel-11-FF2D20" alt="Laravel 11">
   <img src="https://img.shields.io/badge/React-19-61DAFB" alt="React 19">
 </p>
@@ -34,9 +34,9 @@ InfoShop resuelve muy bien la parte funcional —POS, stock por lotes, compras, 
 
 | | |
 |---|---|
-| PHP | 8.2 o superior |
+| PHP | **8.3 o superior** (8.4 recomendado) |
 | Extensiones PHP | `pdo_mysql`, `mbstring`, `openssl`, `tokenizer`, `xml`, `ctype`, `json`, `bcmath`, `gd`, `zip`, `curl`, `fileinfo`, **`sodium`** |
-| Base de datos | MySQL 5.7+ / MariaDB 10.4+ |
+| Base de datos | MySQL 5.7+ / MariaDB 10.4+, o **SQLite** (sin servidor) |
 | Node.js | 18 o superior |
 
 > La extensión **`sodium`** es imprescindible: sin ella `composer install` falla al resolver las dependencias de Firebase. En XAMPP viene desactivada — hay que descomentar `extension=sodium` en el `php.ini`.
@@ -95,6 +95,27 @@ En desarrollo, configurá un VirtualHost apuntando a `public/`:
 Y agregá `127.0.0.1 kios.test` al archivo `hosts`. El dominio `.test` está reservado por la RFC 6761 justamente para esto: nunca va a existir en internet.
 
 En **cPanel** no hace falta nada de esto: apuntá el document root del dominio a la carpeta `public/`.
+
+---
+
+## Versión de escritorio
+
+KIOS puede empaquetarse como aplicación de escritorio para Windows, macOS y
+Linux con [NativePHP](https://nativephp.com). El paquete incluye su propio PHP
+y usa **SQLite**, así que el usuario final no instala ni configura nada: doble
+clic y andando.
+
+```bash
+php artisan native:run              # desarrollo, abre la ventana
+php artisan native:build win x64    # genera el instalador
+```
+
+El asistente de instalación se adapta solo: con SQLite no hay servidor de base
+de datos que configurar, así que salta ese paso y queda en 4 pantallas, todas
+preguntas de negocio (nombre del comercio, sucursal, usuario administrador).
+
+> El mismo código sirve para las dos modalidades. La diferencia son dos líneas
+> del `.env`: `DB_CONNECTION=sqlite` para escritorio, `mysql` para la nube.
 
 ---
 
