@@ -159,13 +159,14 @@ function AuthenticatedLayout({ header, children, ...props }) {
                         sx={[
                             {
                                 minWidth: 0,
+                                width: 22,
                                 justifyContent: "center",
                             },
-                            open ? { mr: 3 } : { mr: "auto" },
+                            open ? { mr: 2 } : { mr: "auto" },
                         ]}
                     >
                         {icontype && icontype === 'fa' ? (
-                            <FontAwesomeIcon icon={Icon} size="xl" />
+                            <FontAwesomeIcon icon={Icon} fixedWidth style={{ fontSize: 18 }} />
                         ) : (
                             Icon && <Icon />
                         )}
