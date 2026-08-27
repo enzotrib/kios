@@ -47,6 +47,12 @@ class InstallerController extends Controller
      */
     public function database()
     {
+        // Con SQLite no hay nada que configurar en este paso: se saltea.
+        // El guard tambien cubre a quien llegue por URL directa.
+        if ($this->installer->usesSqlite()) {
+            return redirect()->route('installer.settings');
+        }
+
         return view('installer.database');
     }
 

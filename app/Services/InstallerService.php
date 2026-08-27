@@ -274,6 +274,17 @@ class InstallerService
     }
 
     /**
+     * Whether the app is configured to use SQLite.
+     *
+     * Con SQLite no hay servidor de base de datos: no hay credenciales que
+     * pedir ni conexion que probar, asi que el asistente saltea ese paso.
+     */
+    public function usesSqlite(): bool
+    {
+        return config('database.default') === 'sqlite';
+    }
+
+    /**
      * Run installation process
      */
     public function runInstallation(array $data): array
@@ -284,6 +295,16 @@ class InstallerService
 
             // Clear config cache first so new .env values are loaded
             Artisan::call('config:clear', ['--no-interaction' => true]);
+
+            // SQLite no crea el archivo solo: si no existe, el conector falla
+            // con SQLiteDatabaseDoesNotExistException antes de migrar.
+            if ($this->usesSqlite()) {
+                $sqlitePath = config('database.connections.sqlite.database');
+                if ($sqlitePath && $sqlitePath !== ':memory:' && !file_exists($sqlitePath)) {
+                    @mkdir(dirname($sqlitePath), 0755, true);
+                    touch($sqlitePath);
+                }
+            }
 
             // Run migrations — tables (sessions, cache, jobs, etc.) are created here
             Artisan::call('migrate:fresh', [

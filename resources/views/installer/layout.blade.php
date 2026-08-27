@@ -21,7 +21,16 @@
             <div class="max-w-4xl mx-auto px-6 py-4">
                 <div class="flex items-center justify-between">
                     <h1 class="text-2xl font-bold text-gray-900">InfoShop Installation</h1>
-                    <span class="text-sm text-gray-500">Step @yield('step') of 8</span>
+                    @php
+                        // Con SQLite se saltea el paso de base de datos (el 3),
+                        // asi que el asistente tiene 7 pasos y los posteriores
+                        // se corren uno hacia atras.
+                        $sqlite = config('database.default') === 'sqlite';
+                        $totalPasos = $sqlite ? 7 : 8;
+                        $pasoDeclarado = (int) View::yieldContent('step');
+                        $pasoVisible = $sqlite && $pasoDeclarado > 3 ? $pasoDeclarado - 1 : $pasoDeclarado;
+                    @endphp
+                    <span class="text-sm text-gray-500">Paso {{ $pasoVisible }} de {{ $totalPasos }}</span>
                 </div>
             </div>
         </header>
@@ -30,8 +39,7 @@
         <div class="bg-white border-b border-gray-200">
             <div class="max-w-4xl mx-auto px-6">
                 <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
-                    @php $step = (int) View::yieldContent('step'); @endphp
-                    <div class="h-full bg-blue-600 transition-all duration-500" style="width: {{ ($step / 8) * 100 }}%"></div>
+                    <div class="h-full bg-blue-600 transition-all duration-500" style="width: {{ ($pasoVisible / $totalPasos) * 100 }}%"></div>
                 </div>
             </div>
         </div>
