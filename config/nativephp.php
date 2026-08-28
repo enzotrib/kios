@@ -151,12 +151,14 @@ return [
      * The queue workers that get auto-started on your application start.
      */
     'queue_workers' => [
-        'default' => [
-            'queues' => ['default'],
-            'memory_limit' => 128,
-            'timeout' => 60,
-            'sleep' => 3,
-        ],
+        // Sin workers: la aplicacion corre con QUEUE_CONNECTION=sync, asi que
+        // los trabajos se ejecutan en linea y no hay cola que atender.
+        //
+        // Arrancar uno igual rompia la aplicacion empaquetada: el worker se
+        // lanza como proceso hijo, ChildProcess::fromRuntimeProcess() no
+        // lograba resolver el binario de PHP ("Trying to access array offset
+        // on null") y a partir de ahi fallaba todo lo que consulta la API
+        // interna de NativePHP, con error 500 en la primera pantalla.
     ],
 
     /**
