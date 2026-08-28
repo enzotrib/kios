@@ -279,6 +279,25 @@ class InstallerService
      * Con SQLite no hay servidor de base de datos: no hay credenciales que
      * pedir ni conexion que probar, asi que el asistente saltea ese paso.
      */
+    /**
+     * Si la aplicacion corre empaquetada como app de escritorio.
+     *
+     * NativePHP reescribe la conexion por defecto a 'nativephp' al arrancar,
+     * y publica su config interna. Es la senal mas confiable sin depender de
+     * variables de entorno, que pueden no viajar dentro del paquete.
+     *
+     * En escritorio no hay servidor que revisar: PHP viaja adentro, no hay
+     * MySQL, y los permisos de carpeta los resuelve el instalador de Windows.
+     * Por eso el asistente saltea los pasos de requisitos y base de datos.
+     */
+    public function isDesktop(): bool
+    {
+        // Solo la conexion por defecto sirve como senal: la config
+        // 'nativephp-internal' tambien existe en desarrollo por tener el
+        // paquete instalado, y daba falso positivo en la version web.
+        return config('database.default') === 'nativephp';
+    }
+
     public function usesSqlite(): bool
     {
         $conexion = config('database.default');

@@ -35,7 +35,11 @@ class AppServiceProvider extends ServiceProvider
         // saltear el paso de credenciales. La decision vive en el servicio;
         // aca solo se comparte con las vistas.
         View::composer('installer.*', function ($view) {
-            $view->with('usaSqlite', app(\App\Services\InstallerService::class)->usesSqlite());
+            $instalador = app(\App\Services\InstallerService::class);
+            $view->with([
+                'usaSqlite' => $instalador->usesSqlite(),
+                'esEscritorio' => $instalador->isDesktop(),
+            ]);
         });
 
         Blade::directive('init', function () {

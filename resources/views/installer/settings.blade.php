@@ -14,7 +14,7 @@
         <input type="hidden" name="app_timezone" id="f_app_timezone">
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">Application Name</label>
-            <input type="text" x-model="app_name" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="InfoShop">
+            <input type="text" x-model="app_name" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Kiosco San Martín">
             <p class="mt-1 text-sm text-gray-500">The name of your application</p>
         </div>
 
@@ -80,7 +80,7 @@
         </div>
 
         <div class="flex justify-between mt-8">
-            <a href="{{ $usaSqlite ? route('installer.requirements') : route('installer.database') }}" class="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition">
+            <a href="{{ $esEscritorio ? route('installer.welcome') : ($usaSqlite ? route('installer.requirements') : route('installer.database')) }}" class="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition">
                 <svg class="mr-2 -ml-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12"></path>
                 </svg>
@@ -100,7 +100,7 @@
 <script>
 function settingsData() {
     return {
-        app_name: 'InfoShop',
+        app_name: '',
         app_url: window.location.origin,
         app_env: 'production',
         app_timezone: 'UTC',
@@ -109,7 +109,7 @@ function settingsData() {
         timezones: @json($timezones),
         
         init() {
-            this.app_name = sessionStorage.getItem('app_name') || 'InfoShop';
+            this.app_name = sessionStorage.getItem('app_name') || '';
             this.app_url = sessionStorage.getItem('app_url') || window.location.origin;
             this.app_env = sessionStorage.getItem('app_env') || 'production';
             this.app_timezone = sessionStorage.getItem('app_timezone') || 'UTC';

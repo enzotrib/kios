@@ -34,6 +34,13 @@ class InstallerController extends Controller
      */
     public function requirements()
     {
+        // En escritorio no hay servidor que revisar: PHP viaja dentro del
+        // paquete y la base es un archivo. Chequear version de MySQL o
+        // pdo_mysql aca deja al usuario trabado sin poder hacer nada.
+        if ($this->installer->isDesktop()) {
+            return redirect()->route('installer.settings');
+        }
+
         try {
             $requirements = $this->installer->checkRequirements();
             return view('installer.requirements', compact('requirements'));

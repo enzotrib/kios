@@ -11,8 +11,8 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
             </svg>
         </div>
-        <h2 class="text-3xl font-bold text-gray-900 mb-2">Welcome to InfoShop</h2>
-        <p class="text-gray-600">Thank you for choosing InfoShop. Let's get your POS system up and running!</p>
+        <h2 class="text-3xl font-bold text-gray-900 mb-2">Bienvenido a {{ config('app.name') }}</h2>
+        <p class="text-gray-600">Vamos a dejar tu sistema listo para vender. Son unos pocos pasos.</p>
     </div>
 
     <div class="space-y-6 mb-8">
@@ -62,7 +62,7 @@
     </div>
 
     <div class="flex justify-end">
-        <a href="{{ route('installer.requirements') }}" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition">
+        <a href="{{ $esEscritorio ? route('installer.settings') : route('installer.requirements') }}" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition">
             Get Started
             <svg class="ml-2 -mr-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
