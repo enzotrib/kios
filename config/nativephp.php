@@ -163,7 +163,12 @@ return [
      * Define your own scripts to run before and after the build process.
      */
     'prebuild' => [
-        // 'npm run build',
+        'npm run build',
+        // Precompila las plantillas Blade: se gana en el primer render.
+        // A proposito NO se corre config:cache ni route:cache: hornearian
+        // el .env de la maquina que compila (incluidas credenciales) dentro
+        // del paquete que se distribuye.
+        'php artisan view:cache',
     ],
 
     'postbuild' => [

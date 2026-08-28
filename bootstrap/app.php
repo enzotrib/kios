@@ -12,6 +12,13 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        $middleware->web(prepend: [
+            // Va primero: si la aplicacion no esta instalada, cualquier ruta
+            // manda al asistente. Sin esto una instalacion nueva abre en
+            // /login sin ningun usuario creado y no hay forma de entrar.
+            \App\Http\Middleware\EnsureAppIsInstalled::class,
+        ]);
+
         $middleware->web(append: [
             \App\Http\Middleware\HandleInertiaRequests::class,
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
