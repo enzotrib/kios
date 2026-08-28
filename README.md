@@ -124,6 +124,12 @@ Sistema → Para programadores). `electron-builder` extrae un paquete que
 contiene enlaces simbólicos, y crearlos en Windows requiere ese permiso. Sin
 él, el build corta con *"Cannot create symbolic link"*.
 
+**El ícono sale de `public/icon.png`** y tiene que medir **256×256 como
+mínimo**. Si el archivo no existe, la aplicación se empaqueta con el ícono por
+defecto de NativePHP (una "N").
+
+**El nombre del producto sale de `APP_NAME`**, no del `composer.json`.
+
 El asistente de instalación se adapta solo: con SQLite no hay servidor de base
 de datos que configurar, así que salta ese paso y queda en 4 pantallas, todas
 preguntas de negocio (nombre del comercio, sucursal, usuario administrador).

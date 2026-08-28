@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\View;
 use App\Models\Setting;
 
 class AppServiceProvider extends ServiceProvider
@@ -30,6 +31,13 @@ class AppServiceProvider extends ServiceProvider
         Vite::prefetch(concurrency: 3);
 
         // Initialize analytics tracking
+        // Las vistas del asistente necesitan saber si la base es SQLite para
+        // saltear el paso de credenciales. La decision vive en el servicio;
+        // aca solo se comparte con las vistas.
+        View::composer('installer.*', function ($view) {
+            $view->with('usaSqlite', app(\App\Services\InstallerService::class)->usesSqlite());
+        });
+
         Blade::directive('init', function () {
             return config('init');
         });

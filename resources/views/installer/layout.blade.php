@@ -25,7 +25,7 @@
                         // Con SQLite se saltea el paso de base de datos (el 3),
                         // asi que el asistente tiene 7 pasos y los posteriores
                         // se corren uno hacia atras.
-                        $sqlite = config('database.default') === 'sqlite';
+                        $sqlite = $usaSqlite;
                         $totalPasos = $sqlite ? 7 : 8;
                         $pasoDeclarado = (int) View::yieldContent('step');
                         $pasoVisible = $sqlite && $pasoDeclarado > 3 ? $pasoDeclarado - 1 : $pasoDeclarado;

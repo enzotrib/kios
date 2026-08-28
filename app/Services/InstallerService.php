@@ -281,7 +281,9 @@ class InstallerService
      */
     public function usesSqlite(): bool
     {
-        return config('database.default') === 'sqlite';
+        $conexion = config('database.default');
+
+        return config("database.connections.{$conexion}.driver") === 'sqlite';
     }
 
     /**
