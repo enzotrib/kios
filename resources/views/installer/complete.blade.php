@@ -22,13 +22,13 @@
                 <svg class="w-5 h-5 text-green-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                 </svg>
-                <span>Log in with your admin credentials</span>
+                <span>Entrá con el usuario que acabás de crear</span>
             </li>
             <li class="flex items-start">
                 <svg class="w-5 h-5 text-green-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                 </svg>
-                <span>Configure your store settings and products</span>
+                <span>Configurá tu comercio y empezá a vender</span>
             </li>
             <li class="flex items-start">
                 <svg class="w-5 h-5 text-green-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -47,7 +47,7 @@
                 </svg>
             </div>
             <div class="ml-3">
-                <h3 class="text-sm font-medium text-yellow-800">Security Reminder</h3>
+                <h3 class="text-sm font-medium text-yellow-800">Guardá tus datos de acceso</h3>
                 <p class="mt-1 text-sm text-yellow-700">
                     For security purposes, you can re-run the installer anytime by deleting the <code class="bg-yellow-100 px-1 rounded">storage/installed</code> file.
                 </p>

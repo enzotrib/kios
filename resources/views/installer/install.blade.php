@@ -5,7 +5,7 @@
 
 @section('content')
 <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
-    <h2 class="text-2xl font-bold text-gray-900 mb-6">Ready to Install</h2>
+    <h2 class="text-2xl font-bold text-gray-900 mb-6">Todo listo para instalar</h2>
 
     @if(session('error'))
         <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
@@ -35,7 +35,7 @@
                     </svg>
                 </div>
                 <div class="ml-3">
-                    <h3 class="text-sm font-medium text-blue-800">Installation Process</h3>
+                    <h3 class="text-sm font-medium text-blue-800">Instalando</h3>
                     <p class="mt-1 text-sm text-blue-700">
                         The installation will create database tables, set up your admin account, and configure your store. This may take a few minutes.
                     </p>

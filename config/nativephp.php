@@ -59,6 +59,18 @@ return [
      * You may use wildcards to match multiple keys.
      */
     'cleanup_env_keys' => [
+        // Estas tres se quitan del .env empaquetado para que Laravel use sus
+        // valores por defecto (production / debug false / localhost).
+        //
+        // Es critico: con APP_DEBUG=true NativePHP NO reescribe las rutas de
+        // almacenamiento ni de base de datos, asi que ambas quedan dentro de
+        // Archivos de programa —solo lectura para un usuario normal— y la
+        // aplicacion muere con pantalla negra apenas intenta escribir una
+        // sesion. Y APP_URL apuntaria al servidor de desarrollo de quien
+        // compilo, no al puerto local que abre la aplicacion.
+        'APP_ENV',
+        'APP_DEBUG',
+        'APP_URL',
         'AWS_*',
         'AZURE_*',
         'GITHUB_*',

@@ -5,7 +5,7 @@
 
 @section('content')
 <div x-data="settingsData()" class="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
-    <h2 class="text-2xl font-bold text-gray-900 mb-6">Application Settings</h2>
+    <h2 class="text-2xl font-bold text-gray-900 mb-6">Configuración</h2>
 
     <form @submit.prevent="submitForm()" method="POST" action="{{ route('installer.settings.save') }}" id="settingsForm" class="space-y-6">
         @csrf
@@ -13,9 +13,9 @@
         <input type="hidden" name="app_url"      id="f_app_url">
         <input type="hidden" name="app_timezone" id="f_app_timezone">
         <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Application Name</label>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Nombre del comercio</label>
             <input type="text" x-model="app_name" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Kiosco San Martín">
-            <p class="mt-1 text-sm text-gray-500">The name of your application</p>
+            <p class="mt-1 text-sm text-gray-500">Así se va a llamar tu sistema</p>
         </div>
 
         {{-- En escritorio estas dos preguntas no tienen sentido y solo confunden:
@@ -40,7 +40,7 @@
         @endunless
 
         <div class="relative" @click.away="open = false">
-            <label class="block text-sm font-medium text-gray-700 mb-2">Timezone</label>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Zona horaria</label>
             <div class="relative">
                 <input 
                     type="text" 
@@ -70,7 +70,7 @@
                 class="absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-auto"
             >
                 <template x-if="getFilteredTimezones().length === 0">
-                    <div class="px-4 py-3 text-sm text-gray-500">No timezones found</div>
+                    <div class="px-4 py-3 text-sm text-gray-500">No se encontró ninguna zona horaria</div>
                 </template>
                 <template x-for="timezone in getFilteredTimezones()" :key="timezone">
                     <div 
@@ -82,7 +82,7 @@
                 </template>
             </div>
             
-            <p class="mt-1 text-sm text-gray-500">Search and select your local timezone</p>
+            <p class="mt-1 text-sm text-gray-500">Buscá y elegí tu zona horaria</p>
         </div>
 
         <div class="flex justify-between mt-8">

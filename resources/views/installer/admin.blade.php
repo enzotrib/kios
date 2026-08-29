@@ -16,7 +16,7 @@
     admin_username = sessionStorage.getItem('admin_username') || '';
     admin_email = sessionStorage.getItem('admin_email') || '';
 " class="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
-    <h2 class="text-2xl font-bold text-gray-900 mb-6">Create Admin Account</h2>
+    <h2 class="text-2xl font-bold text-gray-900 mb-6">Crear tu usuario</h2>
 
     <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
         <div class="flex">
@@ -26,7 +26,7 @@
                 </svg>
             </div>
             <div class="ml-3">
-                <h3 class="text-sm font-medium text-blue-800">Administrator Credentials</h3>
+                <h3 class="text-sm font-medium text-blue-800">Datos de acceso</h3>
                 <p class="mt-1 text-sm text-blue-700">
                     This account will have full access to all features. Keep these credentials secure.
                 </p>
@@ -46,23 +46,23 @@
         window.location.href = '{{ route('installer.install') }}';
     " class="space-y-6">
         <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Nombre completo</label>
             <input type="text" x-model="admin_name" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="John Doe">
         </div>
 
         <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Username</label>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Nombre de usuario</label>
             <input type="text" x-model="admin_username" required pattern="[a-zA-Z0-9_-]+" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="admin">
             <p class="mt-1 text-sm text-gray-500">Use only letters, numbers, hyphens, and underscores</p>
         </div>
 
         <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Correo electrónico</label>
             <input type="email" x-model="admin_email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="admin@example.com">
         </div>
 
         <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Contraseña</label>
             <div class="relative">
                 <input :type="showPassword ? 'text' : 'password'" x-model="admin_password" required minlength="8" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 pr-12" placeholder="••••••••">
                 <button type="button" @click="showPassword = !showPassword" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600">
@@ -79,12 +79,12 @@
         </div>
 
         <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Confirm Password</label>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Confirmar contraseña</label>
             <input :type="showPassword ? 'text' : 'password'" x-model="admin_password_confirmation" required minlength="8" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="••••••••">
         </div>
 
         <div x-show="admin_password && admin_password_confirmation && admin_password !== admin_password_confirmation" class="bg-red-50 border border-red-200 rounded-lg p-3">
-            <p class="text-sm text-red-700">Passwords do not match</p>
+            <p class="text-sm text-red-700">Las contraseñas no coinciden</p>
         </div>
 
         <div class="flex justify-between mt-8">

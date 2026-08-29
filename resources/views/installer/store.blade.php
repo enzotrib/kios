@@ -10,25 +10,25 @@
     <form @submit.prevent="submitForm()" class="space-y-8">
         <!-- Store Information -->
         <div>
-            <h3 class="text-lg font-semibold text-gray-900 mb-4">Store Information</h3>
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Datos del comercio</h3>
             <div class="space-y-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Store Name</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Nombre de la sucursal</label>
                     <input type="text" x-model="store_name" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Store Address</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Dirección</label>
                     <textarea x-model="store_address" required rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Contact Number</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Teléfono</label>
                     <input type="text" x-model="store_contact" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Sale Prefix</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Prefijo de venta</label>
                     <input type="text" x-model="sale_prefix" required maxlength="10" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                     <p class="mt-1 text-sm text-gray-500">Invoice numbers will be: OS-0001, OS-0002, etc.</p>
                 </div>
@@ -37,29 +37,29 @@
 
         <!-- Currency Settings -->
         <div>
-            <h3 class="text-lg font-semibold text-gray-900 mb-4">Currency Settings</h3>
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Moneda</h3>
             <div class="space-y-4">
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Currency Symbol</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Símbolo de moneda</label>
                         <input type="text" x-model="currency_symbol" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Currency Code</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Código de moneda</label>
                         <input type="text" x-model="currency_code" required maxlength="10" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                     </div>
                 </div>
 
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Symbol Position</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Posición del símbolo</label>
                         <select x-model="symbol_position" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                             <option value="before" x-text="'Before (' + currency_symbol + '100)'"></option>
                             <option value="after" x-text="'After (100' + currency_symbol + ')'"></option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Decimal Places</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Decimales</label>
                         <select x-model="decimal_places" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                             <option value="0">0 (100)</option>
                             <option value="2">2 (100.00)</option>
@@ -70,14 +70,14 @@
 
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Decimal Separator</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Separador decimal</label>
                         <select x-model="decimal_separator" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                             <option value=".">Dot (.)</option>
                             <option value=",">,Comma (,)</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Thousands Separator</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Separador de miles</label>
                         <select x-model="thousands_separator" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                             <option value=",">Comma (,)</option>
                             <option value=".">Dot (.)</option>
@@ -88,14 +88,14 @@
 
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Negative Format</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Formato de negativos</label>
                         <select x-model="negative_format" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                             <option value="minus">Minus (-100)</option>
                             <option value="parentheses">Parentheses ((100))</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Show Currency Code</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Mostrar código de moneda</label>
                         <select x-model="show_currency_code" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                             <option value="no" x-text="'No (' + currency_symbol + '100)'"></option>
                             <option value="yes" x-text="'Yes (' + currency_symbol + '100 ' + currency_code + ')'"></option>

@@ -25,7 +25,7 @@
                 </div>
             </div>
             <div class="ml-4">
-                <h3 class="text-lg font-semibold text-gray-900">Quick Setup</h3>
+                <h3 class="text-lg font-semibold text-gray-900">Instalación rápida</h3>
                 <p class="text-gray-600">Complete installation in just 8 simple steps</p>
             </div>
         </div>
@@ -39,8 +39,8 @@
                 </div>
             </div>
             <div class="ml-4">
-                <h3 class="text-lg font-semibold text-gray-900">Powerful Features</h3>
-                <p class="text-gray-600">Manage sales, inventory, customers, and reports with ease</p>
+                <h3 class="text-lg font-semibold text-gray-900">Todo lo que necesitás</h3>
+                <p class="text-gray-600">Ventas, stock, clientes, proveedores y reportes en un solo lugar</p>
             </div>
         </div>
     </div>
@@ -53,7 +53,7 @@
                 </svg>
             </div>
             <div class="ml-3">
-                <h3 class="text-sm font-medium text-yellow-800">Before you begin</h3>
+                <h3 class="text-sm font-medium text-yellow-800">Antes de empezar</h3>
                 <p class="mt-1 text-sm text-yellow-700">
                     Make sure you have your database credentials ready and ensure that your server meets all the requirements.
                 </p>

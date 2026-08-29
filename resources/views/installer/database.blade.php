@@ -101,7 +101,7 @@
         </div>
 
         <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Username</label>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Nombre de usuario</label>
             <input type="text" x-model="username" required
                 @input="testResult = null"
                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -109,7 +109,7 @@
         </div>
 
         <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Contraseña</label>
             <input type="password" x-model="password"
                 @input="testResult = null"
                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
