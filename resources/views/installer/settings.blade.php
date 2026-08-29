@@ -18,20 +18,26 @@
             <p class="mt-1 text-sm text-gray-500">The name of your application</p>
         </div>
 
+        {{-- En escritorio estas dos preguntas no tienen sentido y solo confunden:
+             la aplicacion se sirve sola en un puerto local (app_url ya toma
+             window.location.origin) y el entorno siempre es produccion. Un
+             kiosquero no tiene por que saber que es un "entorno". --}}
+        @unless($esEscritorio)
         <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Application URL</label>
-            <input type="url" x-model="app_url" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="https://yourshop.com">
-            <p class="mt-1 text-sm text-gray-500">The URL where your application will be accessible</p>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Dirección del sistema</label>
+            <input type="url" x-model="app_url" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="https://mikiosco.com">
+            <p class="mt-1 text-sm text-gray-500">La dirección donde va a estar disponible el sistema</p>
         </div>
 
         <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Environment</label>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Entorno</label>
             <select x-model="app_env" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                <option value="production">Production</option>
-                <option value="local">Local/Development</option>
+                <option value="production">Producción</option>
+                <option value="local">Desarrollo</option>
             </select>
-            <p class="mt-1 text-sm text-gray-500">Select 'Production' for live site, 'Local' for testing</p>
+            <p class="mt-1 text-sm text-gray-500">Usá "Producción" salvo que estés probando</p>
         </div>
+        @endunless
 
         <div class="relative" @click.away="open = false">
             <label class="block text-sm font-medium text-gray-700 mb-2">Timezone</label>
@@ -103,7 +109,7 @@ function settingsData() {
         app_name: '',
         app_url: window.location.origin,
         app_env: 'production',
-        app_timezone: 'UTC',
+        app_timezone: 'America/Argentina/Buenos_Aires',
         timezoneSearch: '',
         open: false,
         timezones: @json($timezones),
@@ -112,7 +118,7 @@ function settingsData() {
             this.app_name = sessionStorage.getItem('app_name') || '';
             this.app_url = sessionStorage.getItem('app_url') || window.location.origin;
             this.app_env = sessionStorage.getItem('app_env') || 'production';
-            this.app_timezone = sessionStorage.getItem('app_timezone') || 'UTC';
+            this.app_timezone = sessionStorage.getItem('app_timezone') || 'America/Argentina/Buenos_Aires';
         },
         
         getFilteredTimezones() {

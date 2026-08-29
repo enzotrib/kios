@@ -1,18 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="{{ asset('infoshop-icon.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('icon.png') }}">
     <title>{{ config('app.name') }} — Instalación · @yield('title')</title>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    
-    <style>
-        [x-cloak] { display: none !important; }
-        body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
-    </style>
+
+    {{-- Hoja de estilos y Alpine LOCALES, no por CDN: la aplicacion de
+         escritorio tiene que poder instalarse sin internet. Con el CDN, un
+         comercio con la conexion caida veia el asistente sin estilos y sin
+         funcionar, porque Alpine es el que maneja los formularios. --}}
+    <link rel="stylesheet" href="{{ asset('css/installer.css') }}">
+    <script defer src="{{ asset('js/alpine.min.js') }}"></script>
 </head>
 <body class="bg-gray-50 min-h-screen">
     <div class="min-h-screen flex flex-col">
@@ -20,11 +19,12 @@
         <header class="bg-white border-b border-gray-200">
             <div class="max-w-4xl mx-auto px-6 py-4">
                 <div class="flex items-center justify-between">
-                    <h1 class="text-2xl font-bold text-gray-900">Instalación de {{ config('app.name') }}</h1>
+                    <div class="flex items-center gap-3">
+                        {{-- El logo del comercio si ya lo cargo; si no, el de la app --}}
+                        <img src="{{ asset('icon.png') }}" alt="{{ config('app.name') }}" class="kios-logo">
+                        <h1 class="text-lg font-semibold text-gray-900">{{ config('app.name') }}</h1>
+                    </div>
                     @php
-                        // Con SQLite se saltea el paso de base de datos (el 3),
-                        // asi que el asistente tiene 7 pasos y los posteriores
-                        // se corren uno hacia atras.
                         // Pasos que se saltean segun el entorno:
                         //   escritorio -> requisitos (2) y base de datos (3)
                         //   web+sqlite -> solo base de datos (3)
