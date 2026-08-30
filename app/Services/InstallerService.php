@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Store;
 use App\Models\Contact;
+use App\Models\Product;
+use App\Models\ProductBatch;
+use App\Models\ProductStock;
 use App\Models\Setting;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -517,6 +520,11 @@ class InstallerService
             // Seed default settings (includes installed_at marker inside the transaction)
             $this->seedDefaultSettings($data['store']['name'], $data['currency']);
 
+            // Un proveedor y un producto listos para vender: sin esto la
+            // aplicacion abre vacia y no se puede probar nada sin cargar
+            // datos primero.
+            $this->seedDemoData($store->id);
+
             DB::commit();
 
             // Clear caches, create storage link, and mark as installed
@@ -567,6 +575,64 @@ class InstallerService
     /**
      * Create guest contact
      */
+    /**
+     * Deja un proveedor y un producto de ejemplo, listos para vender.
+     *
+     * Un sistema recien instalado que abre completamente vacio no se puede
+     * probar: hay que cargar un proveedor, un producto, un lote y stock antes
+     * de poder emitir un solo comprobante. Con esto, quien lo instala puede
+     * vender en el momento y ver el ticket.
+     *
+     * Van nombrados como "de prueba" a proposito, para que se entienda que se
+     * pueden borrar cuando el comercio cargue lo suyo.
+     */
+    private function seedDemoData(int $storeId): void
+    {
+        $proveedor = Contact::create([
+            'name' => 'Proveedor de prueba KIOS',
+            'email' => null,
+            'phone' => '1100000000',
+            'address' => 'Podés borrar este proveedor cuando cargues los tuyos',
+            'balance' => 0.00,
+            'type' => 'vendor',
+        ]);
+
+        $producto = Product::create([
+            'name' => 'Producto de prueba KIOS',
+            'barcode' => '7790000000017',
+            'sku' => 'KIOS-DEMO-1',
+            'unit' => 'un',
+            'quantity' => 100,
+            'alert_quantity' => 10,
+            'is_stock_managed' => 1,
+            'is_active' => 1,
+            'is_featured' => 0,
+            'product_type' => 'simple',
+            'discount' => 0,
+        ]);
+
+        // El POS solo lista productos con un lote ACTIVO —ahi viven precio y
+        // costo— y ademas su grilla principal filtra por is_featured, asi que
+        // sin destacarlo el producto solo aparece buscandolo.
+        $lote = ProductBatch::create([
+            'product_id' => $producto->id,
+            'batch_number' => 'INICIAL',
+            'cost' => 700.00,
+            'price' => 1000.00,
+            'discount' => 0,
+            'is_active' => 1,
+            'is_featured' => 1,
+        ]);
+
+        // Y necesita stock en la sucursal, si no la consulta lo descarta.
+        ProductStock::create([
+            'store_id' => $storeId,
+            'batch_id' => $lote->id,
+            'product_id' => $producto->id,
+            'quantity' => 100,
+        ]);
+    }
+
     private function createGuestContact(): void
     {
         Contact::create([
