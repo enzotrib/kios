@@ -602,10 +602,37 @@ class InstallerService
     /**
      * Check if application is already installed
      */
+    /**
+     * Si la aplicacion esta instalada Y SE PUEDE USAR.
+     *
+     * No alcanza con la marca `installed_at`: hace falta que exista al menos
+     * un usuario activo. Sin eso la aplicacion abre en un login que NADIE
+     * puede pasar, que es exactamente lo que pasaba con el primer paquete —
+     * su base tenia las 51 tablas creadas y CERO usuarios.
+     *
+     * Al exigir tambien un usuario, el peor caso posible deja de ser "no se
+     * puede entrar" y pasa a ser "vuelve a aparecer el asistente", que sí
+     * tiene salida.
+     */
     public function isInstalled(): bool
     {
         try {
-            return DB::table('settings')->where('meta_key', 'installed_at')->exists();
+            $marcada = DB::table('settings')->where('meta_key', 'installed_at')->exists();
+
+            return $marcada && $this->hasUsableAccount();
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    /** Si existe alguna cuenta con la que se pueda iniciar sesion. */
+    public function hasUsableAccount(): bool
+    {
+        try {
+            return DB::table('users')
+                ->whereNull('deleted_at')
+                ->where('is_active', 1)
+                ->exists();
         } catch (\Exception $e) {
             return false;
         }

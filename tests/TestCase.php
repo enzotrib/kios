@@ -29,5 +29,13 @@ abstract class TestCase extends BaseTestCase
                 ['meta_value' => now()->toDateTimeString()]
             );
         }
+
+        // Y con al menos una cuenta activa: una aplicacion instalada pero sin
+        // usuarios NO se considera instalada, porque abriria en un login que
+        // nadie puede pasar. Ese estado se prueba a proposito en
+        // AccesoGarantizadoTest, borrando los usuarios.
+        if (Schema::hasTable('users') && !DB::table('users')->where('is_active', 1)->exists()) {
+            \App\Models\User::factory()->create(['is_active' => 1]);
+        }
     }
 }
