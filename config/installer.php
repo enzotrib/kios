@@ -78,7 +78,7 @@ return [
     |--------------------------------------------------------------------------
     */
     'default_settings' => [
-        'shop_logo' => 'infoshop-logo.png',
+        'shop_logo' => '', // vacio: se usa el logo empaquetado hasta que el comercio suba el suyo
         'sale_receipt_note' => 'Thank you for your business!',
         'sale_print_padding_right' => '35',
         'sale_print_padding_left' => '2',

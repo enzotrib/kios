@@ -30,6 +30,18 @@ class HandleInertiaRequests extends Middleware
      *
      * @return array<string, mixed>
      */
+    /** Devuelve la URL publica de una imagen solo si el archivo esta en el disco. */
+    private function urlDeImagenSiExiste(?string $ruta): ?string
+    {
+        if (!$ruta) {
+            return null;
+        }
+
+        $relativa = ltrim($ruta, '/');
+
+        return is_file(public_path($relativa)) ? asset($relativa) : null;
+    }
+
     public function share(Request $request): array
     {
         $permissions = collect();
@@ -65,8 +77,12 @@ class HandleInertiaRequests extends Middleware
             // como /products/edit/5.
             $shopLogoMeta = Setting::where('meta_key', 'shop_logo')->value('meta_value');
             $shopLogoLightMeta = Setting::where('meta_key', 'shop_logo_light')->value('meta_value');
-            $shopLogo = $shopLogoMeta ? asset(ltrim($shopLogoMeta, '/')) : null;
-            $shopLogoLight = $shopLogoLightMeta ? asset(ltrim($shopLogoLightMeta, '/')) : null;
+            // Solo se comparte la ruta si el archivo EXISTE. Si no, se manda
+            // null y el componente cae en el logo empaquetado, en vez de
+            // dibujar una imagen rota. Pasaba en toda instalacion nueva: el
+            // valor por defecto apuntaba a un archivo que ya no esta.
+            $shopLogo = $this->urlDeImagenSiExiste($shopLogoMeta);
+            $shopLogoLight = $this->urlDeImagenSiExiste($shopLogoLightMeta);
         } catch (\Exception $e) {
             // If settings table doesn't exist, use defaults
             $currencySettings = [];
