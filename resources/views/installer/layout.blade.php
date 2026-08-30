@@ -1,4 +1,11 @@
-<!DOCTYPE html>
+@php
+                    // Sello de compilacion, para saber mirando la pantalla que
+                    // version quedo instalada. Sale de la fecha del frontend
+                    // compilado, que se regenera en cada build: no hace falta
+                    // generar ningun archivo aparte.
+                    $manifiesto = public_path('build/manifest.json');
+                    $sello = is_readable($manifiesto) ? date('d/m/Y H:i', filemtime($manifiesto)) : 'sin marca';
+                @endphp<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -57,7 +64,15 @@
         <!-- Footer -->
         <footer class="bg-white border-t border-gray-200 py-6">
             <div class="max-w-4xl mx-auto px-6 text-center text-sm text-gray-500">
-                <p>{{ config('app.name') }} · basado en InfoShop (MIT)</p>
+                @php
+                    // Sello de compilacion, para saber mirando la pantalla que
+                    // version quedo instalada. El arroba de PHP no sirve aca:
+                    // Blade lo interpreta como el inicio de una directiva.
+                    $sello = is_readable(base_path('BUILD'))
+                        ? trim(file_get_contents(base_path('BUILD')))
+                        : 'sin marca';
+                @endphp
+                <p>{{ config('app.name') }} · basado en InfoShop (MIT) · versión {{ config('nativephp.version', '?') }} ({{ $sello }})</p>
             </div>
         </footer>
     </div>

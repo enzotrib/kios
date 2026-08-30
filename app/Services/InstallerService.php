@@ -344,6 +344,13 @@ class InstallerService
     {
         $ruta = $this->sqlitePath();
 
+        \Illuminate\Support\Facades\Log::info('Instalacion: revisando la base', [
+            'conexion' => config('database.default'),
+            'ruta' => $ruta ?? '(no se pudo determinar)',
+            'existe' => $ruta ? file_exists($ruta) : false,
+            'bytes' => ($ruta && file_exists($ruta)) ? filesize($ruta) : null,
+        ]);
+
         if (!$ruta) {
             return;
         }
@@ -404,6 +411,8 @@ class InstallerService
         $respaldo = $ruta . '.corrupta-' . date('YmdHis');
         @copy($ruta, $respaldo);
 
+        \Illuminate\Support\Facades\Log::warning('Instalacion: base danada apartada', ['original' => $ruta, 'respaldo' => $respaldo]);
+
         if (@file_put_contents($ruta, '') === false) {
             throw new Exception(
                 'No se pudo reemplazar la base de datos danada. Cerra la aplicacion ' .
@@ -425,6 +434,57 @@ class InstallerService
         }
     }
 
+    /**
+     * Corre las migraciones y, si la base resulta estar danada, la reemplaza
+     * y reintenta UNA vez.
+     *
+     * Existe porque la deteccion previa puede fallar: SQLite no siempre acusa
+     * el dano al abrir el archivo, a veces recien aparece al escribir. Sin
+     * este reintento, la aplicacion quedaba inservible de forma permanente y
+     * el usuario veia siempre el mismo SQLSTATE, reinstalara las veces que
+     * reinstalara.
+     */
+    private function migrarConReintento(): void
+    {
+        try {
+            Artisan::call('migrate:fresh', ['--force' => true, '--no-interaction' => true]);
+
+            return;
+        } catch (\Throwable $e) {
+            if (!$this->esBaseDanada($e)) {
+                throw $e;
+            }
+
+            \Illuminate\Support\Facades\Log::warning('Instalacion: la base estaba danada al migrar, se reemplaza y reintenta', [
+                'error' => $e->getMessage(),
+            ]);
+        }
+
+        $ruta = $this->sqlitePath();
+
+        if (!$ruta) {
+            throw new Exception('La base de datos esta danada y no se pudo ubicar el archivo para reemplazarla.');
+        }
+
+        $this->apartarBaseDanada($ruta);
+
+        Artisan::call('migrate:fresh', ['--force' => true, '--no-interaction' => true]);
+    }
+
+    /** Si el error corresponde a una base SQLite ilegible. */
+    private function esBaseDanada(\Throwable $e): bool
+    {
+        $mensaje = strtolower($e->getMessage());
+
+        foreach (['malformed', 'not a database', 'database disk image', 'file is encrypted'] as $senal) {
+            if (str_contains($mensaje, $senal)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function runInstallation(array $data): array
     {
         try {
@@ -437,10 +497,7 @@ class InstallerService
             $this->prepareSqliteFile();
 
             // Run migrations — tables (sessions, cache, jobs, etc.) are created here
-            Artisan::call('migrate:fresh', [
-                '--force' => true,
-                '--no-interaction' => true,
-            ]);
+            $this->migrarConReintento();
 
             // Now start transaction for seeding operations
             DB::beginTransaction();
