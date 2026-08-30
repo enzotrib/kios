@@ -271,6 +271,10 @@ class InstallerController extends Controller
                 'admin_email' => $result['admin_email'] ?? null,
             ]);
 
+            // Habilita la pantalla final para este navegador. Sin esta marca
+            // el asistente ya esta cerrado: la aplicacion figura instalada.
+            $request->session()->put(\App\Http\Middleware\SoloDuranteLaInstalacion::RECIEN_INSTALADO, true);
+
             return redirect()
                 ->route('installer.complete')
                 ->with('success', '¡La instalación terminó bien!');

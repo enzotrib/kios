@@ -1,9 +1,10 @@
 <?php
 
 use App\Http\Controllers\InstallerController;
+use App\Http\Middleware\SoloDuranteLaInstalacion;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('install')->name('installer.')->middleware(['web'])->group(function () {
+Route::prefix('install')->name('installer.')->middleware(['web', SoloDuranteLaInstalacion::class])->group(function () {
     Route::get('/', [InstallerController::class, 'welcome'])->name('welcome');
     Route::get('/requirements', [InstallerController::class, 'requirements'])->name('requirements');
     Route::get('/database', [InstallerController::class, 'database'])->name('database');
