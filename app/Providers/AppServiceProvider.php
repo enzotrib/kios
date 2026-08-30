@@ -20,7 +20,56 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->asegurarClavePropiaDeCadaInstalacion();
+    }
+
+    /**
+     * Cada instalacion tiene que tener su propia clave de cifrado.
+     *
+     * El paquete de escritorio se descarga: si la clave viajara adentro,
+     * todas las copias del mundo compartirian la misma, y cualquiera que
+     * abra el instalador —o el repositorio, que es publico— podria firmar
+     * cookies de sesion validas para cualquier otra instalacion. Por eso la
+     * clave se saco del .env que se empaqueta (ver cleanup_env_keys) y se
+     * genera aca, la primera vez que arranca en la maquina del comercio.
+     *
+     * Se guarda junto a la base de datos, en la carpeta de datos del usuario,
+     * que es la unica que la aplicacion tiene garantizado poder escribir: la
+     * carpeta del programa puede ser de solo lectura.
+     *
+     * En la web no hace nada: ahi la clave la escribe el asistente en el .env
+     * y este metodo sale en la primera linea.
+     */
+    private function asegurarClavePropiaDeCadaInstalacion(): void
+    {
+        if (! empty(config('app.key'))) {
+            return;
+        }
+
+        try {
+            $archivo = storage_path('app/clave-de-aplicacion');
+
+            if (is_file($archivo)) {
+                $clave = trim((string) file_get_contents($archivo));
+            } else {
+                $clave = 'base64:' . base64_encode(random_bytes(32));
+
+                if (! is_dir(dirname($archivo))) {
+                    mkdir(dirname($archivo), 0755, true);
+                }
+
+                file_put_contents($archivo, $clave);
+                @chmod($archivo, 0600);
+            }
+
+            if ($clave !== '') {
+                config(['app.key' => $clave]);
+            }
+        } catch (\Throwable $e) {
+            // Sin clave la aplicacion no puede cifrar sesiones y Laravel corta
+            // con su propio mensaje, que es mas claro que cualquier cosa que
+            // se pueda hacer desde aca. No se enmascara el problema.
+        }
     }
 
     /**

@@ -71,6 +71,29 @@ return [
         'APP_ENV',
         'APP_DEBUG',
         'APP_URL',
+
+        // La clave de cifrado NO viaja en el paquete. Si viajara, todas las
+        // copias descargadas compartirian la misma y cualquiera que abra el
+        // instalador podria firmar cookies de sesion validas para cualquier
+        // otra instalacion. La genera AppServiceProvider en el primer arranque,
+        // una distinta por maquina.
+        'APP_KEY',
+
+        // Credenciales de la base de desarrollo de quien compila. En el
+        // escritorio no se usan —NativePHP apunta la conexion a su propio
+        // SQLite— y filtrarlas dentro del instalador es regalar el usuario y
+        // la contrasena de la base de otra persona.
+        'DB_HOST',
+        'DB_PORT',
+        'DB_DATABASE',
+        'DB_USERNAME',
+        'DB_PASSWORD',
+
+        // Mismo criterio para el correo saliente.
+        'MAIL_HOST',
+        'MAIL_PORT',
+        'MAIL_USERNAME',
+        'MAIL_PASSWORD',
         'AWS_*',
         'AZURE_*',
         'GITHUB_*',
