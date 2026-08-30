@@ -388,16 +388,41 @@ class InstallerService
      */
     private function apartarBaseDanada(string $ruta): void
     {
-        DB::disconnect(config('database.default'));
+        // Soltar la conexion primero. Para cuando llega la instalacion, Laravel
+        // ya consulto la base (el middleware que decide si mostrar el asistente),
+        // asi que hay un PDO vivo sobre ese archivo.
+        $conexion = config('database.default');
+        DB::disconnect($conexion);
+        DB::purge($conexion);
 
-        @rename($ruta, $ruta . '.corrupta-' . date('YmdHis'));
+        // NO se renombra: en Windows, mover un archivo abierto FALLA. Con el
+        // PDO todavia vivo el rename devolvia false en silencio, el archivo
+        // corrupto se quedaba en su lugar y la instalacion moria igual con
+        // "database disk image is malformed".
+        //
+        // Copiar y vaciar en el lugar si funciona con el archivo abierto.
+        $respaldo = $ruta . '.corrupta-' . date('YmdHis');
+        @copy($ruta, $respaldo);
 
-        // Los archivos auxiliares del modo WAL quedarian huerfanos
+        if (@file_put_contents($ruta, '') === false) {
+            throw new Exception(
+                'No se pudo reemplazar la base de datos danada. Cerra la aplicacion ' .
+                'por completo y volve a abrirla. Si sigue igual, borra la carpeta ' .
+                dirname($ruta) . ' y reinstala.'
+            );
+        }
+
+        // Los archivos auxiliares del modo WAL quedarian huerfanos y vuelven a
+        // corromper la base nueva.
         foreach (['-wal', '-shm'] as $sufijo) {
             @unlink($ruta . $sufijo);
         }
 
-        touch($ruta);
+        clearstatcache(true, $ruta);
+
+        if (filesize($ruta) !== 0) {
+            throw new Exception('La base de datos danada no se pudo vaciar: ' . $ruta);
+        }
     }
 
     public function runInstallation(array $data): array
