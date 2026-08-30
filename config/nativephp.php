@@ -177,6 +177,12 @@ return [
      * Define your own scripts to run before and after the build process.
      */
     'prebuild' => [
+        // Borrar la marca del servidor de desarrollo de Vite ANTES de compilar.
+        // Si el archivo public/hot viaja dentro del paquete, Laravel sirve el
+        // JavaScript desde localhost:5173 en vez de los assets compilados: el
+        // HTML carga, React nunca arranca y la aplicacion queda en PANTALLA
+        // NEGRA. Alcanza con que alguien haya corrido `npm run dev` una vez.
+        'php -r "@unlink(__DIR__ . chr(47) . chr(112) . chr(117) . chr(98) . chr(108) . chr(105) . chr(99) . chr(47) . chr(104) . chr(111) . chr(116));"',
         'npm run build',
         // Precompila las plantillas Blade: se gana en el primer render.
         // A proposito NO se corre config:cache ni route:cache: hornearian
