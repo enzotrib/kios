@@ -29,7 +29,10 @@ if (!is_readable($archivo)) {
 $destinoImagenes = dirname($archivo) . '/build';
 $origenImagenes = __DIR__ . '/../resources/installer';
 
-foreach (['installerSidebar.bmp', 'installerHeader.bmp', 'uninstallerSidebar.bmp'] as $imagen) {
+// installer.nsh no es una imagen: es el aviso de reinstalacion. Va por el
+// mismo camino porque electron-builder lo toma de la misma carpeta y por el
+// nombre, sin que haya que configurar nada.
+foreach (['installerSidebar.bmp', 'installerHeader.bmp', 'uninstallerSidebar.bmp', 'installer.nsh'] as $imagen) {
     $origen = $origenImagenes . '/' . $imagen;
 
     if (is_readable($origen)) {
@@ -56,9 +59,11 @@ $ajustado = <<<'JS'
         createDesktopShortcut: 'always',
         deleteAppDataOnUninstall: deleteAppDataOnUninstall,
 
-        // Instalador ASISTIDO, no silencioso. Muestra progreso, avisa si ya
-        // hay una version instalada y cierra la aplicacion si esta abierta,
-        // en vez de fallar en silencio dejando los archivos viejos.
+        // Instalador ASISTIDO, no silencioso: muestra el progreso y cierra
+        // la aplicacion si esta abierta, en vez de fallar en silencio dejando
+        // los archivos viejos. El aviso de que ya hay una version instalada
+        // NO viene de aca: eso lo agrega installer.nsh, porque de fabrica
+        // electron-builder reemplaza la version anterior sin decir nada.
         oneClick: false,
 
         // El usuario no elige carpeta: una decision menos que no aporta nada

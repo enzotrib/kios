@@ -108,8 +108,8 @@ Son dos asistentes distintos y conviene no confundirlos.
 **El primero es el de Windows** (NSIS): la ventana que copia los archivos. Está
 configurado así:
 
-- **Asistido, no silencioso.** Muestra el progreso y avisa si ya hay una
-  versión instalada, en vez de fallar callado.
+- **Asistido, no silencioso.** Muestra el progreso y avisa antes de reemplazar
+  una versión ya instalada (ver la sección 5), en vez de hacerlo callado.
 - **No pregunta la carpeta.** Una decisión menos para alguien que sólo quiere
   vender en su kiosco.
 - **En castellano** (`es_ES`, código de idioma 1034).
@@ -172,16 +172,37 @@ instalación completa funciona sin conexión.**
 
 ## 5. Si el usuario reinstala estando ya instalado
 
-Es una pregunta razonable y la respuesta es que **sí, avisa**.
+Es una pregunta razonable y la respuesta es que **sí, avisa** — pero hubo que
+agregarlo.
 
-Al ser un instalador asistido (`oneClick: false`), NSIS detecta la instalación
-previa y lo dice antes de tocar nada. Si KIOS está abierto, lo cierra él mismo
-en vez de fallar a mitad de camino dejando archivos mezclados de dos versiones.
+De fábrica, el instalador de electron-builder detecta la versión anterior y la
+reemplaza **sin decir nada**. Sí avisa si KIOS está abierto ("KIOS está activa.
+Haz clic en Aceptar para cerrarla"), y la cierra él mismo en vez de fallar a
+mitad de camino dejando archivos mezclados de dos versiones. Pero de la
+instalación previa, ni una palabra.
 
-**Los datos no se tocan.** Viven en `%APPDATA%\kios` y el instalador escribe en
-`%LOCALAPPDATA%\Programs\kios`. Reinstalar es reemplazar el programa; las
-ventas, los productos y los usuarios siguen donde estaban. Al abrir, KIOS ve que
-ya está instalado y va derecho al login, sin repetir el asistente.
+Alguien que reinstala sin acordarse de que ya lo tenía se queda con la duda de
+si acaba de borrar las ventas del comercio. Así que ahora, antes de tocar nada,
+aparece:
+
+> Ya hay una versión de KIOS instalada en esta computadora.
+>
+> Si continuás, se reemplaza por esta.
+>
+> Tus datos no se tocan: las ventas, los productos, los clientes y los usuarios
+> quedan como están.
+>
+> Aceptar para actualizar, Cancelar para salir.
+
+Está en `resources/installer/installer.nsh`. electron-builder incluye ese
+archivo solo, por el nombre, si aparece en la carpeta `build/` del proyecto de
+Electron: lo copia el mismo script que copia las imágenes.
+
+**Y es verdad que los datos no se tocan.** Viven en `%APPDATA%\kios` y el
+instalador escribe en `%LOCALAPPDATA%\Programs\kios`. Reinstalar es reemplazar
+el programa; las ventas, los productos y los usuarios siguen donde estaban. Al
+abrir, KIOS ve que ya está instalado y va derecho al login, sin repetir el
+asistente.
 
 Para empezar de cero hay que borrar la carpeta de datos a mano. Es a propósito:
 no puede haber un botón fácil que borre la facturación de un comercio.
