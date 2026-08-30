@@ -308,6 +308,98 @@ class InstallerService
     /**
      * Run installation process
      */
+    /**
+     * Ruta del archivo SQLite de la conexion ACTIVA.
+     *
+     * Se lee de la conexion por defecto y no de una llamada "sqlite": dentro
+     * del paquete de escritorio NativePHP crea una propia llamada 'nativephp',
+     * asi que mirar un nombre fijo apuntaba al archivo equivocado.
+     */
+    private function sqlitePath(): ?string
+    {
+        if (!$this->usesSqlite()) {
+            return null;
+        }
+
+        $conexion = config('database.default');
+        $ruta = config("database.connections.{$conexion}.database");
+
+        return ($ruta && $ruta !== ':memory:') ? $ruta : null;
+    }
+
+    /**
+     * Deja el archivo SQLite en condiciones de recibir la instalacion.
+     *
+     * Hace dos cosas:
+     *
+     * 1. Lo crea si falta. SQLite no lo crea solo y el conector falla con
+     *    SQLiteDatabaseDoesNotExistException antes de llegar a migrar.
+     *
+     * 2. Verifica que no este corrupto, y si lo esta lo aparta. Una base
+     *    danada deja la aplicacion inservible de forma permanente: el archivo
+     *    vive en AppData y SOBREVIVE a la reinstalacion, asi que sin esto el
+     *    usuario reinstala una y otra vez y siempre falla igual.
+     */
+    private function prepareSqliteFile(): void
+    {
+        $ruta = $this->sqlitePath();
+
+        if (!$ruta) {
+            return;
+        }
+
+        if (!file_exists($ruta)) {
+            @mkdir(dirname($ruta), 0755, true);
+            touch($ruta);
+
+            return;
+        }
+
+        // Un archivo con contenido que NO empieza con el encabezado de SQLite
+        // esta roto y punto. Hace falta chequearlo aparte porque a un archivo
+        // muy chico SQLite lo toma como base vacia y el integrity_check da "ok".
+        if (filesize($ruta) > 0 && file_get_contents($ruta, false, null, 0, 16) !== "SQLite format 3 ") {
+            $this->apartarBaseDanada($ruta);
+
+            return;
+        }
+
+        try {
+            $pdo = new \PDO('sqlite:' . $ruta);
+            $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+            $estado = $pdo->query('PRAGMA integrity_check')->fetchColumn();
+            $pdo = null;
+
+            if (strtolower((string) $estado) === 'ok') {
+                return;
+            }
+        } catch (\Throwable $e) {
+            // No se pudo ni abrir: se trata como corrupta.
+        }
+
+        $this->apartarBaseDanada($ruta);
+    }
+
+    /**
+     * Aparta una base danada y deja un archivo limpio en su lugar.
+     *
+     * Se conserva con otro nombre en vez de borrarla: si el comercio ya habia
+     * cargado ventas, es lo unico que queda para intentar recuperarlas.
+     */
+    private function apartarBaseDanada(string $ruta): void
+    {
+        DB::disconnect(config('database.default'));
+
+        @rename($ruta, $ruta . '.corrupta-' . date('YmdHis'));
+
+        // Los archivos auxiliares del modo WAL quedarian huerfanos
+        foreach (['-wal', '-shm'] as $sufijo) {
+            @unlink($ruta . $sufijo);
+        }
+
+        touch($ruta);
+    }
+
     public function runInstallation(array $data): array
     {
         try {
@@ -317,15 +409,7 @@ class InstallerService
             // Clear config cache first so new .env values are loaded
             Artisan::call('config:clear', ['--no-interaction' => true]);
 
-            // SQLite no crea el archivo solo: si no existe, el conector falla
-            // con SQLiteDatabaseDoesNotExistException antes de migrar.
-            if ($this->usesSqlite()) {
-                $sqlitePath = config('database.connections.sqlite.database');
-                if ($sqlitePath && $sqlitePath !== ':memory:' && !file_exists($sqlitePath)) {
-                    @mkdir(dirname($sqlitePath), 0755, true);
-                    touch($sqlitePath);
-                }
-            }
+            $this->prepareSqliteFile();
 
             // Run migrations — tables (sessions, cache, jobs, etc.) are created here
             Artisan::call('migrate:fresh', [
