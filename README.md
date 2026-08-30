@@ -137,6 +137,12 @@ preguntas de negocio (nombre del comercio, sucursal, usuario administrador).
 > El mismo código sirve para las dos modalidades. La diferencia son dos líneas
 > del `.env`: `DB_CONNECTION=sqlite` para escritorio, `mysql` para la nube.
 
+**[INSTALADOR-WINDOWS.md](INSTALADOR-WINDOWS.md)** documenta el paquete
+descargable en detalle: qué versiones de Windows soporta, qué pasa al
+reinstalar sobre una instalación existente, cómo se recupera de una base
+corrupta, la revisión de seguridad, y la bitácora de todo lo que costó que
+funcionara.
+
 ---
 
 ## Datos de prueba
