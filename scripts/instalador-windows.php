@@ -22,6 +22,24 @@ if (!is_readable($archivo)) {
     exit(0);
 }
 
+// Imagenes propias del instalador. Sin esto NSIS usa su win.bmp generico:
+// un fondo azul con una flecha y formas geometricas que no tiene nada que ver
+// con el producto. electron-builder las toma de la carpeta build/ del proyecto
+// de Electron, que vive en vendor/ y se regenera con cada composer update.
+$destinoImagenes = dirname($archivo) . '/build';
+$origenImagenes = __DIR__ . '/../resources/installer';
+
+foreach (['installerSidebar.bmp', 'installerHeader.bmp', 'uninstallerSidebar.bmp'] as $imagen) {
+    $origen = $origenImagenes . '/' . $imagen;
+
+    if (is_readable($origen)) {
+        copy($origen, $destinoImagenes . '/' . $imagen);
+    }
+}
+
+echo "instalador-windows: imagenes propias copiadas
+";
+
 $contenido = file_get_contents($archivo);
 
 if (str_contains($contenido, 'oneClick:')) {

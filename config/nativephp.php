@@ -183,6 +183,10 @@ return [
         // HTML carga, React nunca arranca y la aplicacion queda en PANTALLA
         // NEGRA. Alcanza con que alguien haya corrido `npm run dev` una vez.
         'php -r "@unlink(__DIR__ . chr(47) . chr(112) . chr(117) . chr(98) . chr(108) . chr(105) . chr(99) . chr(47) . chr(104) . chr(111) . chr(116));"',
+        // Configuracion e imagenes del instalador de Windows. Viven en
+        // vendor/, que se regenera con cada composer update, asi que se
+        // reaplican antes de cada compilacion.
+        'php scripts/instalador-windows.php',
         'npm run build',
         // Precompila las plantillas Blade: se gana en el primer render.
         // A proposito NO se corre config:cache ni route:cache: hornearian
