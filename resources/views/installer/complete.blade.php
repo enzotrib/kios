@@ -1,6 +1,6 @@
 @extends('installer.layout')
 
-@section('title', 'Installation Complete')
+@section('title', 'Instalación terminada')
 @section('step', '8')
 
 @section('content')
@@ -11,12 +11,12 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
             </svg>
         </div>
-        <h2 class="text-3xl font-bold text-gray-900 mb-2">Installation Complete!</h2>
+        <h2 class="text-3xl font-bold text-gray-900 mb-2">¡Listo!</h2>
         <p class="text-gray-600">{{ config('app.name') }} quedó instalado y configurado.</p>
     </div>
 
     <div class="bg-green-50 border border-green-200 rounded-lg p-6 mb-8 text-left">
-        <h3 class="text-lg font-semibold text-green-900 mb-3">What's Next?</h3>
+        <h3 class="text-lg font-semibold text-green-900 mb-3">¿Y después?</h3>
         <ul class="space-y-2 text-sm text-green-800">
             <li class="flex items-start">
                 <svg class="w-5 h-5 text-green-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -34,7 +34,7 @@
                 <svg class="w-5 h-5 text-green-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                 </svg>
-                <span>Add your products and start selling!</span>
+                <span>¡Cargá tus productos y empezá a vender!</span>
             </li>
         </ul>
     </div>
@@ -49,7 +49,7 @@
             <div class="ml-3">
                 <h3 class="text-sm font-medium text-yellow-800">Guardá tus datos de acceso</h3>
                 <p class="mt-1 text-sm text-yellow-700">
-                    For security purposes, you can re-run the installer anytime by deleting the <code class="bg-yellow-100 px-1 rounded">storage/installed</code> file.
+                    Por seguridad, podés volver a correr el instalador borrando el <code class="bg-yellow-100 px-1 rounded">storage/installed</code> file.
                 </p>
             </div>
         </div>

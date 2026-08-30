@@ -1,11 +1,11 @@
 @extends('installer.layout')
 
-@section('title', 'Store & Currency')
+@section('title', 'Comercio y moneda')
 @section('step', '5')
 
 @section('content')
 <div x-data="storeData()" class="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
-    <h2 class="text-2xl font-bold text-gray-900 mb-6">Store & Currency Configuration</h2>
+    <h2 class="text-2xl font-bold text-gray-900 mb-6">Datos del comercio y moneda</h2>
 
     <form @submit.prevent="submitForm()" class="space-y-8">
         <!-- Store Information -->
@@ -30,7 +30,7 @@
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Prefijo de venta</label>
                     <input type="text" x-model="sale_prefix" required maxlength="10" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                    <p class="mt-1 text-sm text-gray-500">Invoice numbers will be: OS-0001, OS-0002, etc.</p>
+                    <p class="mt-1 text-sm text-gray-500">Los comprobantes van a numerarse: OS-0001, OS-0002, etc.</p>
                 </div>
             </div>
         </div>
@@ -54,8 +54,8 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Posición del símbolo</label>
                         <select x-model="symbol_position" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                            <option value="before" x-text="'Before (' + currency_symbol + '100)'"></option>
-                            <option value="after" x-text="'After (100' + currency_symbol + ')'"></option>
+                            <option value="before" x-text="'Antes (' + currency_symbol + '100)'"></option>
+                            <option value="after" x-text="'Después (100' + currency_symbol + ')'"></option>
                         </select>
                     </div>
                     <div>
@@ -73,15 +73,15 @@
                         <label class="block text-sm font-medium text-gray-700 mb-2">Separador decimal</label>
                         <select x-model="decimal_separator" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                             <option value=".">Dot (.)</option>
-                            <option value=",">,Comma (,)</option>
+                            <option value=",">,Coma (,)</option>
                         </select>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Separador de miles</label>
                         <select x-model="thousands_separator" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                            <option value=",">Comma (,)</option>
+                            <option value=",">Coma (,)</option>
                             <option value=".">Dot (.)</option>
-                            <option value=" ">Space ( )</option>
+                            <option value=" ">Espacio ( )</option>
                         </select>
                     </div>
                 </div>
@@ -90,8 +90,8 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Formato de negativos</label>
                         <select x-model="negative_format" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                            <option value="minus">Minus (-100)</option>
-                            <option value="parentheses">Parentheses ((100))</option>
+                            <option value="minus">Menos (-100)</option>
+                            <option value="parentheses">Paréntesis ((100))</option>
                         </select>
                     </div>
                     <div>
@@ -110,11 +110,11 @@
                 <svg class="mr-2 -ml-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12"></path>
                 </svg>
-                Back
+                Volver
             </a>
             
             <button type="submit" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition">
-                Next
+                Siguiente
                 <svg class="ml-2 -mr-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                 </svg>
@@ -128,7 +128,7 @@ function storeData() {
     const defaultCurrency = @json($defaultCurrency);
     
     return {
-        store_name: 'Main Store',
+        store_name: 'Casa central',
         store_address: '',
         store_contact: '',
         sale_prefix: 'OS',
@@ -142,7 +142,7 @@ function storeData() {
         show_currency_code: defaultCurrency.show_currency_code,
         
         init() {
-            this.store_name = sessionStorage.getItem('store_name') || 'Main Store';
+            this.store_name = sessionStorage.getItem('store_name') || 'Casa central';
             this.store_address = sessionStorage.getItem('store_address') || '';
             this.store_contact = sessionStorage.getItem('store_contact') || '';
             this.sale_prefix = sessionStorage.getItem('sale_prefix') || 'OS';

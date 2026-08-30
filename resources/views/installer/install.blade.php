@@ -1,6 +1,6 @@
 @extends('installer.layout')
 
-@section('title', 'Installation')
+@section('title', 'Instalación')
 @section('step', '7')
 
 @section('content')
@@ -15,7 +15,7 @@
 
     @if($errors->any())
         <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
-            <p class="text-sm font-medium text-red-800 mb-2">Please fix the following errors:</p>
+            <p class="text-sm font-medium text-red-800 mb-2">Corregí lo siguiente:</p>
             <ul class="list-disc list-inside text-sm text-red-700 space-y-1">
                 @foreach($errors->all() as $error)
                     <li>{{ $error }}</li>
@@ -37,7 +37,7 @@
                 <div class="ml-3">
                     <h3 class="text-sm font-medium text-blue-800">Instalando</h3>
                     <p class="mt-1 text-sm text-blue-700">
-                        The installation will create database tables, set up your admin account, and configure your store. This may take a few minutes.
+                        Vamos a preparar la base de datos, crear tu usuario y configurar tu comercio. Puede tardar unos minutos.
                     </p>
                 </div>
             </div>
@@ -70,7 +70,7 @@
                 <svg class="mr-2 -ml-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12"></path>
                 </svg>
-                Back
+                Volver
             </a>
             
             <button type="submit" class="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition disabled:opacity-50 disabled:cursor-not-allowed" id="submitBtn">
@@ -114,11 +114,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Validate required fields before submit
     form.addEventListener('submit', function(e) {
         const requiredFields = {
-            'store_name': 'Store Name',
-            'store_address': 'Store Address',
-            'admin_name': 'Admin Name',
-            'admin_email': 'Admin Email',
-            'admin_password': 'Admin Password'
+            'store_name': 'Nombre del comercio',
+            'store_address': 'Dirección',
+            'admin_name': 'Nombre',
+            'admin_email': 'Correo electrónico',
+            'admin_password': 'Contraseña'
         };
 
         const missing = [];
@@ -131,13 +131,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (missing.length > 0) {
             e.preventDefault();
-            alert('Missing required information:\n\n' + missing.join('\n') + '\n\nPlease complete all steps.');
+            alert('Faltan datos obligatorios:\n\n' + missing.join('\n') + '\n\nPlease complete all steps.');
             return false;
         }
 
         // Disable submit button to prevent double submission
         submitBtn.disabled = true;
-        btnText.textContent = 'Installing... Please wait...';
+        btnText.textContent = 'Instalando, esperá un momento...';
     });
 });
 </script>

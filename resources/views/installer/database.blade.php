@@ -1,6 +1,6 @@
 @extends('installer.layout')
 
-@section('title', 'Database Setup')
+@section('title', 'Base de datos')
 @section('step', '3')
 
 @section('content')
@@ -33,7 +33,7 @@
             this.testing = false;
         })
         .catch(() => {
-            this.testResult = { success: false, message: 'Connection test failed. Please try again.' };
+            this.testResult = { success: false, message: 'No se pudo conectar. Probá de nuevo.' };
             this.testing = false;
         });
     },
@@ -53,8 +53,8 @@
     password = sessionStorage.getItem('db_password') || '';
 " class="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
 
-    <h2 class="text-2xl font-bold text-gray-900 mb-2">Database Configuration</h2>
-    <p class="text-gray-500 text-sm mb-6">MySQL 8.0+ required. The database must already exist.</p>
+    <h2 class="text-2xl font-bold text-gray-900 mb-2">Configuración de la base de datos</h2>
+    <p class="text-gray-500 text-sm mb-6">Se necesita MySQL 8.0 o superior, y la base ya tiene que existir.</p>
 
     @if(session('db_error'))
         <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
@@ -76,14 +76,14 @@
 
         <div class="grid grid-cols-2 gap-4">
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Host</label>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Servidor</label>
                 <input type="text" x-model="host" required
                     @input="testResult = null"
                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     placeholder="localhost">
             </div>
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Port</label>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Puerto</label>
                 <input type="text" x-model="port" required
                     @input="testResult = null"
                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -92,12 +92,12 @@
         </div>
 
         <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Database Name</label>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Nombre de la base de datos</label>
             <input type="text" x-model="database" required
                 @input="testResult = null"
                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 placeholder="infoshop">
-            <p class="mt-1 text-sm text-gray-500">The database must already exist on your MySQL server.</p>
+            <p class="mt-1 text-sm text-gray-500">La base de datos ya tiene que existir en tu servidor MySQL.</p>
         </div>
 
         <div>
@@ -119,7 +119,7 @@
         <div>
             <button type="submit" :disabled="testing"
                 class="w-full inline-flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-green-600 hover:bg-green-700 transition disabled:opacity-50 disabled:cursor-not-allowed">
-                <template x-if="!testing"><span>Test Database Connection</span></template>
+                <template x-if="!testing"><span>Probar la conexión</span></template>
                 <template x-if="testing">
                     <span class="flex items-center">
                         <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
@@ -145,7 +145,7 @@
                     </div>
                     <div class="ml-3">
                         <h3 :class="testResult?.success ? 'text-green-800' : 'text-red-800'" class="text-sm font-medium"
-                            x-text="testResult?.success ? 'Connection Successful' : 'Connection Failed'"></h3>
+                            x-text="testResult?.success ? 'Conexión correcta' : 'No se pudo conectar'"></h3>
                         <p :class="testResult?.success ? 'text-green-700' : 'text-red-700'"
                             class="mt-1 text-sm" x-text="testResult?.message"></p>
                     </div>
@@ -160,12 +160,12 @@
             <svg class="mr-2 -ml-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12"></path>
             </svg>
-            Back
+            Volver
         </a>
 
         <button @click="submitSave()" x-show="testResult?.success" x-cloak
             class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 transition">
-            Next
+            Siguiente
             <svg class="ml-2 -mr-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
             </svg>

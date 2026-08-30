@@ -23,7 +23,7 @@ class InstallerController extends Controller
     public function welcome()
     {
         if ($this->installer->isInstalled()) {
-            return redirect('/login')->with('error', 'Application is already installed.');
+            return redirect('/login')->with('error', 'La aplicación ya está instalada.');
         }
 
         return view('installer.welcome');
@@ -45,7 +45,7 @@ class InstallerController extends Controller
             $requirements = $this->installer->checkRequirements();
             return view('installer.requirements', compact('requirements'));
         } catch (\Exception $e) {
-            return back()->with('error', 'Failed to check requirements: ' . $e->getMessage());
+            return back()->with('error', 'No se pudieron verificar los requisitos: ' . $e->getMessage());
         }
     }
 
@@ -114,7 +114,7 @@ class InstallerController extends Controller
             if ($validator->fails()) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Validation failed',
+                    'message' => 'Faltan datos o hay datos inválidos',
                     'errors' => $validator->errors(),
                 ], 422);
             }
@@ -124,7 +124,7 @@ class InstallerController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Database test failed: ' . $e->getMessage(),
+                'message' => 'Falló la prueba de conexión: ' . $e->getMessage(),
                 'trace' => config('app.debug') ? $e->getTraceAsString() : null,
             ], 500);
         }
@@ -206,7 +206,7 @@ class InstallerController extends Controller
     public function processInstallation(Request $request)
     {
         if ($this->installer->isInstalled()) {
-            return redirect('/login')->with('error', 'Application is already installed.');
+            return redirect('/login')->with('error', 'La aplicación ya está instalada.');
         }
 
         // Validate request — DB and app settings are already in .env from earlier steps
@@ -273,14 +273,14 @@ class InstallerController extends Controller
 
             return redirect()
                 ->route('installer.complete')
-                ->with('success', 'Installation completed successfully!');
+                ->with('success', '¡La instalación terminó bien!');
         } catch (\Exception $e) {
             logger()->error('Installation: Failed during installation process', [
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
             ]);
             return back()
-                ->with('error', 'Installation failed: ' . $e->getMessage())
+                ->with('error', 'No se pudo instalar: ' . $e->getMessage())
                 ->withInput();
         }
     }

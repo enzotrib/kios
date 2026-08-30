@@ -1,6 +1,6 @@
 @extends('installer.layout')
 
-@section('title', 'Admin Account')
+@section('title', 'Cuenta de administrador')
 @section('step', '6')
 
 @section('content')
@@ -28,7 +28,7 @@
             <div class="ml-3">
                 <h3 class="text-sm font-medium text-blue-800">Datos de acceso</h3>
                 <p class="mt-1 text-sm text-blue-700">
-                    This account will have full access to all features. Keep these credentials secure.
+                    Esta cuenta tiene acceso a todo el sistema. Guardá bien el usuario y la contraseña.
                 </p>
             </div>
         </div>
@@ -36,7 +36,7 @@
 
     <form @submit.prevent="
         if (admin_password !== admin_password_confirmation) {
-            alert('Passwords do not match!');
+            alert('¡Las contraseñas no coinciden!');
             return;
         }
         sessionStorage.setItem('admin_name', admin_name);
@@ -47,18 +47,18 @@
     " class="space-y-6">
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">Nombre completo</label>
-            <input type="text" x-model="admin_name" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="John Doe">
+            <input type="text" x-model="admin_name" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Juan Pérez">
         </div>
 
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">Nombre de usuario</label>
             <input type="text" x-model="admin_username" required pattern="[a-zA-Z0-9_-]+" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="admin">
-            <p class="mt-1 text-sm text-gray-500">Use only letters, numbers, hyphens, and underscores</p>
+            <p class="mt-1 text-sm text-gray-500">Solo letras, números, guiones y guiones bajos</p>
         </div>
 
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">Correo electrónico</label>
-            <input type="email" x-model="admin_email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="admin@example.com">
+            <input type="email" x-model="admin_email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="tucorreo@ejemplo.com">
         </div>
 
         <div>
@@ -75,7 +75,7 @@
                     </svg>
                 </button>
             </div>
-            <p class="mt-1 text-sm text-gray-500">Minimum 8 characters</p>
+            <p class="mt-1 text-sm text-gray-500">Mínimo 8 caracteres</p>
         </div>
 
         <div>
@@ -92,11 +92,11 @@
                 <svg class="mr-2 -ml-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12"></path>
                 </svg>
-                Back
+                Volver
             </a>
             
             <button type="submit" :disabled="!admin_password || !admin_password_confirmation || admin_password !== admin_password_confirmation" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition disabled:opacity-50 disabled:cursor-not-allowed">
-                Next
+                Siguiente
                 <svg class="ml-2 -mr-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                 </svg>

@@ -115,7 +115,7 @@ class InstallerService
             if (!$innodb) {
                 return [
                     'success' => false,
-                    'message' => 'InnoDB storage engine is not available. InnoDB is required.',
+                    'message' => 'El motor InnoDB no está disponible, y es necesario.',
                 ];
             }
 
@@ -126,7 +126,7 @@ class InstallerService
         } catch (Exception $e) {
             return [
                 'success' => false,
-                'message' => 'Connection failed: ' . $e->getMessage(),
+                'message' => 'No se pudo conectar: ' . $e->getMessage(),
             ];
         }
     }
@@ -415,8 +415,8 @@ class InstallerService
 
         if (@file_put_contents($ruta, '') === false) {
             throw new Exception(
-                'No se pudo reemplazar la base de datos danada. Cerra la aplicacion ' .
-                'por completo y volve a abrirla. Si sigue igual, borra la carpeta ' .
+                'No se pudo reemplazar la base de datos dañada. Cerrá la aplicación ' .
+                'por completo y volvé a abrirla. Si sigue igual, borrá la carpeta ' .
                 dirname($ruta) . ' y reinstala.'
             );
         }
@@ -430,7 +430,7 @@ class InstallerService
         clearstatcache(true, $ruta);
 
         if (filesize($ruta) !== 0) {
-            throw new Exception('La base de datos danada no se pudo vaciar: ' . $ruta);
+            throw new Exception('No se pudo vaciar la base de datos dañada: ' . $ruta);
         }
     }
 
@@ -463,7 +463,7 @@ class InstallerService
         $ruta = $this->sqlitePath();
 
         if (!$ruta) {
-            throw new Exception('La base de datos esta danada y no se pudo ubicar el archivo para reemplazarla.');
+            throw new Exception('La base de datos está dañada y no se pudo ubicar el archivo para reemplazarla.');
         }
 
         $this->apartarBaseDanada($ruta);
@@ -524,12 +524,12 @@ class InstallerService
 
             return [
                 'success' => true,
-                'message' => 'Installation completed successfully!',
+                'message' => '¡La instalación terminó bien!',
                 'admin_email' => $admin->email,
             ];
         } catch (Exception $e) {
             DB::rollBack();
-            throw new Exception('Installation failed: ' . $e->getMessage());
+            throw new Exception('No se pudo instalar: ' . $e->getMessage());
         }
     }
 

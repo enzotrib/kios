@@ -1,6 +1,6 @@
 @extends('installer.layout')
 
-@section('title', 'Application Settings')
+@section('title', 'Configuración')
 @section('step', '4')
 
 @section('content')
@@ -47,7 +47,7 @@
                     x-model="timezoneSearch"
                     @focus="open = true"
                     @input="open = true"
-                    placeholder="Search timezone..."
+                    placeholder="Buscar zona horaria..."
                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     autocomplete="off"
                 >
@@ -90,11 +90,11 @@
                 <svg class="mr-2 -ml-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12"></path>
                 </svg>
-                Back
+                Volver
             </a>
             
             <button type="submit" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition">
-                Next
+                Siguiente
                 <svg class="ml-2 -mr-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                 </svg>
