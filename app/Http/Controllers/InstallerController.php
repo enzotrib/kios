@@ -277,7 +277,11 @@ class InstallerController extends Controller
 
             return redirect()
                 ->route('installer.complete')
-                ->with('success', '¡La instalación terminó bien!');
+                ->with('success', '¡La instalación terminó bien!')
+                // El codigo de recuperacion se muestra una sola vez, aca. En la
+                // base solo queda el hash; en limpio vive en un archivo dentro
+                // de la carpeta de datos.
+                ->with('codigo_de_recuperacion', $result['codigo_de_recuperacion'] ?? null);
         } catch (\Exception $e) {
             logger()->error('Installation: Failed during installation process', [
                 'error' => $e->getMessage(),
@@ -299,7 +303,10 @@ class InstallerController extends Controller
                 return redirect()->route('installer.welcome');
             }
 
-            return view('installer.complete');
+            return view('installer.complete', [
+                'codigoDeRecuperacion' => session('codigo_de_recuperacion'),
+                'carpetaDeDatos' => app(\App\Services\CodigoDeRecuperacion::class)->carpetaDeDatos(),
+            ]);
         } catch (\Exception $e) {
             return back()->with('error', 'Installation verification failed: ' . $e->getMessage());
         }

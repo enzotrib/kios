@@ -12,6 +12,7 @@ use App\Models\Contact;
 use App\Models\Product;
 use App\Models\ProductBatch;
 use App\Models\ProductStock;
+use App\Services\CodigoDeRecuperacion;
 use App\Models\Setting;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -530,10 +531,17 @@ class InstallerService
             // Clear caches, create storage link, and mark as installed
             $this->finalizeInstallation();
 
+            // La unica salida si nadie recuerda la contrasena: en el escritorio
+            // no hay correo ni tiene por que haber internet. Queda escrito en un
+            // archivo en la carpeta de datos, y se muestra una vez ahora para
+            // que se pueda anotar.
+            $codigo = app(CodigoDeRecuperacion::class)->generarSiNoHay();
+
             return [
                 'success' => true,
                 'message' => '¡La instalación terminó bien!',
                 'admin_email' => $admin->email,
+                'codigo_de_recuperacion' => $codigo,
             ];
         } catch (Exception $e) {
             DB::rollBack();

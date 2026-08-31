@@ -19,8 +19,17 @@ class AuthenticatedSessionController extends Controller
     public function create(): Response
     {
         $version = config('version.version');
+        // A donde manda "Olvidaste tu contrasena". En el escritorio no puede
+        // ser el envio por correo: no hay correo configurado —el mensaje se
+        // escribe en un archivo de registro— ni tiene por que haber internet.
+        // Ahi se recupera con el codigo que quedo en la carpeta de datos.
+        $esEscritorio = app(\App\Services\InstallerService::class)->isDesktop();
+
         return Inertia::render('Auth/Login', [
             'canResetPassword' => Route::has('password.request'),
+            'rutaDeRecuperacion' => $esEscritorio
+                ? route('recuperacion.formulario')
+                : route('password.request'),
             'status' => session('status'),
             'version'=>$version,
         ]);

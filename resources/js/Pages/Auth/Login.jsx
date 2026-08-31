@@ -15,7 +15,7 @@ import brandLogoLight from '@/kios-logo-light.webp';
 import { useThemeMode } from '@/design/useThemeMode';
 import { t } from '@/i18n';
 
-export default function Login({ status, canResetPassword, version }) {
+export default function Login({ status, canResetPassword, rutaDeRecuperacion, version }) {
     const shopName = usePage().props.settings?.shop_name;
     const darkLogoSetting = usePage().props.settings?.shop_logo;
     const lightLogoSetting = usePage().props.settings?.shop_logo_light;
@@ -120,7 +120,7 @@ export default function Login({ status, canResetPassword, version }) {
                         {canResetPassword && (
                             <Button
                                 component={Link}
-                                href={route('password.request')}
+                                href={rutaDeRecuperacion ?? route('password.request')}
                                 variant="text"
                                 size="small"
                             >

@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
+use App\Http\Controllers\Auth\RecuperarAccesoController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +34,21 @@ Route::middleware(['guest'])->group(function () {
 
     Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
                 ->name('password.email');
+
+    // Recuperar el acceso sin correo y sin internet. Solo tiene sentido en el
+    // paquete de escritorio: ahi no hay forma de mandar un mensaje —el correo
+    // se escribe en un archivo de registro— y el comercio puede estar dias sin
+    // conexion. El propio controlador manda al flujo por correo si no es
+    // escritorio.
+    Route::get('recuperar-acceso', [RecuperarAccesoController::class, 'formulario'])
+                ->name('recuperacion.formulario');
+
+    Route::post('recuperar-acceso/codigo-nuevo', [RecuperarAccesoController::class, 'regenerar'])
+                ->name('recuperacion.regenerar');
+
+    Route::post('recuperar-acceso', [RecuperarAccesoController::class, 'restablecer'])
+                ->middleware('throttle:6,1')
+                ->name('recuperacion.restablecer');
 
     Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
                 ->name('password.reset');
