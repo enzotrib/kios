@@ -246,6 +246,49 @@ no está instalada**, aunque figure la marca de instalado. Cualquier pantalla
 lleva al asistente. El acceso está garantizado por construcción, no por
 acordarse de un caso.
 
+### Nadie recuerda la contraseña
+
+Es el bloqueo más fácil de provocar y el más difícil de salir: alcanza con un
+error de tipeo al elegirla en el asistente.
+
+En la web esto lo resuelve el correo. Acá no: el paquete va con
+`MAIL_MAILER=log`, o sea que el mensaje se escribe en un archivo de registro y
+no sale a ningún lado. La pantalla decía "te enviamos un enlace" y no llegaba
+nunca. Y aunque el correo estuviera configurado, un kiosco puede estar una
+semana sin internet y seguir vendiendo.
+
+La salida es un **código de recuperación**. Se genera al instalar, se muestra
+en la pantalla final para poder anotarlo, y queda escrito en:
+
+```
+%APPDATA%\kios\codigo-de-recuperacion.txt
+```
+
+Con ese código, desde "¿Olvidaste tu contraseña?", se pone una contraseña
+nueva sin perder ni un dato.
+
+Que haya que abrir esa carpeta es la protección, y no regala nada: quien puede
+leer ese archivo también puede abrir la base de datos, que está al lado, y
+reescribir la contraseña a mano. Lo que sí evita es que alguien que sólo tiene
+la aplicación abierta en el mostrador —un empleado, un cliente que se acerca al
+monitor— se quede con la cuenta del dueño.
+
+En la base sólo queda el hash. El código en limpio vive nada más que en el
+archivo, así que el anotado en un papel el día de la instalación sigue
+sirviendo aunque después el archivo se borre. Nada rota el código por su
+cuenta: hacerlo dejaría sin valor ese papel sin avisarle a nadie. Si alguien
+perdió el archivo y no anotó nada, hay un botón que escribe uno nuevo — pero es
+explícito, porque invalida el anterior.
+
+Las instalaciones anteriores a esta función no tienen ningún código: se les
+genera al entrar a la pantalla. Ninguna queda sin salida por haberse instalado
+antes.
+
+En la web la ruta ni siquiera existe: ahí el correo funciona y la carpeta de
+datos no está al alcance de quien usa el sistema, así que un cambio de
+contraseña sin credenciales sería regalar la cuenta del administrador a
+cualquiera que llegue al dominio.
+
 ### Los registros
 
 Cuando algo falla, el detalle queda en:
@@ -461,3 +504,6 @@ Por orden de importancia:
 5. Unos 104 mensajes en inglés que todavía quedan en los controladores de PHP
    —los avisos de "guardado", "eliminado" y demás—, y tres pantallas de acceso
    que siguen con el diseño original de Breeze.
+6. **Configurar el correo desde la aplicación.** Hoy no se puede mandar nada:
+   ni un recibo por correo, ni un aviso. Los ajustes de correo existen en la
+   base pero no hay pantalla para cargarlos.
