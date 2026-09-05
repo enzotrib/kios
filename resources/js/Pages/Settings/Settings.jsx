@@ -16,6 +16,7 @@ import {
     FormControlLabel,
     Card,
     Paper,
+    Alert,
 } from "@mui/material";
 
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
@@ -98,6 +99,7 @@ function TabPanel(props) {
 
 export default function Setting({ settings }) {
     const esEscritorio = usePage().props.esEscritorio;
+    const { alicuotasIva } = usePage().props.fiscal;
     const [settingFormData, setSettingFormData] = useState(() => {
         let currencySettings = {
             currency_symbol: 'Rs.',
@@ -137,6 +139,8 @@ export default function Setting({ settings }) {
             receipt_paper_width: settings.receipt_paper_width ?? '80mm',
             receipt_printer: settings.receipt_printer ?? '',
             receipt_silent_print: settings.receipt_silent_print ?? 'off',
+            prices_include_tax: settings.prices_include_tax ?? 'on',
+            default_tax_rate: settings.default_tax_rate ?? '5',
             enable_unit_discount: 'yes',
             enable_flat_item_discount: 'no',
             cart_first_focus: 'quantity',
@@ -287,6 +291,7 @@ export default function Setting({ settings }) {
                         <Tab label={t("RECEIPT")} value="receipt" />
                         <Tab label={t("BARCODE")} value="barcode" />
                         <Tab label={t("CURRENCY")} value="currency" />
+                        <Tab label={t("TAX")} value="tax" />
                         <Tab label={t("MISC")} value="misc" />
                         <Tab label={t("MODULES")} value="modules" />
                         <Tab label={t("MAIL")} value="mail" />
@@ -762,6 +767,69 @@ export default function Setting({ settings }) {
 
                 <TabPanel value={tabValue} index={'currency'}>
                     <CurrencySetting handleSubmit={handleSubmit} settingFormData={settingFormData} handleChange={handleChange} />
+                </TabPanel>
+
+                <TabPanel value={tabValue} index={'tax'}>
+                    <form onSubmit={handleSubmit}>
+                        <input type="hidden" name="setting_type" value={'tax'} />
+                        <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
+                            <Grid container spacing={2} sx={{ width: { xs: "100%", sm: "60%" } }}>
+                                <Paper elevation={3} sx={{ padding: 3, marginBottom: 2, width: "100%" }}>
+                                    <Grid container spacing={2}>
+                                        <Grid size={12}>
+                                            <Typography variant="body2" sx={{ color: "text.secondary", mb: 1 }}>
+                                                {t("These two settings decide how the prices you type are read. They matter the day you start issuing invoices: from the shelf price the invoice needs the net amount and the tax separated.")}
+                                            </Typography>
+                                        </Grid>
+
+                                        <Grid size={{ xs: 12, sm: 6 }}>
+                                            <TextField
+                                                fullWidth
+                                                name="prices_include_tax"
+                                                label={t("Prices you type")}
+                                                value={settingFormData.prices_include_tax}
+                                                onChange={handleChange}
+                                                select
+                                            >
+                                                <MenuItem value="on">{t("Include VAT")}</MenuItem>
+                                                <MenuItem value="off">{t("Do not include VAT")}</MenuItem>
+                                            </TextField>
+                                        </Grid>
+
+                                        <Grid size={{ xs: 12, sm: 6 }}>
+                                            <TextField
+                                                fullWidth
+                                                name="default_tax_rate"
+                                                label={t("Default VAT rate")}
+                                                value={settingFormData.default_tax_rate}
+                                                onChange={handleChange}
+                                                helperText={t("Used by every product that has no rate of its own")}
+                                                select
+                                            >
+                                                {alicuotasIva.map((alicuota) => (
+                                                    <MenuItem key={alicuota.codigo} value={String(alicuota.codigo)}>
+                                                        {alicuota.etiqueta}
+                                                    </MenuItem>
+                                                ))}
+                                            </TextField>
+                                        </Grid>
+
+                                        <Grid size={12}>
+                                            <Alert severity="info" sx={{ mt: 1 }}>
+                                                {t("Electronic invoicing is not active yet. What you set here is saved and will be used when it is.")}
+                                            </Alert>
+                                        </Grid>
+
+                                        <Grid size={12} sx={{ display: "flex", justifyContent: "flex-end" }}>
+                                            <Button type="submit" variant="contained">
+                                                {t("UPDATE")}
+                                            </Button>
+                                        </Grid>
+                                    </Grid>
+                                </Paper>
+                            </Grid>
+                        </Box>
+                    </form>
                 </TabPanel>
 
                 <TabPanel value={tabValue} index={'misc'}>

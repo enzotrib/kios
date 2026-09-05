@@ -716,6 +716,8 @@ class InstallerService
             ['meta_key' => 'receipt_paper_width', 'meta_value' => $defaults['receipt_paper_width']],
             ['meta_key' => 'receipt_printer', 'meta_value' => $defaults['receipt_printer']],
             ['meta_key' => 'receipt_silent_print', 'meta_value' => $defaults['receipt_silent_print']],
+            ['meta_key' => 'prices_include_tax', 'meta_value' => $defaults['prices_include_tax']],
+            ['meta_key' => 'default_tax_rate', 'meta_value' => $defaults['default_tax_rate']],
             ['meta_key' => 'show_barcode_store', 'meta_value' => $defaults['show_barcode_store']],
             ['meta_key' => 'show_barcode_product_price', 'meta_value' => $defaults['show_barcode_product_price']],
             ['meta_key' => 'show_barcode_product_name', 'meta_value' => $defaults['show_barcode_product_name']],

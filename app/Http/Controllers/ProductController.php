@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Fiscal\AlicuotaIva;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use App\Models\Collection;
 use App\Models\Contact;
@@ -227,6 +229,8 @@ class ProductController extends Controller
             'barcode' => 'nullable|string|unique:products',
             'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10000',
             'unit' => 'nullable|string|max:100',
+            // Nula = la alicuota general del comercio. Ver App\Fiscal\AlicuotaIva.
+            'alicuota_iva' => ['nullable', Rule::enum(AlicuotaIva::class)],
             'quantity' => 'required|numeric|min:0',
             'alert_quantity' => 'nullable|numeric|min:0',
             'cost' => 'required|numeric|min:0',
@@ -275,6 +279,7 @@ class ProductController extends Controller
             'image_url' => $imageUrl, // Save the image path
             'attachment_id' => $attachment ? $attachment->id : null,
             'unit' => $request->unit,
+            'alicuota_iva' => $request->alicuota_iva ?: null,
             'quantity' => $request->quantity,
             'alert_quantity' => $request->alert_quantity ?? 5,
             'is_stock_managed' => $request->is_stock_managed,
@@ -321,6 +326,7 @@ class ProductController extends Controller
             'barcode' => 'nullable|string|unique:products,barcode,' . $id,
             'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10000', // Image validation
             'unit' => 'nullable|string|max:100',
+            'alicuota_iva' => ['nullable', Rule::enum(AlicuotaIva::class)],
             'alert_quantity' => 'nullable|numeric|min:0',
             'is_stock_managed' => 'boolean',
             'is_active' => 'boolean',
@@ -396,6 +402,7 @@ class ProductController extends Controller
                 'image_url' => $imageUrl, // Update the image URL if a new image was uploaded
                 'attachment_id' => $attachment ? $attachment->id : ($request->delete_image == 1 ? null : $product->attachment_id),
                 'unit' => $request->unit,
+                'alicuota_iva' => $request->alicuota_iva ?: null,
                 'alert_quantity' => $request->alert_quantity ?? 5, // Use default alert_quantity if null
                 'is_stock_managed' => $request->is_stock_managed,
                 'is_active' => $request->is_active ?? 1, // Default to active if not provided

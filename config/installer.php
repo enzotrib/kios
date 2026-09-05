@@ -93,6 +93,14 @@ return [
         'receipt_printer' => '',
         // Apagado = se abre el dialogo de impresion, como hasta ahora.
         'receipt_silent_print' => 'off',
+        // Como se leen los precios cargados. En un kiosco el precio es el de
+        // gondola, con el IVA adentro: de ahi hay que poder separar el neto y
+        // el impuesto el dia que se emita un comprobante.
+        'prices_include_tax' => 'on',
+        // La alicuota que se le aplica a un producto que no tiene la suya.
+        // 5 es el codigo de ARCA para el 21%.
+        'default_tax_rate' => '5',
+
         'show_barcode_store' => 'on',
         'show_barcode_product_price' => 'on',
         'show_barcode_product_name' => 'on',

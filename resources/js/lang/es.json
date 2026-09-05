@@ -783,5 +783,21 @@
   "Print without asking": "Imprimir sin preguntar",
   "Show the print dialog": "Mostrar el diálogo de impresión",
   "Print directly": "Imprimir directo",
-  "Cache refreshed.": "Se vació la memoria temporal."
+  "Cache refreshed.": "Se vació la memoria temporal.",
+  "Tax details": "Datos fiscales",
+  "Document type": "Tipo de documento",
+  "Document number": "Número de documento",
+  "Consumers with no document need no number": "Un consumidor final no necesita número",
+  "Tax condition": "Condición frente al IVA",
+  "VAT rate": "Alícuota de IVA",
+  "Only if it differs from the shop default": "Sólo si es distinta a la del comercio",
+  "Shop default": "La del comercio",
+  "TAX": "FISCAL",
+  "Prices you type": "Los precios que cargás",
+  "Include VAT": "Incluyen IVA",
+  "Do not include VAT": "No incluyen IVA",
+  "Default VAT rate": "Alícuota de IVA general",
+  "Used by every product that has no rate of its own": "La usa todo producto que no tenga la suya",
+  "These two settings decide how the prices you type are read. They matter the day you start issuing invoices: from the shelf price the invoice needs the net amount and the tax separated.": "Estos dos ajustes definen cómo se leen los precios que cargás. Importan el día que empieces a facturar: del precio de góndola, el comprobante necesita el neto y el impuesto por separado.",
+  "Electronic invoicing is not active yet. What you set here is saved and will be used when it is.": "La facturación electrónica todavía no está activa. Lo que configures acá queda guardado y se va a usar cuando lo esté."
 }

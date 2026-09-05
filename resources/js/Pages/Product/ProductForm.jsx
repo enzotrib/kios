@@ -2,7 +2,7 @@ import * as React from "react";
 
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { useState, useEffect, useRef } from "react";
-import { Head, router } from "@inertiajs/react";
+import { Head, router, usePage } from "@inertiajs/react";
 import {
     Button,
     Box,
@@ -62,6 +62,7 @@ const VisuallyHiddenInput = styled("input")({
 });
 
 export default function Product({ product, collection, product_code, contacts, product_alert, misc_setting }) {
+    const { alicuotasIva } = usePage().props.fiscal;
 
     const [discountType, setDiscountType] = useState("percentage");
     const [loading, setLoading] = useState(false);
@@ -87,6 +88,10 @@ export default function Product({ product, collection, product_code, contacts, p
         barcode: product_code || "",
         featured_image: productplaceholder,
         unit: "PC",
+        // Vacia significa "la alicuota general del comercio", que se
+        // configura una sola vez. Asi el kiosquero toca solo las
+        // excepciones y no los tres mil productos.
+        alicuota_iva: "",
         quantity: "",
         alert_quantity: product_alert || 0,
         is_stock_managed: 1,
@@ -163,6 +168,7 @@ export default function Product({ product, collection, product_code, contacts, p
                 barcode: product.barcode || "",
                 featured_image: product.image_url ? product.image_url : productplaceholder,
                 unit: product.unit || "PC",
+                alicuota_iva: product.alicuota_iva ?? "",
                 quantity: product.quantity || "",
                 alert_quantity: product.alert_quantity || 0,
                 is_stock_managed: product.is_stock_managed || false,
@@ -352,6 +358,25 @@ export default function Product({ product, collection, product_code, contacts, p
                                                     <MenuItem value={"PC"}>{t("PC")}</MenuItem>
                                                     <MenuItem value={"KG"}>{t("KG")}</MenuItem>
                                                     <MenuItem value={"Meter"}>{t("Meter")}</MenuItem>
+                                                </TextField>
+                                            </Grid>
+                                            <Grid size={{ xs: 12, sm: 4 }}>
+                                                <TextField
+                                                    size="small"
+                                                    value={productFormData.alicuota_iva}
+                                                    label={t("VAT rate")}
+                                                    onChange={handleChange}
+                                                    name="alicuota_iva"
+                                                    select
+                                                    fullWidth
+                                                    helperText={t("Only if it differs from the shop default")}
+                                                >
+                                                    <MenuItem value="">{t("Shop default")}</MenuItem>
+                                                    {alicuotasIva.map((alicuota) => (
+                                                        <MenuItem key={alicuota.codigo} value={alicuota.codigo}>
+                                                            {alicuota.etiqueta}
+                                                        </MenuItem>
+                                                    ))}
                                                 </TextField>
                                             </Grid>
                                             <Grid size={{ xs: 12, sm: 4 }}>

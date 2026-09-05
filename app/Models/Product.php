@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Fiscal\AlicuotaIva;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -48,10 +50,15 @@ class Product extends Model
         'product_type',
         'meta_data',
         'attachment_id',
+
+        // Nula significa "la alicuota general del comercio". Ver
+        // App\Fiscal\AlicuotaIva.
+        'alicuota_iva',
     ];
 
     protected $casts = [
         'meta_data' => 'array', // Ensure the meta_data column is treated as an array
+        'alicuota_iva' => AlicuotaIva::class,
     ];
 
     public function batches()

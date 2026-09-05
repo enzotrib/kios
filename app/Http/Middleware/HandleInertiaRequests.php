@@ -107,6 +107,17 @@ class HandleInertiaRequests extends Middleware
             'userPermissions'=>$permissions->pluck('name'),
             'locale'=> app()->getLocale(),
 
+            // Los codigos de ARCA, en un solo lugar. Se comparten desde PHP en
+            // vez de repetirlos en el javascript porque una lista de codigos
+            // fiscales duplicada que se desincroniza es de las cosas que se
+            // descubren tarde y caro. Son un kilobyte por pedido, y en el
+            // paquete de escritorio el pedido no sale de la maquina.
+            'fiscal' => [
+                'tiposDeDocumento' => \App\Fiscal\TipoDeDocumento::catalogo(),
+                'condicionesIva' => \App\Fiscal\CondicionIva::catalogo(),
+                'alicuotasIva' => \App\Fiscal\AlicuotaIva::catalogo(),
+            ],
+
             // Hay pantallas que solo tienen sentido en el paquete de
             // escritorio: elegir la impresora del ticket, por ejemplo. En la
             // web esas opciones no se muestran.

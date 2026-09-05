@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Fiscal\CondicionIva;
+use App\Fiscal\TipoDeDocumento;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -37,7 +40,18 @@ class Contact extends Model
         'balance',
         'loyalty_points',
         'type',   // Type of contact: customer or vendor
-        'whatsapp'
+        'whatsapp',
+
+        // Datos fiscales. Codigos de ARCA: ver App\Fiscal\TipoDeDocumento y
+        // App\Fiscal\CondicionIva.
+        'doc_tipo',
+        'doc_nro',
+        'condicion_iva',
+    ];
+
+    protected $casts = [
+        'doc_tipo' => TipoDeDocumento::class,
+        'condicion_iva' => CondicionIva::class,
     ];
 
 

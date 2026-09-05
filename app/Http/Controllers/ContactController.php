@@ -5,7 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Contact;
 use App\Models\Store;
+use App\Fiscal\CondicionIva;
+use App\Fiscal\Reglas\DocumentoCoherente;
+use App\Fiscal\TipoDeDocumento;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Validation\Rule;
 
 use Inertia\Inertia;
 
@@ -14,7 +18,7 @@ class ContactController extends Controller
 
     public function getContacts($type, $filters){
         // Fetch data from the Collection model
-        $query = Contact::select('id', 'name','phone','email','address', 'balance','created_at','type', 'whatsapp')->where('id','!=','1');
+        $query = Contact::select('id', 'name','phone','email','address', 'balance','created_at','type', 'whatsapp', 'doc_tipo', 'doc_nro', 'condicion_iva')->where('id','!=','1');
         
         if (!empty($filters['search_query'])) {
             $searchTerm = $filters['search_query'];
@@ -23,7 +27,8 @@ class ContactController extends Controller
                 $query->where('name', 'LIKE', '%'.$searchTerm.'%')
                       ->orWhere('phone', 'LIKE', '%'.$searchTerm.'%')
                       ->orWhere('email', 'LIKE', '%'.$searchTerm.'%')
-                      ->orWhere('address', 'LIKE', '%'.$searchTerm.'%');
+                      ->orWhere('address', 'LIKE', '%'.$searchTerm.'%')
+                      ->orWhere('doc_nro', 'LIKE', '%'.$searchTerm.'%');
             });
         }
         
@@ -66,6 +71,7 @@ class ContactController extends Controller
                 'whatsapp' => 'nullable|string|max:15',
                 'address' => 'nullable|string|max:255',
                 'type' => 'required|string|in:customer,vendor', // Only allow specific types
+                ...self::reglasFiscales(),
             ]),
             ['balance' => 0] // Append 'balance' manually with a default value of 0
         ));
@@ -91,6 +97,7 @@ class ContactController extends Controller
             'whatsapp' => 'nullable|string|max:15',
             'address' => 'nullable|string|max:255',
             'type' => 'required|string|in:customer,vendor',
+            ...self::reglasFiscales(),
         ]));
 
         // Return a success response
@@ -132,5 +139,22 @@ class ContactController extends Controller
             'status' => 'success',
             'message' => 'Contact deleted successfully'
         ], 200);
+    }
+
+    /**
+     * Los datos fiscales del cliente.
+     *
+     * Son opcionales: un kiosco vende casi siempre a consumidor final, sin
+     * pedirle documento a nadie. Se validan igual porque un CUIT mal escrito
+     * hace que ARCA rechace el comprobante meses despues, cuando ya nadie se
+     * acuerda de como se cargo ese cliente.
+     */
+    private static function reglasFiscales(): array
+    {
+        return [
+            'doc_tipo' => ['nullable', Rule::enum(TipoDeDocumento::class)],
+            'doc_nro' => ['nullable', 'string', 'max:20', 'regex:/^[0-9]+$/', new DocumentoCoherente],
+            'condicion_iva' => ['nullable', Rule::enum(CondicionIva::class)],
+        ];
     }
 }
