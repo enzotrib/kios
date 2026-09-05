@@ -83,6 +83,16 @@ return [
         'sale_print_padding_right' => '35',
         'sale_print_padding_left' => '2',
         'sale_print_font' => 'Arial, sans-serif',
+
+        // Ancho del rollo. 80mm es la medida de casi toda impresora termica de
+        // mostrador; 58mm es la de las chicas y portatiles. Sin esto el ticket
+        // salia maquetado para una hoja A4 y la impresora cortaba la mitad
+        // derecha.
+        'receipt_paper_width' => '80mm',
+        // Vacio = la impresora predeterminada de Windows.
+        'receipt_printer' => '',
+        // Apagado = se abre el dialogo de impresion, como hasta ahora.
+        'receipt_silent_print' => 'off',
         'show_barcode_store' => 'on',
         'show_barcode_product_price' => 'on',
         'show_barcode_product_name' => 'on',

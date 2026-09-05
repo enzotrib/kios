@@ -22,6 +22,11 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('sales', function (Blueprint $table) {
+            // El indice va primero. SQLite se niega a borrar una columna que
+            // todavia tiene un indice apuntandole, y deja la tabla en un
+            // estado que despues rompe hasta el VACUUM con el que se hace la
+            // copia de seguridad. En MySQL el orden da igual.
+            $table->dropIndex('sales_sale_time_index');
             $table->dropColumn('sale_time');
         });
     }

@@ -16,6 +16,9 @@ use ZipArchive;
 class BackupController extends Controller
 {
     private const MAX_BACKUPS = 100;
+
+    /** Archivos intermedios que hay que borrar cuando el zip ya esta hecho. */
+    private array $temporales = [];
     public function download(string $file)
     {
         $fileName = $this->sanitizeBackupName($file);
@@ -108,41 +111,16 @@ class BackupController extends Controller
      */
     protected function createBackupZip(): array
     {
-        $dbName = env('DB_DATABASE');
-        $tables = DB::select('SHOW TABLES');
-        $tableKey = 'Tables_in_' . $dbName;
-
-        $sql = '';
-
-        foreach ($tables as $table) {
-            $tableName = $table->$tableKey;
-
-            $sql .= "DROP TABLE IF EXISTS `{$tableName}`;\n";
-
-            $createTable = DB::select("SHOW CREATE TABLE `{$tableName}`");
-            $sql .= $createTable[0]->{'Create Table'} . ";\n\n";
-
-            $rows = DB::table($tableName)->get();
-            foreach ($rows as $row) {
-                $row = (array) $row;
-                $columns = implode('`,`', array_keys($row));
-                $values = implode("','", array_map(static fn ($value) => addslashes($value), $row));
-                $sql .= "INSERT INTO `{$tableName}` (`{$columns}`) VALUES ('{$values}');\n";
-            }
-            $sql .= "\n\n";
-        }
-
         $timestamp = date('Y-m-d_H-i-s');
         $zipFileName = 'infoshop-backup-' . $timestamp . '.zip';
         $tmpZipPath = storage_path(Str::random(16) . '.zip');
-        $sqlFileName = 'database-' . $timestamp . '.sql';
 
         $zip = new ZipArchive();
         if ($zip->open($tmpZipPath, ZipArchive::CREATE) !== true) {
             abort(500, 'Unable to create backup archive.');
         }
 
-        $zip->addFromString($sqlFileName, $sql);
+        $this->agregarLaBaseDeDatos($zip, $timestamp);
 
         $uploadsPath = storage_path('app/public/uploads');
         if (is_dir($uploadsPath)) {
@@ -152,6 +130,110 @@ class BackupController extends Controller
         $zip->close();
 
         return [$tmpZipPath, $zipFileName];
+    }
+
+    /**
+     * Mete la base de datos adentro del zip.
+     *
+     * Antes esto era una sola rama, escrita para MySQL: `SHOW TABLES` y
+     * `SHOW CREATE TABLE`, que en SQLite no existen. En el paquete de
+     * escritorio la base es SQLite, asi que "Hacer una copia ahora" respondia
+     * error 500 siempre: la unica funcion que protege los datos del comercio
+     * era justo la que nunca habia funcionado ahi.
+     */
+    private function agregarLaBaseDeDatos(ZipArchive $zip, string $timestamp): void
+    {
+        $conexion = DB::connection();
+
+        if ($conexion->getDriverName() === 'sqlite') {
+            $zip->addFile($this->copiaDeLaBaseSqlite(), 'database-' . $timestamp . '.sqlite');
+
+            return;
+        }
+
+        $zip->addFromString('database-' . $timestamp . '.sql', $this->volcadoMysql());
+    }
+
+    /**
+     * Una copia de la base SQLite, consistente aunque se este vendiendo.
+     *
+     * Copiar el archivo con `copy()` mientras hay una venta a medio escribir
+     * daria una copia rota. `VACUUM INTO` lo hace desde adentro del motor:
+     * espera a que la transaccion en curso termine y escribe una base entera y
+     * valida, ya compactada.
+     *
+     * El archivo que devuelve queda en el temporal del sistema; lo borra
+     * storeBackupFile() junto con el zip.
+     */
+    private function copiaDeLaBaseSqlite(): string
+    {
+        $destino = storage_path(Str::random(16) . '.sqlite');
+
+        // VACUUM INTO exige que el destino no exista.
+        if (file_exists($destino)) {
+            @unlink($destino);
+        }
+
+        $this->temporales[] = $destino;
+
+        try {
+            DB::statement('VACUUM INTO ?', [$destino]);
+        } catch (\Throwable $e) {
+            // VACUUM no corre con una transaccion abierta, y las versiones de
+            // SQLite anteriores a la 3.27 no conocen INTO. Copiar el archivo
+            // es peor —si justo hay una venta a medio escribir, la copia sale
+            // rota— pero es infinitamente mejor que no dejar copia.
+            $original = DB::connection()->getDatabaseName();
+
+            if (! is_file($original)) {
+                // No hay de donde copiar. Se deja subir el error original en
+                // vez de guardar un zip con una base vacia adentro, que seria
+                // peor: el comercio creeria tener respaldo.
+                throw $e;
+            }
+
+            copy($original, $destino);
+        }
+
+        return $destino;
+    }
+
+    /**
+     * El volcado de siempre, para las instalaciones sobre MySQL.
+     */
+    private function volcadoMysql(): string
+    {
+        $dbName = DB::connection()->getDatabaseName();
+        $tables = DB::select('SHOW TABLES');
+        $tableKey = 'Tables_in_' . $dbName;
+
+        $sql = '';
+
+        foreach ($tables as $table) {
+            $tableName = $table->$tableKey;
+
+            $sql .= "DROP TABLE IF EXISTS `{$tableName}`;
+";
+
+            $createTable = DB::select("SHOW CREATE TABLE `{$tableName}`");
+            $sql .= $createTable[0]->{'Create Table'} . ";
+
+";
+
+            $rows = DB::table($tableName)->get();
+            foreach ($rows as $row) {
+                $row = (array) $row;
+                $columns = implode('`,`', array_keys($row));
+                $values = implode("','", array_map(static fn ($value) => addslashes($value), $row));
+                $sql .= "INSERT INTO `{$tableName}` (`{$columns}`) VALUES ('{$values}');
+";
+            }
+            $sql .= "
+
+";
+        }
+
+        return $sql;
     }
 
     protected function generateAndStoreBackup(): array
@@ -174,6 +256,11 @@ class BackupController extends Controller
             fclose($stream);
         }
         @unlink($tmpZipPath);
+
+        foreach ($this->temporales as $temporal) {
+            @unlink($temporal);
+        }
+        $this->temporales = [];
 
         $this->enforceBackupLimit($disk);
 

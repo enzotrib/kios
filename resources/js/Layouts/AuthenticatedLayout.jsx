@@ -13,7 +13,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
-import { MenuItem } from "@mui/material";
+import { MenuItem, Snackbar, Alert } from "@mui/material";
 import ThemeToggle from "@/Components/design/ThemeToggle";
 import React, { useState, useEffect } from "react";
 import { Link, usePage, router } from "@inertiajs/react";
@@ -64,6 +64,15 @@ function AuthenticatedLayout({ header, children, ...props }) {
     const pageLabel = usePage().props.pageLabel;
     const pathname = usePage().url;
     const permissions = usePage().props.userPermissions;
+
+    // Avisos de acciones que terminan en otra pagina (vaciar la cache, por
+    // ejemplo). Vienen por la sesion, asi que se muestran una sola vez.
+    const flash = usePage().props.flash ?? {};
+    const [aviso, setAviso] = useState(null);
+    useEffect(() => {
+        if (flash.success) setAviso({ tipo: "success", texto: flash.success });
+        else if (flash.error) setAviso({ tipo: "error", texto: flash.error });
+    }, [flash.success, flash.error]);
 
     const [mobileOpen, setMobileOpen] = useState(false);
     const [isClosing, setIsClosing] = useState(false);
@@ -575,6 +584,21 @@ function AuthenticatedLayout({ header, children, ...props }) {
                 <Toolbar />
                 {children}
             </Box>
+
+            <Snackbar
+                open={Boolean(aviso)}
+                autoHideDuration={4000}
+                onClose={() => setAviso(null)}
+                anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+            >
+                <Alert
+                    severity={aviso?.tipo ?? "success"}
+                    variant="filled"
+                    onClose={() => setAviso(null)}
+                >
+                    {aviso ? t(aviso.texto) : ""}
+                </Alert>
+            </Snackbar>
         </Box>
     );
 }

@@ -19,8 +19,8 @@ import {
 } from "@mui/material";
 
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head } from "@inertiajs/react";
-import { useState } from "react";
+import { Head, usePage } from "@inertiajs/react";
+import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import axios from "axios";
 import MiscSetting from "./Partials/MiscSetting";
@@ -97,6 +97,7 @@ function TabPanel(props) {
 }
 
 export default function Setting({ settings }) {
+    const esEscritorio = usePage().props.esEscritorio;
     const [settingFormData, setSettingFormData] = useState(() => {
         let currencySettings = {
             currency_symbol: 'Rs.',
@@ -133,6 +134,9 @@ export default function Setting({ settings }) {
             show_barcode_product_name: settings.show_barcode_product_name,
             sale_receipt_second_note: settings.sale_receipt_second_note,
             auto_open_print_dialog: settings.auto_open_print_dialog ?? '0',
+            receipt_paper_width: settings.receipt_paper_width ?? '80mm',
+            receipt_printer: settings.receipt_printer ?? '',
+            receipt_silent_print: settings.receipt_silent_print ?? 'off',
             enable_unit_discount: 'yes',
             enable_flat_item_discount: 'no',
             cart_first_focus: 'quantity',
@@ -206,6 +210,17 @@ export default function Setting({ settings }) {
             reader.readAsDataURL(file);
         }
     };
+
+    // Las impresoras que ve Windows. Solo existen en el paquete de escritorio;
+    // en la web la ruta devuelve 404 y la lista queda vacia, que es lo
+    // correcto: ahi el ticket lo imprime el navegador de quien atiende.
+    const [impresoras, setImpresoras] = useState([]);
+    useEffect(() => {
+        if (!esEscritorio) return;
+        axios.get('/impresoras')
+            .then((r) => setImpresoras(r.data.impresoras ?? []))
+            .catch(() => setImpresoras([]));
+    }, [esEscritorio]);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -550,6 +565,60 @@ export default function Setting({ settings }) {
                                                 ))}
                                             </TextField>
                                         </Grid>
+                                        <Grid size={{ xs: 12, sm: 6 }}>
+                                            <TextField
+                                                fullWidth
+                                                name="receipt_paper_width"
+                                                label={t("Paper width")}
+                                                value={settingFormData.receipt_paper_width}
+                                                onChange={handleChange}
+                                                helperText={t("The width of the roll in your printer")}
+                                                select
+                                            >
+                                                <MenuItem value="80mm">80 mm</MenuItem>
+                                                <MenuItem value="58mm">58 mm</MenuItem>
+                                                <MenuItem value="A4">A4</MenuItem>
+                                            </TextField>
+                                        </Grid>
+
+                                        {esEscritorio && (
+                                            <>
+                                                <Grid size={{ xs: 12, sm: 6 }}>
+                                                    <TextField
+                                                        fullWidth
+                                                        name="receipt_printer"
+                                                        label={t("Printer")}
+                                                        value={settingFormData.receipt_printer}
+                                                        onChange={handleChange}
+                                                        helperText={t("Leave empty to use the Windows default printer")}
+                                                        select
+                                                    >
+                                                        <MenuItem value="">{t("Default printer")}</MenuItem>
+                                                        {impresoras.map((impresora) => (
+                                                            <MenuItem key={impresora.nombre} value={impresora.nombre}>
+                                                                {impresora.etiqueta}
+                                                            </MenuItem>
+                                                        ))}
+                                                    </TextField>
+                                                </Grid>
+
+                                                <Grid size={12}>
+                                                    <TextField
+                                                        fullWidth
+                                                        name="receipt_silent_print"
+                                                        label={t("Print without asking")}
+                                                        value={settingFormData.receipt_silent_print}
+                                                        onChange={handleChange}
+                                                        helperText={t("The receipt goes straight to the printer, with no Windows dialog")}
+                                                        select
+                                                    >
+                                                        <MenuItem value="off">{t("Show the print dialog")}</MenuItem>
+                                                        <MenuItem value="on">{t("Print directly")}</MenuItem>
+                                                    </TextField>
+                                                </Grid>
+                                            </>
+                                        )}
+
                                         <Grid size={12}>
                                             <TextField
                                                 fullWidth

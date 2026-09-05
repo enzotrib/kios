@@ -106,6 +106,19 @@ class HandleInertiaRequests extends Middleware
             'modules'=> $modules ?? [],
             'userPermissions'=>$permissions->pluck('name'),
             'locale'=> app()->getLocale(),
+
+            // Hay pantallas que solo tienen sentido en el paquete de
+            // escritorio: elegir la impresora del ticket, por ejemplo. En la
+            // web esas opciones no se muestran.
+            'esEscritorio' => app(\App\Services\InstallerService::class)->isDesktop(),
+
+            // Los avisos de una accion que termino en otra pagina: vaciar la
+            // cache, cerrar el asistente, etc. Sin esto, un `->with('success')`
+            // se escribia en la sesion y no lo leia nadie.
+            'flash' => [
+                'success' => fn () => $request->session()->get('success'),
+                'error' => fn () => $request->session()->get('error'),
+            ],
         ];
     }
 }

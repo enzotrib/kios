@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Setting;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class SettingController extends Controller
 {
@@ -229,7 +230,7 @@ class SettingController extends Controller
     public function update(Request $request)
     {
         $setting_type = $request->setting_type;
-        $settingsData = $request->only(['sale_receipt_note', 'shop_name', 'sale_print_padding_right', 'sale_print_padding_left', 'sale_print_font', 'show_barcode_store', 'show_barcode_product_price', 'show_barcode_product_name', 'show_receipt_shop_name', 'sale_receipt_second_note', 'auto_open_print_dialog',]);
+        $settingsData = $request->only(['sale_receipt_note', 'shop_name', 'sale_print_padding_right', 'sale_print_padding_left', 'sale_print_font', 'show_barcode_store', 'show_barcode_product_price', 'show_barcode_product_name', 'show_receipt_shop_name', 'sale_receipt_second_note', 'auto_open_print_dialog', 'receipt_paper_width', 'receipt_printer', 'receipt_silent_print',]);
 
         if ($setting_type == 'shop_information') {
             // `nullable` es imprescindible: los inputs de archivo se envian aunque
@@ -325,82 +326,80 @@ class SettingController extends Controller
             }
         }
 
-        // Handle image upload if a file is present
-        if ($request->hasFile('shop_logo')) {
-            $image = $request->file('shop_logo');
-
-            // Retrieve the current shop logo path from the database
-            $currentImage = Setting::where('meta_key', 'shop_logo')->first();
-
-            if ($currentImage) {
-                $currentImagePath = public_path($currentImage->meta_value);
-
-                // Check if the file exists and delete it
-                if (file_exists($currentImagePath)) {
-                    unlink($currentImagePath);
-                }
-            }
-
-            $folderPath = 'uploads/' . date('Y') . '/' . date('m');
-            $imageUrl = $image->store($folderPath, 'public');
-
-            // Update the 'shop_logo' setting in the database with the image path
-            Setting::updateOrCreate(
-                ['meta_key' => 'shop_logo'],
-                ['meta_value' => 'storage/' . $imageUrl]
-            );
-        }
-
-        // Handle image upload if a file is present for shop_logo_light
-        if ($request->hasFile('shop_logo_light')) {
-            $image = $request->file('shop_logo_light');
-
-            $currentImage = Setting::where('meta_key', 'shop_logo_light')->first();
-
-            if ($currentImage) {
-                $currentImagePath = public_path($currentImage->meta_value);
-
-                if (file_exists($currentImagePath)) {
-                    unlink($currentImagePath);
-                }
-            }
-
-            $folderPath = 'uploads/' . date('Y') . '/' . date('m');
-            $imageUrl = $image->store($folderPath, 'public');
-
-            Setting::updateOrCreate(
-                ['meta_key' => 'shop_logo_light'],
-                ['meta_value' => 'storage/' . $imageUrl]
-            );
-        }
-
-        // Handle image upload if a file is present for app_icon
-        if ($request->hasFile('app_icon')) {
-            $image = $request->file('app_icon');
-
-            // Retrieve the current shop logo path from the database
-            $currentImage = Setting::where('meta_key', 'app_icon')->first();
-
-            if ($currentImage) {
-                $currentImagePath = public_path($currentImage->meta_value);
-
-                // Check if the file exists and delete it
-                if (file_exists($currentImagePath)) {
-                    unlink($currentImagePath);
-                }
-            }
-
-            $folderPath = 'uploads/' . date('Y') . '/' . date('m');
-            $imageUrl = $image->store($folderPath, 'public');
-
-            // Update the 'app_icon' setting in the database with the image path
-            Setting::updateOrCreate(
-                ['meta_key' => 'app_icon'],
-                ['meta_value' => 'storage/' . $imageUrl]
-            );
+        foreach (['shop_logo', 'shop_logo_light', 'app_icon'] as $campo) {
+            $this->guardarLaImagen($request, $campo);
         }
 
         return response()->json(['message' => 'Setting has been updated successfully!'], 200);
+    }
+
+    /**
+     * Guarda una de las imagenes de la configuracion y borra la anterior.
+     *
+     * Antes esto estaba tres veces copiado, una por imagen, y en las tres el
+     * borrado de la anterior era:
+     *
+     *     $ruta = public_path($actual->meta_value);
+     *     if (file_exists($ruta)) unlink($ruta);
+     *
+     * El asistente deja `shop_logo` con el valor vacio, asi que la fila existe
+     * pero no apunta a ningun archivo. Con el valor vacio `public_path('')`
+     * devuelve la carpeta `public` entera, `file_exists()` dice que si —las
+     * carpetas existen— y `unlink()` sobre una carpeta emite un warning, que
+     * Laravel convierte en excepcion. De ahi salia el "Server Error" la primera
+     * vez que el comercio subia su logo, que es justo la unica vez que le
+     * importa. Y como `shop_logo` es el primero de los tres, el icono de la app
+     * ni llegaba a procesarse.
+     *
+     * Ahora solo se borra lo que sea un archivo de verdad y este adentro de la
+     * carpeta de subidas.
+     */
+    private function guardarLaImagen(Request $request, string $campo): void
+    {
+        if (! $request->hasFile($campo)) {
+            return;
+        }
+
+        $anterior = Setting::where('meta_key', $campo)->first();
+
+        $ruta = 'uploads/' . date('Y') . '/' . date('m');
+        $guardada = $request->file($campo)->store($ruta, 'public');
+
+        if ($guardada === false) {
+            return;
+        }
+
+        Setting::updateOrCreate(
+            ['meta_key' => $campo],
+            ['meta_value' => 'storage/' . $guardada]
+        );
+
+        $this->borrarLaImagenAnterior($anterior?->meta_value);
+    }
+
+    /**
+     * Borra el archivo que reemplaza la imagen nueva, si es que habia uno.
+     *
+     * Se borra despues de guardar la nueva: si el disco falla, el comercio se
+     * queda con el logo viejo y no sin ninguno.
+     */
+    private function borrarLaImagenAnterior(?string $valorAnterior): void
+    {
+        $valor = trim((string) $valorAnterior);
+
+        // Solo se tocan los archivos que subio el propio comercio. Un valor
+        // vacio, o cualquier cosa que no viva en la carpeta de subidas, se
+        // deja como esta.
+        if (! str_starts_with($valor, 'storage/uploads/')) {
+            return;
+        }
+
+        $disco = Storage::disk('public');
+        $relativa = substr($valor, strlen('storage/'));
+
+        if ($disco->fileExists($relativa)) {
+            $disco->delete($relativa);
+        }
     }
 
     public function updateModule($action, Request $request)

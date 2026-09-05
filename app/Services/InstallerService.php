@@ -560,7 +560,7 @@ class InstallerService
             'pos', 'products', 'inventory', 'sales', 'customers', 'vendors',
             'charges', 'collections', 'expenses', 'quotations', 'reloads',
             'cheques', 'sold-items', 'purchases', 'payments', 'stores',
-            'employees', 'payroll', 'media', 'settings',
+            'employees', 'payroll', 'media', 'settings', 'activity-log',
         ];
 
         foreach ($permissions as $permission) {
@@ -713,6 +713,9 @@ class InstallerService
             ['meta_key' => 'sale_print_padding_right', 'meta_value' => $defaults['sale_print_padding_right']],
             ['meta_key' => 'sale_print_padding_left', 'meta_value' => $defaults['sale_print_padding_left']],
             ['meta_key' => 'sale_print_font', 'meta_value' => $defaults['sale_print_font']],
+            ['meta_key' => 'receipt_paper_width', 'meta_value' => $defaults['receipt_paper_width']],
+            ['meta_key' => 'receipt_printer', 'meta_value' => $defaults['receipt_printer']],
+            ['meta_key' => 'receipt_silent_print', 'meta_value' => $defaults['receipt_silent_print']],
             ['meta_key' => 'show_barcode_store', 'meta_value' => $defaults['show_barcode_store']],
             ['meta_key' => 'show_barcode_product_price', 'meta_value' => $defaults['show_barcode_product_price']],
             ['meta_key' => 'show_barcode_product_name', 'meta_value' => $defaults['show_barcode_product_name']],
@@ -721,6 +724,12 @@ class InstallerService
             ['meta_key' => 'misc_settings', 'meta_value' => json_encode($defaults['misc_settings'])],
             ['meta_key' => 'barcode_settings', 'meta_value' => json_encode($defaults['barcode_settings'])],
             ['meta_key' => 'currency_settings', 'meta_value' => json_encode($currencySettings)],
+
+            // La zona horaria tambien va a la base, no solo al .env: el .env
+            // vive en la carpeta del programa, que el instalador reemplaza al
+            // actualizar, y con el se perdia la zona elegida. Ver
+            // AppServiceProvider::aplicarLaZonaHorariaDelComercio().
+            ['meta_key' => 'app_timezone', 'meta_value' => config('app.timezone')],
         ];
 
         // Get barcode template from view

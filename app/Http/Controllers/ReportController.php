@@ -24,11 +24,14 @@ class ReportController extends Controller
 {
     public function getDailyCashReport(Request $request)
     {
-        $transaction_date = $request->only(['transaction_date']);
+        // `$request->only([...])` devuelve un arreglo, no el valor. Mientras no
+        // se elegia ninguna fecha no se notaba, porque el arreglo vacio caia en
+        // el valor por defecto; apenas el usuario tocaba el calendario, la
+        // consulta comparaba la columna contra un arreglo y no encontraba nada.
+        // La caja quedaba en blanco justo cuando se la iba a buscar.
+        $transaction_date = $request->input('transaction_date') ?: Carbon::today()->toDateString();
         $user = $request->user;
         $store_id = $request->store_id;
-
-        if (empty($transaction_date)) $transaction_date = Carbon::today()->toDateString();
 
         $stores = Store::forCurrentUser()->select('id', 'name')->get();
         if (Auth::user()->user_role !== 'admin' && Auth::user()->user_role !== 'super-admin') {
@@ -47,13 +50,15 @@ class ReportController extends Controller
                 'transactions.sales_id',
                 DB::raw('CASE WHEN cash_logs.amount > 0 THEN cash_logs.amount ELSE 0 END AS cash_in'),
                 DB::raw('CASE WHEN cash_logs.amount < 0 THEN ABS(cash_logs.amount) ELSE 0 END AS cash_out'),
-                DB::raw('
-                    CASE 
-                        WHEN cash_logs.source = "sales" THEN transactions.transaction_type 
-                        WHEN cash_logs.source = "purchases" THEN purchase_transactions.transaction_type 
-                        ELSE NULL 
+                // Comillas simples, no dobles: en SQL las dobles delimitan
+                // nombres de columnas y solo MySQL las acepta como texto.
+                DB::raw("
+                    CASE
+                        WHEN cash_logs.source = 'sales' THEN transactions.transaction_type
+                        WHEN cash_logs.source = 'purchases' THEN purchase_transactions.transaction_type
+                        ELSE NULL
                     END AS transaction_type
-                ')
+                ")
             )
             ->leftJoin('contacts', 'cash_logs.contact_id', '=', 'contacts.id')
             ->leftJoin('transactions', function ($join) {

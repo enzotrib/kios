@@ -36,6 +36,7 @@ use App\Http\Controllers\DevDatabaseController;
 use App\Http\Controllers\ChargeController;
 use App\Http\Controllers\SyncController;
 use App\Http\Controllers\ActivityLogController;
+use App\Http\Controllers\ImpresionController;
 
 // Installer routes (must be before auth routes)
 require __DIR__ . '/installer.php';
@@ -246,6 +247,11 @@ Route::get('/update', [UpgradeController::class, 'showUploadForm'])->name('uploa
 
     Route::resource('sale-templates', SaleTemplateController::class);
 
+    // Devolvia la frase suelta 'All caches cleared...' como cuerpo de la
+    // pagina: el navegador se quedaba mostrando ese texto sobre fondo blanco,
+    // sin menu, sin boton y sin forma de volver mas que escribir la direccion
+    // a mano. En la aplicacion de escritorio, donde no hay barra de
+    // direcciones, eso equivale a tener que cerrarla y volver a abrirla.
     Route::get('/clear-cache', function () {
         Artisan::call('cache:clear');
         Artisan::call('config:clear');
@@ -254,8 +260,10 @@ Route::get('/update', [UpgradeController::class, 'showUploadForm'])->name('uploa
         Artisan::call('event:clear');
         Artisan::call('optimize:clear');
 
-        return 'All caches cleared and configurations updated!';
-    });
+        // La traduccion la resuelve el front con t(): los textos de la
+        // interfaz viven en resources/js/lang, no en lang/.
+        return back()->with('success', 'Cache refreshed.');
+    })->name('cache.clear');
 
     Route::get('/check-update', function () {
         return 'Update';
@@ -274,6 +282,11 @@ Route::get('/update', [UpgradeController::class, 'showUploadForm'])->name('uploa
         });
         return 'Mail sent';
     });
+
+    // Impresion del ticket sin el dialogo de Windows. Solo responde en el
+    // paquete de escritorio; en la web devuelve 404.
+    Route::get('/impresoras', [ImpresionController::class, 'impresoras'])->name('impresoras.listar');
+    Route::post('/imprimir-ticket', [ImpresionController::class, 'imprimir'])->name('impresoras.imprimir');
 
     Route::get('/activity-log', [ActivityLogController::class, 'index'])->name('activity-log.index');
     Route::get('/activity-log/prune-count', [ActivityLogController::class, 'pruneCount'])->name('activity-log.prune-count');

@@ -774,5 +774,14 @@
   "✓ Executed": "✓ Ejecutada",
   "✓ Present": "✓ Presente",
   "✗ Missing": "✗ Faltante",
-  "💡 Template Tips": "💡 Consejos para la plantilla"
+  "💡 Template Tips": "💡 Consejos para la plantilla",
+  "Paper width": "Ancho del papel",
+  "The width of the roll in your printer": "El ancho del rollo de tu impresora",
+  "Printer": "Impresora",
+  "Leave empty to use the Windows default printer": "Vacío usa la impresora predeterminada de Windows",
+  "Default printer": "Impresora predeterminada",
+  "Print without asking": "Imprimir sin preguntar",
+  "Show the print dialog": "Mostrar el diálogo de impresión",
+  "Print directly": "Imprimir directo",
+  "Cache refreshed.": "Se vació la memoria temporal."
 }

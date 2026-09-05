@@ -26,6 +26,7 @@ import { snapdom } from '@zumer/snapdom';
 import { Download } from "lucide-react";
 import { useCurrencyFormatter } from "../../lib/currencyFormatter";
 import { t } from '@/i18n';
+import axios from "axios";
 
 export function ReceiptDisplay({ 
     sale, 
@@ -37,7 +38,50 @@ export function ReceiptDisplay({
     hideActionButtons = false
 }) {
     const contentRef = useRef(null);
-    const reactToPrintFn = useReactToPrint({ contentRef });
+
+    // El rollo termico. Sin decirle el tamano de pagina, el navegador maqueta
+    // el ticket para una hoja A4 y la impresora imprime lo que le entra: el
+    // ticket sale con el texto cortado a la derecha y el papel avanza de mas.
+    // `auto` de alto es lo que hace que el corte quede al terminar el ticket y
+    // no a los 297 milimetros.
+    const anchoDelPapel = settings.receipt_paper_width || "80mm";
+    const estiloDePagina = anchoDelPapel === "A4"
+        ? "@page { size: A4; margin: 10mm; }"
+        : `@page { size: ${anchoDelPapel} auto; margin: 0; }
+           body { width: ${anchoDelPapel}; margin: 0; }`;
+
+    // Impresion directa: en el paquete de escritorio se puede mandar el ticket
+    // a la impresora sin abrir el dialogo de Windows. Queda apagado salvo que
+    // el comercio lo encienda en Configuracion, porque depende de que la
+    // impresora este bien elegida; con esto apagado el camino es el de
+    // siempre, el dialogo del sistema.
+    const imprimeSolo = settings.receipt_silent_print === "on";
+
+    const mandarAImpresora = async (iframe) => {
+        // react-to-print ya armo adentro del iframe el documento completo, con
+        // los estilos resueltos. Se manda tal cual, asi lo que sale por la
+        // impresora es lo mismo que se ve.
+        const documento = iframe.contentDocument?.documentElement?.outerHTML;
+
+        try {
+            await axios.post("/imprimir-ticket", {
+                html: `<!doctype html>${documento}`,
+                impresora: settings.receipt_printer || "",
+            });
+        } catch (error) {
+            // Si la impresion directa falla —impresora apagada, nombre que ya
+            // no existe— se cae al dialogo de siempre en vez de dejar al
+            // comercio sin ticket y sin explicacion.
+            console.error("No se pudo imprimir directo, se abre el diálogo:", error);
+            iframe.contentWindow?.print();
+        }
+    };
+
+    const reactToPrintFn = useReactToPrint({
+        contentRef,
+        pageStyle: estiloDePagina,
+        ...(imprimeSolo ? { print: mandarAImpresora } : {}),
+    });
     const [receiptNo, setReceiptNo] = useState(sale ? ' ' + sale.sale_prefix + "/" + sale.invoice_number : '');
     const formatCurrency = useCurrencyFormatter();
 

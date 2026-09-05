@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider;
 use Opcodes\LogViewer\Facades\LogViewer;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Blade;
@@ -21,6 +22,71 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->asegurarClavePropiaDeCadaInstalacion();
+    }
+
+    /**
+     * El duenio del comercio puede entrar a todo.
+     *
+     * El menu de la izquierda ya lo trataba asi: `canAccess()` deja pasar al
+     * super-admin sin mirar la lista de permisos. El backend no, y ahi estaba
+     * la contradiccion: el menu mostraba "Registro de actividad" y al tocarlo
+     * saltaba un 403. La lista de permisos que escribe el asistente no incluia
+     * `activity-log`, asi que en una instalacion de verdad ni el duenio lo
+     * tenia.
+     *
+     * Agregar el permiso que faltaba arregla ese caso; esto arregla la clase
+     * entera. Cualquier permiso que se agregue de aca en adelante lo tiene el
+     * duenio desde el primer dia, sin depender de que alguien se acuerde de
+     * sumarlo a la lista del instalador ni de correr una migracion en las
+     * instalaciones que ya estan andando.
+     *
+     * Devolver null —no false— es lo que deja que el resto de los usuarios
+     * sigan pasando por la verificacion normal de permisos.
+     */
+    private function elDuenioPuedeTodo(): void
+    {
+        Gate::before(function ($user) {
+            return $user->user_role === 'super-admin' ? true : null;
+        });
+    }
+
+    /**
+     * La hora del comercio, la misma en cada arranque.
+     *
+     * El asistente pregunta la zona horaria y la escribe en APP_TIMEZONE, en
+     * el .env. El problema es donde vive ese archivo: adentro de la carpeta del
+     * programa, que el instalador reemplaza entera en cada actualizacion. La
+     * zona horaria elegida se pierde y la aplicacion vuelve a UTC.
+     *
+     * Con UTC, en Argentina, "hoy" cambia a las nueve de la noche. Un kiosco
+     * que sigue vendiendo despues de esa hora ve esas ventas contadas en el dia
+     * siguiente: la caja del dia no cierra y las ventas parecen no estar.
+     *
+     * Por eso la zona horaria tambien se guarda en la tabla de ajustes, que
+     * vive en la carpeta de datos y no se toca al actualizar, y se aplica al
+     * arrancar. `config()` sola no alcanza: Carbon y las funciones de fecha de
+     * PHP leen la zona horaria del proceso, que ya quedo fijada al arrancar el
+     * framework.
+     */
+    private function aplicarLaZonaHorariaDelComercio(): void
+    {
+        try {
+            if (! Schema::hasTable('settings')) {
+                return;
+            }
+
+            $zona = Setting::where('meta_key', 'app_timezone')->value('meta_value');
+
+            if (! $zona || ! in_array($zona, timezone_identifiers_list(), true)) {
+                return;
+            }
+
+            Config::set('app.timezone', $zona);
+            date_default_timezone_set($zona);
+        } catch (\Throwable $e) {
+            // Antes de que exista la tabla —durante la instalacion— se sigue
+            // con la zona horaria del .env, que es lo que habia hasta ahora.
+        }
     }
 
     /**
@@ -78,6 +144,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Vite::prefetch(concurrency: 3);
+
+        $this->elDuenioPuedeTodo();
+        $this->aplicarLaZonaHorariaDelComercio();
 
         // Initialize analytics tracking
         // Las vistas del asistente necesitan saber si la base es SQLite para

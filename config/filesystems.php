@@ -43,6 +43,21 @@ return [
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
             'throw' => false,
+
+            // Con esto Laravel registra el la ruta GET /storage/{archivo} y
+            // sirve el mismo contenido que serviria el enlace simbolico
+            // public/storage.
+            //
+            // Hace falta en el paquete de escritorio: ahi el almacenamiento
+            // vive en %APPDATA%\kios\storage, afuera de la carpeta del
+            // programa, y `storage:link` no siempre puede crear el enlace
+            // —Windows pide modo desarrollador o permisos de administrador
+            // para los enlaces simbolicos—. Sin esto el logo que sube el
+            // comercio se guarda bien pero se ve roto en pantalla.
+            //
+            // En la web no cambia nada: Apache encuentra el archivo por el
+            // enlace y responde antes de que Laravel entre en juego.
+            'serve' => true,
         ],
 
         's3' => [
